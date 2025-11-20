@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useRef, useState } from 'react';
 
 /**
@@ -73,7 +74,7 @@ export default function ImgUpload({ label, id, setImg, img, style, update }) {
     <div className="iptBox">
       {label && <div className="label">{label}</div>}
       <div className={`imgBox ${style || ''} ${update ? isUpdate : ''}`}>
-        {img && <img src={img} alt="" />}
+        {img && <Image src={img} alt="" />}
         {(!img || isUpdate) && (
           <>
             <button className="btnUpload" onClick={handleFile}>
