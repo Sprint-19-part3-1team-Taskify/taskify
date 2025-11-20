@@ -3,6 +3,12 @@
   justify-content: center;
   align-items: center;
 }
+// space-between (양끝 정렬)
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
 // 폰트 스타일을 적용하는 믹스인
 // $size: 가이드라인의 스타일 이름 (예: '3xl', '2xl', 'xl', 26px)
