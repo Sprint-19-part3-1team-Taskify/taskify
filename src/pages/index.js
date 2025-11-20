@@ -1,12 +1,26 @@
 import Head from 'next/head';
-import { putAuthPassword } from '@/api/auth';
+import { postAuthLogin } from '@/api/auth';
+import { postDashboards } from '@/api/dashboards';
 
 export default function Home() {
-  const handleClick = async () => {
+  const handleLogin = async () => {
     try {
-      const res = await putAuthPassword({
-        password: 'oldpassword123',
-        newPassword: 'newpassword123',
+      const res = await postAuthLogin({
+        email: 'user@example.com',
+        password: 'password123',
+      });
+      console.log(res);
+    } catch (error) {
+      // HTTP 전송 오류 처리
+      console.error(error);
+    }
+  };
+
+  const handleCreate = async () => {
+    try {
+      const res = await postDashboards({
+        title: 'New Dashboard',
+        color: '#FF5733',
       });
       console.log(res);
     } catch (error) {
@@ -25,7 +39,8 @@ export default function Home() {
       </Head>
       <div>
         <main>123123123123</main>
-        <button onClick={handleClick}>테스트 실행</button>
+        <button onClick={handleLogin}>로그인</button>
+        <button onClick={handleCreate}>대시보드 생성</button>
       </div>
     </>
   );

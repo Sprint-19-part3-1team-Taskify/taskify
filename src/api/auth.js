@@ -4,6 +4,7 @@ import api from '@/lib/api';
 export async function postAuthLogin({ email, password }) {
   try {
     const res = await api.post('/auth/login', { email, password });
+    localStorage.setItem('accessToken', res.data.accessToken);
     return res.data;
   } catch (e) {
     return e.response.data;
