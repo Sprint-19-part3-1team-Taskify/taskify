@@ -57,19 +57,12 @@ export default function ImgUpload({ label, id, setImg, img, style, update }) {
   async function handleImgUpload(e) {
     const file = e.target.files[0];
     if (!file) return;
-
     setUIspdate('');
-
-    // const result = await PostImage(file);
+    // const result = await PostImage(file); //@API 연결예정
     const result = URL.createObjectURL(file);
     setImg(result);
     if (fileInputRef.current) fileInputRef.current.value = '';
   }
-  // 이미지 삭제
-  const handleImgDelete = (e) => {
-    e.preventDefault();
-    setImg(null);
-  };
   return (
     <div className="iptBox">
       {label && <div className="label">{label}</div>}
