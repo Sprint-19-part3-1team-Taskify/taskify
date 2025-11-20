@@ -1,4 +1,4 @@
-import SideMenu from '@/components/layout/SideMenu/index';
+import SideMenu from '@/components/sidemenu/SideMenu';
 
 export default function MyDashBoard() {
   return (

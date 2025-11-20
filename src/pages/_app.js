@@ -1,4 +1,4 @@
-import Header from '@/components/layout/Header/Header';
+import Header from '@/components/header/Header';
 import '@/styles/globals.scss';
 
 export default function MyApp({ Component, pageProps }) {

@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './SideMenu.module.scss';
-import DashboardLink from '@/components/layout/SideMenu/DashboardLink';
+import DashboardLink from '@/components/sidemenu/DashboardLink';
 import { usePathname } from 'next/navigation';
 
 /**

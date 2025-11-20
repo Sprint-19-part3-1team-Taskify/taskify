@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import Input from '@/components/forms/Input';
-import Tag from '@/components/forms/Tag';
-import Textarea from '@/components/forms/Textarea';
-import ImgUpload from '@/components/forms/ImgUpload';
+import Input from '@/components/input/Input';
+import Tag from '@/components/input/Tag';
+import Textarea from '@/components/input/Textarea';
+import ImgUpload from '@/components/input/ImgUpload';
 
 export default function Forms() {
   /* Input */
