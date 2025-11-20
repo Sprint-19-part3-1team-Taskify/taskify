@@ -3,8 +3,22 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from './SideMenu.module.scss';
 import DashboardLink from '@/components/layout/SideMenu/DashboardLink';
-import { useParams, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
+/**
+ * SideMenu Component
+ * 애플리케이션의 좌측 메뉴 영역을 구성하는 컴포넌트입니다.
+ * 로고, 대시보드 생성 버튼, 대시보드 목록을 포함합니다.
+ *
+ * @component
+ * @returns {JSX.Element} SideMenu Component
+ *
+ * @example
+ * // dashboard 레이아웃에서 사용됩니다.
+ * <SideMenu />
+ **/
+
+// 임시데이터
 const menu = [
   { href: '/mydashboard/1', name: '비브리지', color: 'green', owner: true },
   { href: '/mydashboard/2', name: '코드잇', color: 'purple' },
