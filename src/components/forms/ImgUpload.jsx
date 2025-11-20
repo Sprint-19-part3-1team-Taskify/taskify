@@ -1,4 +1,48 @@
-import { use, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
+
+/**
+ * ImgUpload Component
+ * 이미지 업로드 및 미리보기를 제공하는 컴포넌트
+ *
+ * @param {Object} props
+ * @param {string} [props.label]
+ *   - 이미지 업로드 영역 상단에 표시되는 레이블
+ *
+ * @param {string} [props.id]
+ *   - 컴포넌트의 고유 ID
+ *
+ * @param {Function} props.setImg
+ *   - 이미지 URL을 설정하는 상태 업데이트 함수
+ *
+ * @param {string | null} props.img
+ *   - 현재 표시될 이미지 URL 또는 null
+ *
+ * @param {string} [props.style]
+ *   - 이미지 박스의 크기 클래스 (예: "lg")
+ *
+ * @param {boolean} [props.update=false]
+ *   - true: 이미지가 있어도 업로드 버튼 표시 (수정 모드)
+ *   - false: 이미지가 없을 때만 업로드 버튼 표시 (신규 등록 모드)
+ *
+ * @returns {JSX.Element} ImgUpload Component
+ *
+ * @example
+ * // 신규 이미지 등록
+ * <ImgUpload
+ *   setImg={setImg}
+ *   img={img}
+ *   label="이미지"
+ * />
+ *
+ * @example
+ * // 기존 이미지 수정 (큰 크기)
+ * <ImgUpload
+ *   setImg={setImg3}
+ *   img={img3}
+ *   style="lg"
+ *   update
+ * />
+ */
 
 export default function ImgUpload({ label, id, setImg, img, style, update }) {
   const fileInputRef = useRef(null);
