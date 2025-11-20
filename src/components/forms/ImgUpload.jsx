@@ -67,7 +67,7 @@ export default function ImgUpload({ label, id, setImg, img, style, update }) {
     <div className="iptBox">
       {label && <div className="label">{label}</div>}
       <div className={`imgBox ${style || ''} ${update ? isUpdate : ''}`}>
-        {img && <Image src={img} alt="" />}
+        {img && <Image src={img} alt="" fill />}
         {(!img || isUpdate) && (
           <>
             <button className="btnUpload" onClick={handleFile}>
