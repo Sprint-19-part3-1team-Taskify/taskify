@@ -44,10 +44,10 @@ Taskify는 커뮤니티를 생성하고 멤버를 초대하여 일정과 할 일
 
 ```bash
 # 저장소 클론
-git clone https://github.com/Sprint-19-part3-1team-Taksify/frontend.git
+git clone https://github.com/Sprint-19-part3-1team-Taksify/taskify.git
 
 # 프로젝트 디렉토리로 이동
-cd frontend
+cd taskify
 
 # 의존성 설치
 npm install
@@ -66,12 +66,13 @@ npm run dev
 │   └── 📂 fonts            # 커스텀 폰트 (Pretendard, NotoSans 등)
 │
 ├── 📂 src
-│   ├── 📂 app              # ⭐ Next.js App Router
-│   │   ├── 📄 layout.js    # 전체 레이아웃 (전역 스타일 로드, 공통 UI)
-│   │   ├── 📄 page.js      # 메인 페이지 (/)
-│   │   ├── 📂 list         # /list 페이지
-│   │   ├── 📂 mypage       # /mypage 페이지
-│   │   └── 📂 not-found    # 404 페이지
+│   ├── 📂 pages            # ⭐ Pages Router 핵심
+│   │   ├── 📄 _app.js      # 전역 레이아웃 (App Router의 layout.js 역할)
+│   │   ├── 📄 _document.js # HTML 구조 커스텀 (선택)
+│   │   ├── 📄 index.js     # 메인 페이지 (/)
+│   │   ├── 📂 api          # 서버 API 라우트
+│   │   └── 📂 mypage
+│   │       └── index.js    # /mypage 페이지
 │   │
 │   ├── 📂 services         # API 계층 (axios)
 │   │   ├── axiosInstance.js
@@ -92,19 +93,11 @@ npm run dev
 │   │
 │   ├── 📂 features         # 기능 단위 Feature Layer
 │   │   ├── 📂 auth
-│   │   │   └── AuthButton.jsx
 │   │   ├── 📂 board
-│   │   │   ├── BoardContainer.jsx
-│   │   │   └── dnd-utils.js
 │   │   └── 📂 upload
-│   │       └── ImageUploader.jsx
 │   │
 │   ├── 📂 constants        # 상수 관리
-│   │   └── endpoints.js
-│   │
 │   ├── 📂 lib              # 유틸 함수 모음
-│   │   └── utils.js
-│   │
 │   └── 📂 hooks            # Custom Hook 디렉토리
 │       └── useAuth.js
 │
