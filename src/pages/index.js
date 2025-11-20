@@ -1,6 +1,20 @@
 import Head from 'next/head';
+import { putAuthPassword } from '@/api/auth';
 
 export default function Home() {
+  const handleClick = async () => {
+    try {
+      const res = await putAuthPassword({
+        password: 'oldpassword123',
+        newPassword: 'newpassword123',
+      });
+      console.log(res);
+    } catch (error) {
+      // HTTP 전송 오류 처리
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <Head>
@@ -13,7 +27,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <main>123123123123</main>
+        <main></main>
+        <button onClick={handleClick}>테스트 실행</button>
       </div>
     </>
   );
