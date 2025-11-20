@@ -22,8 +22,7 @@ import Link from 'next/link';
  *   - header3/4/5에서 표시되는 대시보드명
  *
  * @returns {JSX.Element} Header Component
- *  <Header type={headerType} dashboardName={dashboardName} /> 선언 후
- *  이런식으로 사용
+ * 이런식으로 사용
  * function MyDashboard() {
   return <div>내 대시보드</div>;
   }
@@ -32,7 +31,19 @@ import Link from 'next/link';
     MyDashboard.dashboardName = "내 대시보드";
 
     export default MyDashboard;
- */
+    
+ headerType를 "none"으로 설정하여 헤더를 숨길 수도 있습니다.
+ 예를 들어, 로그인 페이지에서 헤더를 숨기고 싶다면 다음과 같이 설정할 수 있습니다.
+    function LoginPage() {
+  return <div>로그인 화면</div>;
+}
+
+LoginPage.headerType = "none";       // Header 숨기고 싶을 때
+LoginPage.dashboardName = "";        // 제목 없음
+
+export default LoginPage;
+ 
+    **/
 
 export default function Header({
   type = 'default', // default, header3, header4, header5
@@ -43,10 +54,12 @@ export default function Header({
   return (
     <header className={`${styles.header} ${darkMode ? styles.dark : ''}`}>
       <div className={styles.inner}>
-        {/* 로고 */}
-        <Link href="/" className={styles.logo}>
-          <Image src="/images/logo.svg" width={109} height={33} alt="Taskify" priority />
-        </Link>
+        {/* 로고 — default 에서만 표시 */}
+        {type === 'default' && (
+          <Link href="/" className={styles.logo}>
+            <Image src="/images/logo.svg" width={109} height={33} alt="Taskify" priority />
+          </Link>
+        )}
 
         {/* 오른쪽 영역 */}
         <nav className={styles.nav}>
