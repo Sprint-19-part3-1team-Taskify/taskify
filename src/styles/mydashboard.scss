@@ -1,0 +1,99 @@
+@use './variables.scss' as *;
+@use './mixins.scss' as *;
+
+.mydashboard {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  grid-template-rows: 70px 1fr;
+  height: 100%;
+  background-color: #fbfbfb;
+  & > header {
+    grid-column: 2/-1;
+    grid-row: 1/2;
+  }
+}
+.sideMenu {
+  grid-column: 1/2;
+  grid-row: 1/-1;
+  width: 300px;
+  height: 100%;
+  padding: 20px 12px;
+  background-color: #fff;
+  border-right: 1px solid $gray3;
+  .logo {
+    display: flex;
+    margin-bottom: 56px;
+  }
+  nav {
+    position: relative;
+    .title {
+      @include txtStyle('xs', SB);
+      color: $gray1;
+    }
+    .btnCreate {
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      background: url(/images/dashboard/btn_create.svg) no-repeat 0 0;
+    }
+  }
+  ul {
+    margin-top: 20px;
+    li:not(:first-child) {
+      margin-top: 8px;
+    }
+  }
+}
+
+.dashboardLink {
+  @include txtStyle('2lg', M);
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 42px;
+  padding-left: 36px;
+  color: $gray1;
+  &.on {
+    border-radius: 4px;
+    background: rgba($color: $violet2, $alpha: 0.8);
+  }
+  &.onwer::after {
+    content: '';
+    display: inline-block;
+    margin-left: 4px;
+    width: 18px;
+    height: 14px;
+    background: url(/images/dashboard/ico_crown.svg) no-repeat 0 0;
+  }
+
+  &::before {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    margin-top: -4px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  &.green::before {
+    background: $green;
+  }
+  &.purple::before {
+    background: $purple;
+  }
+  &.orange::before {
+    background: $orange;
+  }
+  &.blue::before {
+    background: $blue;
+  }
+  &.pink::before {
+    background: $pink;
+  }
+}

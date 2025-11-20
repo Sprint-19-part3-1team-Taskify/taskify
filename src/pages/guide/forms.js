@@ -55,7 +55,6 @@ export default function Forms() {
   const [img, setImg] = useState(null);
   const [img2, setImg2] = useState('/images/temp/image01.svg');
   const [img3, setImg3] = useState(null);
-  const [img4, setImg4] = useState('/images/temp/image02.svg');
 
   return (
     <>

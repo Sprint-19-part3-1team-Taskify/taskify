@@ -8,6 +8,13 @@
 html {
   font-size: 16px;
   font-family: 'Pretendard', sans-serif;
+  color: $black3;
+}
+html,
+body,
+#__next,
+.appMain {
+  height: 100%;
 }
 p,
 div,
@@ -23,6 +30,12 @@ a {
   display: inline-block;
   text-decoration: none;
   cursor: pointer;
+}
+a,
+a:focus,
+a:hover,
+a:active {
+  color: inherit;
 }
 i,
 em {
@@ -79,7 +92,7 @@ option,
 optgroup,
 textarea {
   border-radius: 0;
-  color: $gray2;
+  color: $black3;
   font-family:
     'Pretendard', 'Malgun Gothic', '맑은 고딕', 'Dotum', '돋움', 'gulim', '굴림', Helvetica,
     sans-serif;
