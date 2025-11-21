@@ -1,4 +1,3 @@
-// common/Button/index.js
 export { default as BaseButton } from './BaseButton/BaseButton';
 export { default as LoginButton } from './LoginButton/LoginButton';
 export { DashboardButton } from './DashboardButton/DashboardButton';
