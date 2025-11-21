@@ -1,0 +1,14 @@
+@use '@styles/mixins' as *;
+@use '@styles/variables' as *;
+
+.mydashboard {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  grid-template-rows: 70px 1fr;
+  height: 100%;
+  background-color: #fbfbfb;
+  & > header {
+    grid-column: 2/-1;
+    grid-row: 1/2;
+  }
+}

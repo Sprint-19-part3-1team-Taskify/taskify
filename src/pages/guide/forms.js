@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import Input from '@/components/forms/Input';
-import Tag from '@/components/forms/Tag';
-import Textarea from '@/components/forms/Textarea';
-import ImgUpload from '@/components/forms/ImgUpload';
+import Input from '@/components/input/Input';
+import Tag from '@/components/input/Tag';
+import Textarea from '@/components/input/Textarea';
+import ImgUpload from '@/components/input/ImgUpload';
 
 export default function Forms() {
   /* Input */
@@ -55,7 +55,6 @@ export default function Forms() {
   const [img, setImg] = useState(null);
   const [img2, setImg2] = useState('/images/temp/image01.svg');
   const [img3, setImg3] = useState(null);
-  const [img4, setImg4] = useState('/images/temp/image02.svg');
 
   return (
     <>
