@@ -34,15 +34,6 @@ import { useRef, useState } from 'react';
  *   img={img}
  *   label="이미지"
  * />
- *
- * @example
- * // 기존 이미지 수정 (큰 크기)
- * <ImgUpload
- *   setImg={setImg3}
- *   img={img3}
- *   style="lg"
- *   update
- * />
  */
 
 export default function ImgUpload({ label, id, setImg, img, style, update }) {
