@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import Input from '@/components/input/Input';
-import Tag from '@/components/input/Tag';
+import Tag from '@/components/chip/TagChip';
 import Textarea from '@/components/input/Textarea';
 import ImgUpload from '@/components/input/ImgUpload';
 
-export default function Forms() {
+export default function Inputs() {
   /* Input */
   const [tags, setTags] = useState([]); // 태그 생성
   const [tagId, setTagId] = useState(0); // 태그 ID
@@ -52,9 +52,9 @@ export default function Forms() {
   const handleTextSubmit = () => {};
 
   /* Image Upload */
-  const [img, setImg] = useState(null);
-  const [img2, setImg2] = useState('/images/temp/image01.svg');
-  const [img3, setImg3] = useState(null);
+  const [cardImg, setCardImg] = useState('');
+  const [cardImg2, setCardImg2] = useState('/images/temp/image01.svg');
+  const [useImg, setUserImg] = useState('');
 
   return (
     <>
@@ -116,8 +116,8 @@ export default function Forms() {
         onKeyDown={handleCreateTag}
       />
       {tags.length > 0 && (
-        <div className="tagWrap">
-          {tags.map((tg, index) => {
+        <div>
+          {tags.map((tg) => {
             return (
               <Tag key={tg.id} className={tg.colorClass} onClick={(e) => handleDeleteTag(e, tg)}>
                 {tg.txt}
@@ -163,9 +163,9 @@ export default function Forms() {
       <hr />
 
       {/* Image Upload */}
-      <ImgUpload setImg={setImg} img={img} label="이미지" />
-      <ImgUpload setImg={setImg2} img={img2} label="이미지" update />
-      <ImgUpload setImg={setImg3} img={img3} style="lg" update />
+      <ImgUpload type="card" setImg={setCardImg} img={cardImg} label="이미지" />
+      <ImgUpload type="card" setImg={setCardImg2} img={cardImg2} label="이미지" update />
+      <ImgUpload type="user" setImg={setUserImg} img={useImg} update />
     </>
   );
 }
