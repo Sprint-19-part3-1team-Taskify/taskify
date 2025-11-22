@@ -265,79 +265,111 @@ export default function ApiExamplePage() {
       {/* Auth API */}
       <section>
         <h2>Auth API</h2>
-        <button onClick={handlePostAuthLogin}>POST /auth/login</button>
-        <button onClick={handlePutAuthPassword}>PUT /auth/password</button>
+        <button onClick={handlePostAuthLogin}>로그인 POST /auth/login</button>
+        <br />
+        <button onClick={handlePutAuthPassword}>비밀번호 변경 PUT /auth/password</button>
       </section>
 
       {/* Cards API */}
       <section>
         <h2>Cards API</h2>
-        <button onClick={handlePostCards}>POST /cards</button>
-        <button onClick={handleGetCards}>GET /cards</button>
-        <button onClick={handleGetCardsId}>GET /cards/:cardId</button>
-        <button onClick={handlePutCardsId}>PUT /cards/:cardId</button>
-        <button onClick={handleDeleteCardsId}>DELETE /cards/:cardId</button>
+        <button onClick={handlePostCards}>카드 생성 POST /cards</button>
+        <br />
+        <button onClick={handleGetCards}>카드 목록 조회 GET /cards</button>
+        <br />
+        <button onClick={handlePutCardsId}>카드 수정 PUT /cards/:cardId</button>
+        <br />
+        <button onClick={handleGetCardsId}>카드 상세 조회 GET /cards/:cardId</button>
+        <br />
+        <button onClick={handleDeleteCardsId}>카드 삭제 DELETE /cards/:cardId</button>
       </section>
 
       {/* Columns API */}
       <section>
         <h2>Columns API</h2>
-        <button onClick={handlePostColumns}>POST /columns</button>
-        <button onClick={handleGetColumns}>GET /columns</button>
-        <button onClick={handlePutColumnsId}>PUT /columns/:columnId</button>
-        <button onClick={handleDeleteColumnsId}>DELETE /columns/:columnId</button>
-        <button onClick={handlePostColumnsIdCardImage}>POST /columns/:columnId/card-image</button>
+        <button onClick={handlePostColumns}>컬럼 생성 POST /columns</button>
+        <br />
+        <button onClick={handleGetColumns}>컬럼 목록 조회 GET /columns</button>
+        <br />
+        <button onClick={handlePutColumnsId}>컬럼 수정 PUT /columns/:columnId</button>
+        <br />
+        <button onClick={handleDeleteColumnsId}>컬럼 삭제 DELETE /columns/:columnId</button>
+        <br />
+        <button onClick={handlePostColumnsIdCardImage}>
+          카드 이미지 업로드 POST /columns/:columnId/card-image
+        </button>
       </section>
 
       {/* Comments API */}
       <section>
         <h2>Comments API</h2>
-        <button onClick={handlePostComments}>POST /comments</button>
-        <button onClick={handleGetComments}>GET /comments</button>
-        <button onClick={handlePutCommentsId}>PUT /comments/:commentId</button>
-        <button onClick={handleDeleteCommentsId}>DELETE /comments/:commentId</button>
+        <button onClick={handlePostComments}>댓글 생성 POST /comments</button>
+        <br />
+        <button onClick={handleGetComments}>댓글 목록 조회 GET /comments</button>
+        <br />
+        <button onClick={handlePutCommentsId}>댓글 수정 PUT /comments/:commentId</button>
+        <br />
+        <button onClick={handleDeleteCommentsId}>댓글 삭제 DELETE /comments/:commentId</button>
       </section>
 
       {/* Dashboards API */}
       <section>
         <h2>Dashboards API</h2>
-        <button onClick={handlePostDashboards}>POST /dashboards</button>
-        <button onClick={handleGetDashboards}>GET /dashboards</button>
-        <button onClick={handleGetDashboardsId}>GET /dashboards/:dashboardId</button>
-        <button onClick={handlePutDashboardsId}>PUT /dashboards/:dashboardId</button>
-        <button onClick={handleDeleteDashboardsId}>DELETE /dashboards/:dashboardId</button>
+        <button onClick={handlePostDashboards}>대시보드 생성 POST /dashboards</button>
+        <br />
+        <button onClick={handleGetDashboards}>대시보드 목록 조회 GET /dashboards</button>
+        <br />
+        <button onClick={handleGetDashboardsId}>
+          대시보드 상세 조회 GET /dashboards/:dashboardId
+        </button>
+        <br />
+        <button onClick={handlePutDashboardsId}>대시보드 수정 PUT /dashboards/:dashboardId</button>
+        <br />
+        <button onClick={handleDeleteDashboardsId}>
+          대시보드 삭제 DELETE /dashboards/:dashboardId
+        </button>
+        <br />
         <button onClick={handlePostDashboardsIdInvitations}>
-          POST /dashboards/:dashboardId/invitations
+          대시보드 초대하기 POST /dashboards/:dashboardId/invitations
         </button>
+        <br />
         <button onClick={handleGetDashboardsIdInvitations}>
-          GET /dashboards/:dashboardId/invitations
+          대시보드 초대 불러오기 GET /dashboards/:dashboardId/invitations
         </button>
+        <br />
         <button onClick={handleDeleteDashboardsIdInvitations}>
-          DELETE /dashboards/:dashboardId/invitations/:invitationId
+          대시보드 초대 취소 DELETE /dashboards/:dashboardId/invitations/:invitationId
         </button>
       </section>
 
       {/* Invitations API */}
       <section>
         <h2>Invitations API</h2>
-        <button onClick={handleGetInvitations}>GET /invitations</button>
-        <button onClick={handlePutInvitationsId}>PUT /invitations/:invitationId</button>
+        <button onClick={handleGetInvitations}>내가 받은 초대 목록 조회 GET /invitations</button>
+        <br />
+        <button onClick={handlePutInvitationsId}>초대 응답 PUT /invitations/:invitationId</button>
       </section>
 
       {/* Members API */}
       <section>
         <h2>Members API</h2>
-        <button onClick={handleGetMembers}>GET /members</button>
-        <button onClick={handleDeleteMembersId}>DELETE /members/:memberId</button>
+        <button onClick={handleGetMembers}>대시보드 멤버 목록 조회 GET /members</button>
+        <br />
+        <button onClick={handleDeleteMembersId}>
+          대시보드 멤버 삭제 DELETE /members/:memberId
+        </button>
       </section>
 
       {/* Users API */}
       <section>
         <h2>Users API</h2>
-        <button onClick={handlePostUsers}>POST /users</button>
-        <button onClick={handleGetUsersMe}>GET /users/me</button>
-        <button onClick={handlePutUsersMe}>PUT /users/me</button>
-        <button onClick={handlePostUsersMeImage}>POST /users/me/image</button>
+        <button onClick={handlePostUsers}>회원 가입 POST /users</button>
+        <br />
+        <button onClick={handleGetUsersMe}>내 정보 조회 GET /users/me</button>
+        <br />
+        <button onClick={handlePutUsersMe}>내 정보 수정 PUT /users/me</button>
+        <br />
+        <button onClick={handlePostUsersMeImage}>프로필 이미지 업로드 POST /users/me/image</button>
       </section>
     </div>
   );
