@@ -2,6 +2,12 @@ import api from '@/lib/api';
 
 // POST /users
 export async function postUsers(userData) {
+  /* userData: {
+    email: string;
+    nickname: string;
+    password: string;
+  }
+  */
   try {
     const res = await api.post('/users', userData);
     return res.data;
@@ -22,6 +28,11 @@ export async function getUsersMe() {
 
 // PUT /users/me
 export async function putUsersMe(userData) {
+  /* userData: {
+    nickname: string;
+    profileImageUrl: File;
+  }
+  */
   try {
     const res = await api.put('/users/me', userData);
     return res.data;
@@ -32,6 +43,7 @@ export async function putUsersMe(userData) {
 
 // POST /users/me/image
 export async function postUsersMeImage(image) {
+  /* image: File; */
   const formData = new FormData();
   formData.append('image', image);
   try {
