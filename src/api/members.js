@@ -2,6 +2,10 @@ import api from '@/lib/api';
 
 // GET /members
 export async function getMembers({ page = 1, size = 20, dashboardId }) {
+  /* page: number;
+  size: number;
+  dashboardId: number;
+  */
   if (!dashboardId) return { error: 'dashboardId is required' };
 
   try {
@@ -16,6 +20,7 @@ export async function getMembers({ page = 1, size = 20, dashboardId }) {
 
 // DELETE /members/:memberId
 export async function deleteMembersId(memberId) {
+  /* memberId: number; */
   try {
     const res = await api.delete(`/members/${memberId}`);
     return res.data;

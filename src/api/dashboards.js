@@ -2,6 +2,11 @@ import api from '@/lib/api';
 
 // POST /dashboards
 export async function postDashboards(dashboardData) {
+  /* dashboardData: {
+    title: string;
+    color: string;
+  }
+  */
   try {
     const res = await api.post('/dashboards', dashboardData);
     return res.data;
@@ -12,6 +17,11 @@ export async function postDashboards(dashboardData) {
 
 // GET /dashboards
 export async function getDashboards({ navigationMethod, cursorId, page = 1, size = 10 }) {
+  /* navigationMethod: 'infiniteScroll', 'pagination'
+  cursorId: number;
+  page: number;
+  size: number;
+  */
   try {
     const res = await api.get('/dashboards', {
       params: { navigationMethod, cursorId, page, size },
@@ -24,6 +34,7 @@ export async function getDashboards({ navigationMethod, cursorId, page = 1, size
 
 // GET /dashboards/:dashboardId
 export async function getDashboardsId(dashboardId) {
+  /* dashboardId: number; */
   try {
     const res = await api.get(`/dashboards/${dashboardId}`);
     return res.data;
@@ -34,6 +45,12 @@ export async function getDashboardsId(dashboardId) {
 
 // PUT /dashboards/:dashboardId *대시보드 생성자만 수정 가능
 export async function putDashboardsId(dashboardId, dashboardData) {
+  /* dashboardId: number;
+  dashboardData: {
+    title: string;
+    color: string;
+  }
+  */
   try {
     const res = await api.put(`/dashboards/${dashboardId}`, dashboardData);
     return res.data;
@@ -44,6 +61,7 @@ export async function putDashboardsId(dashboardId, dashboardData) {
 
 // DELETE /dashboards/:dashboardId *대시보드 생성자만 삭제 가능
 export async function deleteDashboardsId(dashboardId) {
+  /* dashboardId: number; */
   try {
     const res = await api.delete(`/dashboards/${dashboardId}`);
     return res.data;
@@ -54,6 +72,9 @@ export async function deleteDashboardsId(dashboardId) {
 
 // POST /dashboards/:dashboardId/invitations *대시보드 생성자만 초대 가능
 export async function postDashboardsIdInvitations(dashboardId, email) {
+  /* dashboardId: number;
+  email: string;
+  */
   try {
     const res = await api.post(`/dashboards/${dashboardId}/invitations`, { email });
     return res.data;
@@ -64,6 +85,10 @@ export async function postDashboardsIdInvitations(dashboardId, email) {
 
 // GET /dashboards/:dashboardId/invitations
 export async function getDashboardsIdInvitations(dashboardId, { page = 1, size = 10 }) {
+  /* dashboardId: number;
+  page: number;
+  size: number;
+  */
   try {
     const res = await api.get(`/dashboards/${dashboardId}/invitations`, {
       params: { page, size },
@@ -76,6 +101,9 @@ export async function getDashboardsIdInvitations(dashboardId, { page = 1, size =
 
 // DELETE /dashboards/:dashboardId/invitations/:invitationId
 export async function deleteDashboardsIdInvitations(dashboardId, invitationId) {
+  /* dashboardId: number;
+  invitationId: number;
+  */
   try {
     const res = await api.delete(`/dashboards/${dashboardId}/invitations/${invitationId}`);
     return res.data;
