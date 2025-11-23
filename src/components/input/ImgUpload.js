@@ -1,5 +1,7 @@
 import Image from 'next/image';
 import { useRef, useState } from 'react';
+import { postColumnsIdCardImage } from '@/api/columns';
+import { postUsersMeImage } from '@/api/users';
 
 /**
  * ImgUpload Component
@@ -9,17 +11,14 @@ import { useRef, useState } from 'react';
  * @param {string} [props.label]
  *   - 이미지 업로드 영역 상단에 표시되는 레이블
  *
- * @param {string} [props.id]
- *   - 컴포넌트의 고유 ID
- *
  * @param {Function} props.setImg
  *   - 이미지 URL을 설정하는 상태 업데이트 함수
  *
  * @param {string | null} props.img
  *   - 현재 표시될 이미지 URL 또는 null
  *
- * @param {string} [props.style]
- *   - 이미지 박스의 크기 클래스 (예: "lg")
+ * @param {string} [props.type]
+ *   - 이미지 박스의 타입 클래스 (예: "user || card")
  *
  * @param {boolean} [props.update=false]
  *   - true: 이미지가 있어도 업로드 버튼 표시 (수정 모드)
@@ -30,15 +29,15 @@ import { useRef, useState } from 'react';
  * @example
  * // 신규 이미지 등록
  * <ImgUpload
- *   setImg={setImg}
+ *   setImg={setCardImg}
  *   img={img}
  *   label="이미지"
  * />
  */
 
-export default function ImgUpload({ label, id, setImg, img, style, update }) {
+export default function ImgUpload({ label, img, setImg, type, update }) {
   const fileInputRef = useRef(null);
-  const [isUpdate, setUIspdate] = useState('update');
+  const [isUpdate, setUpdate] = useState('update');
 
   // 파일 선택창 열기
   const handleFile = () => {
@@ -48,23 +47,29 @@ export default function ImgUpload({ label, id, setImg, img, style, update }) {
   async function handleImgUpload(e) {
     const file = e.target.files[0];
     if (!file) return;
-    setUIspdate('');
-    // const result = await PostImage(file); //@API 연결예정
-    const result = URL.createObjectURL(file);
-    setImg(result);
+    setUpdate('');
+
+    if (type === 'card') {
+      const result = await postColumnsIdCardImage(1, file);
+      setImg(result);
+    } else if (type === 'user') {
+      const result = await postUsersMeImage(file);
+      setImg(result);
+    }
+
     if (fileInputRef.current) fileInputRef.current.value = '';
   }
   return (
     <div className="iptBox">
       {label && <div className="label">{label}</div>}
-      <div className={`imgBox ${style || ''} ${update ? isUpdate : ''}`}>
-        {img && <Image src={img} alt="" fill />}
+      <div className={`imgBox ${type} ${update ? isUpdate : ''}`}>
+        {img?.trim() && <Image src={img} alt="" fill />}
         {(!img || isUpdate) && (
           <>
             <button className="btnUpload" onClick={handleFile}>
               <span className="blind">이미지 등록</span>
             </button>
-            <input type="file" onChange={handleImgUpload} ref={fileInputRef} />
+            <input type="file" onChange={handleImgUpload} accept="image/*" ref={fileInputRef} />
           </>
         )}
       </div>
