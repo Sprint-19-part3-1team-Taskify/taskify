@@ -1,0 +1,68 @@
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  background: white;
+  overflow: hidden;
+}
+
+.side {
+  width: 24px;
+  height: 24px;
+  padding: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background: transparent;
+}
+
+.large {
+  width: 80px;
+  height: 48px;
+}
+
+.small {
+  width: 68px;
+  height: 42px;
+}
+.wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  overflow: hidden;
+
+  // 버튼이 100% 높이를 가지도록
+  & > button {
+    border: none;
+    border-radius: 0;
+  }
+
+  // 가운데 구분선
+  & > button:first-child {
+    border-right: 2px solid #d9d9d9;
+  }
+} /* active 상태(검정색 유지) */
+.active img {
+  filter: none;
+}
+
+/* inactive 상태(연회색 아이콘) */
+.inactive img {
+  filter: brightness(0) saturate(0) invert(80%);
+}
+/* gray 그대로 */
+.gray {
+  filter: none;
+}
+
+/* gray → black 으로 변환 */
+.black {
+  filter: brightness(0) saturate(100%);
+}

@@ -1,5 +1,3 @@
-// header.module.scss
-
 .header {
   background: #ffffff;
   border-bottom: 1px solid #d9d9d9;
@@ -10,6 +8,10 @@
   &.dark {
     background: #1f1f1f;
     border-bottom-color: #484848;
+  }
+
+  &.right {
+    left: 300px;
   }
 }
 
@@ -86,7 +88,6 @@
   font-weight: 700;
   text-decoration: none;
   position: absolute;
-  left: 316.19px; // 로고 너비(109px) + 거리(207.19px)
 
   .dark & {
     color: #ffffff;
@@ -99,7 +100,6 @@
   align-items: center;
   gap: 12px;
   position: absolute;
-  left: 316.19px; // 로고 너비(109px) + 거리(207.19px)
 
   .dashboardName {
     position: static; // 부모가 이미 absolute이므로 자식은 static
