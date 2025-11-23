@@ -7,15 +7,11 @@
   align-items: flex-start;
   gap: 10px;
 
-  /* tablet */
-  @media (min-width: 768px) {
-    width: 544px;
-    height: 93px;
-    flex-shrink: 0;
-  }
-
   /* pc */
   @media (min-width: 1024px) {
+    width: 314px;
+    padding: 16px;
+    height: 125px;
   }
 }
 
@@ -32,13 +28,8 @@
   align-items: flex-start;
   gap: 6px;
 
-  /* tablet */
-  @media (min-width: 768px) {
-    width: 504px;
-    gap: 10px;
-  }
-
   @media (min-width: 1024px) {
+    gap: 10px;
   }
 }
 
@@ -55,6 +46,13 @@
     font-style: normal;
     font-weight: 700;
     line-height: 22px; /* 157.143% */
+
+    @media (min-width: 1024px) {
+      color: var(--black-black_333236, #333236);
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 26px; /* 162.5% */
+    }
   }
 }
 
