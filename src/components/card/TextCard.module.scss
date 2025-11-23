@@ -1,0 +1,89 @@
+.textCard {
+  display: flex;
+  width: 284px;
+  height: 95px;
+  padding: 5px 12px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+
+  /* tablet */
+  @media (min-width: 768px) {
+    width: 544px;
+    height: 93px;
+    flex-shrink: 0;
+  }
+
+  /* pc */
+  @media (min-width: 1024px) {
+  }
+}
+
+.textCardBoarder {
+  border-radius: 6px;
+  border: 1px solid var(--gray-gray_D9D9D9, #d9d9d9);
+  background: var(--white-white_FFFFFF, #fff);
+}
+
+.frame1997 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 6px;
+
+  /* tablet */
+  @media (min-width: 768px) {
+    width: 504px;
+    gap: 10px;
+  }
+
+  @media (min-width: 1024px) {
+  }
+}
+
+.frame1996 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+
+  h3 {
+    color: var(--black-black_333236, #333236);
+    font-family: Pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 22px; /* 157.143% */
+  }
+}
+
+.frame2610638 {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.frame1995 {
+  display: flex;
+  width: 260px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.frame1994 {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.frame1994 span {
+  color: var(--gray-gray_787486, #787486);
+
+  /* pretendard/xs-12px-medium */
+  font-family: Pretendard;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px; /* 150% */
+}
