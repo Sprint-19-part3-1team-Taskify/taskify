@@ -1,4 +1,4 @@
-/* made by Cursor */
+/* made by Cursor, and modified by cadst */
 
 import Tag from './Tag';
 
@@ -18,7 +18,7 @@ import Tag from './Tag';
  * @example
  * <Tags tags={['태그 1', '태그 2', '태그 3']} />
  */
-export default function Tags({ tags = [], onClick }) {
+export default function Tags({ tags = [], onClick, disabled }) {
   if (!tags || tags.length === 0) {
     return null;
   }
@@ -33,7 +33,9 @@ export default function Tags({ tags = [], onClick }) {
         return (
           <Tag
             key={index}
+            // key는 React가 리스트 렌더링을 관리하기 위한 것
             className={colorClass}
+            disabled={disabled}
             onClick={onClick ? (e) => onClick(e, tag, index) : undefined}
           >
             {tag}
