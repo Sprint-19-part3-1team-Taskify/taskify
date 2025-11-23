@@ -8,7 +8,6 @@ import 'react-datepicker/dist/react-datepicker.css';
  * Input Component
  * 다양한 타입의 입력 필드를 제공하는 컴포넌트
  *
- * @param {Object} props
  * @param {"text" | "email" | "password" | "date" | "search"} [props.type="text"]
  *   - text: 기본 텍스트 입력
  *   - email: 이메일 입력

@@ -1,0 +1,81 @@
+@use '@styles/variables' as *;
+@use '@styles/mixins' as *;
+
+.user {
+  display: inline-flex;
+  align-items: center;
+  .first {
+    @include txtStyle('xs', B);
+    color: $white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border: 2px solid $white;
+    border-radius: 50%;
+    &:only-child {
+      width: 24px;
+      height: 24px;
+      border: none;
+    }
+  }
+  .name {
+    @include txtStyle('lg', R);
+    margin-left: 6px;
+  }
+  &.large {
+    .first {
+      @include txtStyle('lg', SB);
+      width: 38px;
+      height: 38px;
+      &:only-child {
+        border: 2px solid $white;
+      }
+    }
+    .name {
+      margin-left: 12px;
+      @include txtStyle('lg', M);
+      color: $black3;
+    }
+  }
+  @mixin firstMediumStyle {
+    @include txtStyle('lg', SB);
+    width: 34px;
+    height: 34px;
+  }
+  &.medium {
+    .first {
+      @include firstMediumStyle;
+    }
+    .name {
+      margin-left: 8px;
+      @include txtStyle('md', R);
+      color: $black3;
+    }
+  }
+  &.comment {
+    .first {
+      @include firstMediumStyle;
+      position: absolute;
+      left: 0;
+      top: 2px;
+    }
+    .name {
+      margin-left: 0;
+      @include txtStyle(14px, B);
+    }
+  }
+}
+:global(.userGroup) {
+  display: inline-flex;
+  .user {
+    margin-left: -8px;
+    &:first-child {
+      margin-left: 0;
+    }
+    .first {
+      text-indent: -2px;
+    }
+  }
+}

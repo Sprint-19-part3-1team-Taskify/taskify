@@ -1,0 +1,66 @@
+@use '@styles/variables' as *;
+@use '@styles/mixins' as *;
+
+.dropDownBox {
+  .label {
+    @include txtStyle('2lg', M);
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+  .dropDown {
+    position: relative;
+    z-index: 1;
+    min-width: 217px;
+    .trigger {
+      @include txtStyle('lg', R);
+      position: relative;
+      display: flex;
+      align-items: center;
+      color: $black3;
+      padding: 0 16px;
+      width: 100%;
+      height: 50px;
+      text-align: left;
+      border-radius: 8px;
+      border: 1px solid $gray3;
+      background-color: $white;
+      &:after {
+        content: '';
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        margin-top: -13px;
+        width: 26px;
+        height: 26px;
+        background: url('/images/common/ico_drop_arrow.svg') no-repeat 0 0;
+      }
+      .default {
+        color: $gray2;
+      }
+    }
+    .list {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 52px;
+      min-height: 48px;
+      border-radius: 8px;
+      border: 1px solid $gray3;
+      background-color: $white;
+      button {
+        padding-left: 46px;
+        width: 100%;
+        height: 48px;
+        text-align: left;
+        &.on {
+          background: url('/images/common/ico_drop_check.svg') no-repeat 16px 50%;
+        }
+      }
+    }
+  }
+}
+
+:global(.dropDownWrap) {
+  display: flex;
+  gap: 32px;
+}

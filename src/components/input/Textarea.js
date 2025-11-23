@@ -1,3 +1,5 @@
+import { InputSubmitButton } from '@/components/button';
+
 /**
  * Textarea Component
  * 여러 줄 텍스트 입력을 제공하는 컴포넌트
@@ -45,9 +47,7 @@ export default function Textarea({ label, id, required, onClick, ...rest }) {
         <textarea id={id} required={required} {...rest} />
         {onClick && (
           //@공통컴퍼넌트 변경예정
-          <button className="button" onClick={onClick}>
-            입력
-          </button>
+          <InputSubmitButton type="1" onClick={onClick} />
         )}
       </div>
     </div>
