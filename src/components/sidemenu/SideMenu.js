@@ -21,8 +21,10 @@ import styles from './SideMenu.module.scss';
  * @returns {JSX.Element} SideMenu Component
  *
  * @example
- * // dashboard 레이아웃에서 사용됩니다.
- * <SideMenu />
+ * function MyDashboard() {
+ *  return <div>내 대시보드</div>;
+ * }
+ * MyDashBoard.sidemenuShow = true;
  **/
 
 const ITEMS_PER_PAGE = 10;
