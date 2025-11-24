@@ -6,7 +6,6 @@ import styles from './DashboardLink.module.scss';
  * 대시보드 목록에서 사용되는 링크 컴포넌트입니다.
  * 색상, 소유자 여부, 활성화 상태에 따라 다른 스타일이 적용됩니다.
  *
- * @param {Object} props
  * @param {string} props.href - 링크 URL (예: "/mydashboard/123")
  * @param {string} props.name - 대시보드 이름
  * @param {string} [props.color] - 대시보드 색상 테마 (styles에 정의된 색상 클래스명)
