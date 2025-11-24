@@ -2,6 +2,11 @@ import api from '@/lib/api';
 
 // POST /columns
 export async function postColumns(columnsData) {
+  /* columnsData: {
+    title: string;
+    dashboardId: number;
+  }
+  */
   try {
     const res = await api.post('/columns', columnsData);
     return res.data;
@@ -12,6 +17,7 @@ export async function postColumns(columnsData) {
 
 // GET /columns
 export async function getColumns(dashboardId) {
+  /* dashboardId: number; */
   if (!dashboardId) return { error: 'dashboardId is required' };
 
   try {
@@ -24,6 +30,9 @@ export async function getColumns(dashboardId) {
 
 // PUT /columns/:columnId
 export async function putColumnsId(columnId, title) {
+  /* columnId: number;
+  title: string;
+  */
   try {
     const res = await api.put(`/columns/${columnId}`, { title });
     return res.data;
@@ -34,6 +43,7 @@ export async function putColumnsId(columnId, title) {
 
 // DELETE /columns/:columnId
 export async function deleteColumnsId(columnId) {
+  /* columnId: number; */
   try {
     const res = await api.delete(`/columns/${columnId}`);
     return res.data;
@@ -44,6 +54,9 @@ export async function deleteColumnsId(columnId) {
 
 // POST /columns/:columnId/card-image
 export async function postColumnsIdCardImage(columnId, image) {
+  /* columnId: number;
+  image: File;
+  */
   try {
     const formData = new FormData();
     formData.append('image', image);
