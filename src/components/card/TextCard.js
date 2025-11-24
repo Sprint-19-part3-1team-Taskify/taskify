@@ -1,4 +1,5 @@
 import Tags from '@/components/common/Tags';
+import User from '@/components/common/User';
 import styles from './TextCard.module.scss';
 
 export default function TextCard({ imageUrl, title, tags, date }) {
@@ -27,7 +28,7 @@ export default function TextCard({ imageUrl, title, tags, date }) {
             </svg>
             <span>{date}</span>
           </div>
-          <div className={styles.group756}></div>
+          <User value="김철수" hiddenName={true} />
         </div>
       </div>
     </div>

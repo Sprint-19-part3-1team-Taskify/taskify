@@ -26,18 +26,8 @@ export default function Tags({ tags = [], onClick, disabled }) {
   return (
     <>
       {tags.map((tag, index) => {
-        // 인덱스 기반으로 c1, c2, c3, c4 순환
-        // 0번째: c1, 1번째: c2, 2번째: c3, 3번째: c4, 4번째: c1, ...
-        const colorClass = `c${(index % 4) + 1}`;
-
         return (
-          <Tag
-            key={index}
-            // key는 React가 리스트 렌더링을 관리하기 위한 것
-            className={colorClass}
-            disabled={disabled}
-            onClick={onClick ? (e) => onClick(e, tag, index) : undefined}
-          >
+          <Tag key={index} index={index}>
             {tag}
           </Tag>
         );

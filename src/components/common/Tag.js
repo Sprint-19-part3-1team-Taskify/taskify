@@ -2,43 +2,32 @@ import styles from './Tag.module.scss';
 
 /**
  * Tag Component
- * 클릭 가능한 태그를 표시하는 컴포넌트 (주로 삭제용으로 사용)
+ * 태그를 표시하는 컴포넌트
+ * ID 기반으로 일관된 색상을 자동 할당합니다.
  *
- * @param {Object} props
  * @param {React.ReactNode} props.children
  *   - 태그에 표시될 텍스트 또는 요소
  *
- * @param {string} [props.className]
- *   - 태그의 색상 클래스 (예: c0, c1, c2, c3)
- *
- * @param {Function} [props.onClick]
- *   - 태그 클릭 시 실행될 이벤트 핸들러 (주로 삭제 동작)
- *
- * @param {boolean} [props.disabled=false]
- *   - 태그 비활성화 여부
+ * @param {number} props.index
+ *   - 태그의 고유 ID (색상 결정에 사용)
+ *   - 4개 색상이 반복됩니다.
  *
  * @returns {JSX.Element} Tag Component
  *
  * @example
- * // 태그 목록 렌더링 (삭제 가능)
- * {tags.map((tag) => (
- *   <Tag
- *     key={tag.id}
- *     className={tag.colorClass}
- *     onClick={(e) => handleDeleteTag(e, tag)}
- *   >
- *     {tag.txt}
+ * // 태그 목록 렌더링
+ * {tags.map((item, index) => (
+ *   <Tag key={index} index={index}>
+ *     {item}
  *   </Tag>
  * ))}
+ *
+ * @example
+ * // 단일 태그
+ * <Tag index={1}>디자인</Tag>
  */
 
-export default function Tag({ children, className, onClick, disabled }) {
-  const handleDelete = (e) => {
-    onClick(e);
-  };
-  return (
-    <button className={`tag ${className}`} onClick={handleDelete} disabled={disabled}>
-      {children}
-    </button>
-  );
+export default function Tag({ children, index }) {
+  const colorIndex = index % 4;
+  return <span className={`${styles.tag} ${styles[`c${colorIndex}`]}`}>{children}</span>;
 }
