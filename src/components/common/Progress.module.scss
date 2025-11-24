@@ -1,0 +1,28 @@
+@use '@styles/variables' as *;
+@use '@styles/mixins' as *;
+
+.progress {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 10px 0 22px;
+  border-radius: 16px;
+  background-color: $violet2;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-top: -3px;
+    border-radius: 50%;
+    background-color: $violet1;
+  }
+  .state {
+    @include txtStyle('md', R);
+    color: $violet1;
+  }
+}

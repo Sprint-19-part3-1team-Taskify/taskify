@@ -1,0 +1,42 @@
+@use '@styles/variables' as *;
+@use '@styles/mixins' as *;
+
+.Color {
+  position: relative;
+  display: inline-flex;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  input {
+    position: absolute;
+    z-index: -1;
+  }
+  input:checked + span {
+    display: block;
+    width: 30px;
+    height: 30px;
+    background: url('/images/common/ico_chip_check.svg') no-repeat 50% 50%;
+  }
+  &.green {
+    background-color: #7ac555;
+  }
+  &.purple {
+    background-color: #760dde;
+  }
+  &.orange {
+    background-color: #ffa500;
+  }
+  &.blue {
+    background-color: #76a5ea;
+  }
+  &.pink {
+    background-color: #e876ea;
+  }
+}
+
+:global(.ColorWrap) {
+  display: flex;
+  margin-top: 16px;
+  gap: 8px;
+}

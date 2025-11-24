@@ -120,7 +120,7 @@ textarea:-ms-input-placeholder {
   color: $gray2;
   font-size: 16px;
   font-weight: 400;
-  opacity: 0.5;
+  opacity: 1;
 }
 input::placeholder,
 input::-moz-placeholder,
@@ -129,7 +129,7 @@ input:-ms-input-placeholder {
   color: $gray2;
   font-size: 16px;
   font-weight: 400;
-  opacity: 0.5;
+  opacity: 1;
 }
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
