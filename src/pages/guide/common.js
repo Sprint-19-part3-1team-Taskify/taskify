@@ -2,6 +2,8 @@ import User from '@/components/common/User';
 import Color from '@/components/common/Color';
 import { useState } from 'react';
 import Tag from '@/components/common/Tag';
+import Dropdown from '@/components/common/Dropdown';
+import Progress from '@/components/common/Progress';
 
 export default function Common() {
   const colorOptions = [
@@ -31,6 +33,13 @@ export default function Common() {
   };
 
   const [viewTags, setViewTags] = useState(['프로젝트', '일반', '백엔드']); // 태그 상세
+
+  //드롭다운
+  const progress = ['To Do', 'On Progress', 'Done'];
+  const manager = ['홍길동', '배유철'];
+  const [managerValue, setManagerValue] = useState('이름을 입력해 주세요');
+  const [managerValue2, setManagerValue2] = useState(manager[1]);
+  const [progressValue2, setProgressValue2] = useState(progress[1]);
   return (
     <>
       <h1>User Examples</h1>
@@ -116,6 +125,42 @@ export default function Common() {
           );
         })}
       </section>
+      <br />
+      <br />
+      <h1>Progress Examples</h1>
+      <section>
+        할일상세 모달 / Dropdown :
+        <Progress value={'To Do'} />
+      </section>
+      <br />
+      <br />
+      <h1>Dropdown Examples</h1>
+      <section>
+        <div className="dropDownWrap">
+          <Dropdown
+            type="progress"
+            label="상태"
+            content={progress}
+            onChange={setProgressValue2}
+            initValue={progressValue2}
+          />
+          <Dropdown
+            type="manager"
+            label="담당자"
+            content={manager}
+            onChange={setManagerValue2}
+            initValue={managerValue2}
+          />
+        </div>
+      </section>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
     </>
   );
 }

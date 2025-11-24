@@ -5,7 +5,7 @@ import Modal from '@/components/modal/Modal';
 import Color from '@/components/common/Color';
 import Textarea from '@/components/input/Textarea';
 import ImgUpload from '@/components/input/ImgUpload';
-import Dropdown from '@/components/modal/Dropdown';
+import Dropdown from '@/components/common/Dropdown';
 import InputTag from '@/components/input/InputTag';
 import Progress from '@/components/common/Progress';
 
@@ -19,6 +19,8 @@ export default function Modals() {
   const { isOpen, openModal, closeModal } = useModal();
   const handleModalSubmit = (e) => {
     console.log('폼전송');
+    // 예시: closeModal('createDashboardModal');
+    closeModal(/* 여기에 모달 ID 문자열을 넣어주세요 */);
   };
   /* Input 관련 */
   const [value, setValue] = useState({
