@@ -1,3 +1,5 @@
+import styles from './Tag.module.scss';
+
 /**
  * Tag Component
  * 클릭 가능한 태그를 표시하는 컴포넌트 (주로 삭제용으로 사용)
