@@ -166,3 +166,34 @@
     }
   }
 }
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  height: 28px;
+  border-radius: 4px;
+
+  &.c1 {
+    color: #d58d49;
+    background-color: #f9eee3;
+  }
+  &.c2 {
+    color: #86d549;
+    background-color: #e7f7db;
+  }
+  &.c3 {
+    color: #d549b6;
+    background-color: #f7dbf0;
+  }
+  &.c4 {
+    color: #4981d5;
+    background-color: #dbe6f7;
+  }
+  &Wrap {
+    margin-top: 10px;
+    display: flex;
+    gap: 6px;
+  }
+}
