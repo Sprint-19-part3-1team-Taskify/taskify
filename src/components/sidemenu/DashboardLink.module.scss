@@ -34,19 +34,22 @@
     height: 8px;
     border-radius: 50%;
   }
-  &.green::before {
+  &.color7ac555::before {
     background: $green;
   }
-  &.purple::before {
+  &.color760dde::before {
     background: $purple;
   }
-  &.orange::before {
+  &.colorffa500::before {
     background: $orange;
   }
-  &.blue::before {
+  &.color76a5ea::before {
     background: $blue;
   }
-  &.pink::before {
+  &.colore876ea::before {
     background: $pink;
+  }
+  &.colorFF5733::before {
+    background: #ff5733;
   }
 }

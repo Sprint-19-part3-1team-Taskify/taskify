@@ -51,6 +51,7 @@ export default function Header({
   darkMode = false,
   profileImage = null,
 }) {
+  if (type === 'none') return null;
   return (
     <header className={`${styles.header} ${darkMode ? styles.dark : ''}`}>
       <div className={styles.inner}>

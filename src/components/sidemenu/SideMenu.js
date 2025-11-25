@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -8,6 +8,8 @@ import Modal from '@/components/modal/Modal';
 import DashboardLink from '@/components/sidemenu/DashboardLink';
 import Input from '@/components/input/Input';
 import Color from '@/components/common/Color';
+import { PaginationPairButton } from '@/components/button';
+import { getDashboards, postDashboards } from '@/api/dashboards';
 import styles from './SideMenu.module.scss';
 
 /**
@@ -19,35 +21,31 @@ import styles from './SideMenu.module.scss';
  * @returns {JSX.Element} SideMenu Component
  *
  * @example
- * // dashboard 레이아웃에서 사용됩니다.
- * <SideMenu />
+ * function MyDashboard() {
+ *  return <div>내 대시보드</div>;
+ * }
+ * MyDashBoard.sidemenuShow = true;
  **/
 
-// 임시데이터
-const menu = [
-  { href: '/mydashboard/1', name: '비브리지', color: 'green', owner: true },
-  { href: '/mydashboard/2', name: '코드잇', color: 'purple' },
-  { href: '/mydashboard/3', name: '3분기 계획', color: 'orange', owner: true },
-  { href: '/mydashboard/4', name: '회의록', color: 'blue' },
-  { href: '/mydashboard/5', name: '중요 문서함', color: 'pink' },
+const ITEMS_PER_PAGE = 10;
+const colorOptions = [
+  { colorValue: '#7ac555', colorName: 'green' },
+  { colorValue: '#760dde', colorName: 'purple' },
+  { colorValue: '#ffa500', colorName: 'orange' },
+  { colorValue: '#76a5ea', colorName: 'blue' },
+  { colorValue: '#e876ea', colorName: 'pink' },
 ];
-
-export default function SideMenu() {
-  const params = usePathname();
+export default function SideMenu({ show }) {
+  const path = usePathname();
+  const [pageCount, setPageCount] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
+  const lastPage = Math.ceil(totalCount / ITEMS_PER_PAGE);
   const { isOpen, openModal, closeModal } = useModal();
-
+  const [dashboards, setDashboards] = useState([]);
   const [value, setValue] = useState({
     title: '',
     color: '',
   });
-
-  const colorOptions = [
-    { colorValue: '#7ac555', colorName: 'green' },
-    { colorValue: '#760dde', colorName: 'purple' },
-    { colorValue: '#ffa500', colorName: 'orange' },
-    { colorValue: '#76a5ea', colorName: 'blue' },
-    { colorValue: '#e876ea', colorName: 'pink' },
-  ];
   const handleColorChange = (value) => {
     setValue((prev) => ({
       ...prev,
@@ -61,26 +59,63 @@ export default function SideMenu() {
       [name]: value,
     }));
   };
-  const handleModalSubmit = (e) => {
-    // api전송 작성필요
-    console.log(value);
-
-    setValue({
-      title: '',
-      color: '',
-    });
-  };
+  // 새 대시보드 생성취소
   const handleModalCancle = (e) => {
     setValue({
       title: '',
       color: '',
     });
+    closeModal('createDashboardModal');
   };
+
+  // 새 대시보드 생성시
+  const handleModalSubmit = async (e) => {
+    if (!value.title || !value.color) {
+      console.log('없음');
+      return null;
+    }
+
+    await postDashboards({ title: value.title, color: value.color });
+    setValue({
+      title: '',
+      color: '',
+    });
+    const res = await getDashboards({
+      navigationMethod: 'pagination',
+      page: 1,
+      size: ITEMS_PER_PAGE,
+    });
+    setDashboards(res.dashboards);
+    setTotalCount(res.totalCount);
+  };
+  // 페이징 이전버튼
+  const goToPreviousPage = () => {
+    setPageCount((prev) => Math.max(prev - 1, 1));
+  };
+  // 페이징 다음버튼
+  const goToNextPage = () => {
+    setPageCount((prev) => Math.min(prev + 1, lastPage));
+  };
+
+  // 초기로딩시
+  useEffect(() => {
+    const getDashboarData = async () => {
+      const res = await getDashboards({
+        navigationMethod: 'pagination',
+        page: pageCount,
+        size: ITEMS_PER_PAGE,
+      });
+      setDashboards(res.dashboards);
+      setTotalCount(res.totalCount);
+    };
+    getDashboarData();
+  }, [pageCount]);
+  if (!show) return null;
   return (
     <>
       <section className={styles.sideMenu}>
         <Link href="/" className={styles.logo}>
-          <Image src="/images/logo.svg" fill alt="Taskify" />
+          <Image src="/images/logo.svg" width={109} height={33} alt="Taskify" priority />
         </Link>
         <nav className={styles.nav}>
           <h1 className={styles.title}>Dash Boards</h1>
@@ -88,18 +123,28 @@ export default function SideMenu() {
             <span className="blind">대시보드 생성</span>
           </button>
           <ul className={styles.navList}>
-            {menu.map((item) => (
-              <li key={item.href}>
+            {dashboards.map((item) => (
+              <li key={item.id}>
                 <DashboardLink
-                  href={item.href}
-                  name={item.name}
+                  href={`/mydashboard/${item.id}`}
+                  name={item.title}
                   color={item.color}
-                  owner={item.owner}
-                  active={item.href === params}
+                  owner={item.createdByMe}
+                  active={`/mydashboard/${item.id}` === path}
                 />
               </li>
             ))}
           </ul>
+
+          <PaginationPairButton
+            size="large"
+            prevState={pageCount === 1 ? 'inactive' : 'active'}
+            nextState={pageCount === lastPage ? 'inactive' : 'active'}
+            prevColorSet={pageCount === 1 ? 'gray' : 'black'}
+            nextColorSet={pageCount === lastPage ? 'gray' : 'black'}
+            onPrev={goToPreviousPage}
+            onNext={goToNextPage}
+          />
         </nav>
       </section>
 
