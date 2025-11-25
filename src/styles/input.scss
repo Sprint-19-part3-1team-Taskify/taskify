@@ -93,6 +93,7 @@
     border-radius: 8px;
     border: 1px solid $gray3;
     resize: none;
+    vertical-align: top;
 
     &:focus {
       border-color: $violet1;
@@ -109,6 +110,9 @@
     color: $violet1;
     border-radius: 4px;
     border: 1px solid $gray3;
+  }
+  &:not(.lg) {
+    margin-top: -4px;
   }
   &.lg textarea {
     height: 126px;
