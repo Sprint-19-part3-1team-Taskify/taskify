@@ -1,6 +1,4 @@
-'use client';
 import { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useModal } from '@/context/modalProvider';
@@ -11,6 +9,7 @@ import Color from '@/components/common/Color';
 import { PaginationPairButton } from '@/components/button';
 import { getDashboards, postDashboards } from '@/api/dashboards';
 import styles from './SideMenu.module.scss';
+import { useRouter } from 'next/router';
 
 /**
  * SideMenu Component
@@ -36,7 +35,8 @@ const colorOptions = [
   { colorValue: '#e876ea', colorName: 'pink' },
 ];
 export default function SideMenu({ show }) {
-  const path = usePathname();
+  const router = useRouter();
+  const path = router.query.dashboardid;
   const [pageCount, setPageCount] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const lastPage = Math.ceil(totalCount / ITEMS_PER_PAGE);
@@ -102,7 +102,6 @@ export default function SideMenu({ show }) {
     setPageCount((prev) => Math.min(prev + 1, lastPage));
   };
 
-  // 초기로딩시
   useEffect(() => {
     const getDashboarData = async () => {
       const res = await getDashboards({
@@ -135,7 +134,7 @@ export default function SideMenu({ show }) {
                   name={item.title}
                   color={item.color}
                   owner={item.createdByMe}
-                  active={`/mydashboard/${item.id}` === path}
+                  active={`${item.id}` === path}
                 />
               </li>
             ))}
