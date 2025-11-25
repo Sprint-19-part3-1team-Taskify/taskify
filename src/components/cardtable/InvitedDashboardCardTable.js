@@ -6,7 +6,7 @@ import styles from './InvitedDashboardCardTable.module.scss';
 const InvitedDashboardCardTable = ({
   title = '초대받은 대시보드',
   dashboards = [],
-  itemsPerPage = 5,
+  itemsPerPage = 6,
   onAccept,
   onReject,
   searchPlaceholder = '검색',
