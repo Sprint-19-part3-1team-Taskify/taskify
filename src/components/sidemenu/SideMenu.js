@@ -71,22 +71,27 @@ export default function SideMenu({ show }) {
   // 새 대시보드 생성시
   const handleModalSubmit = async (e) => {
     if (!value.title || !value.color) {
-      console.log('없음');
       return null;
     }
 
-    await postDashboards({ title: value.title, color: value.color });
-    setValue({
-      title: '',
-      color: '',
-    });
-    const res = await getDashboards({
-      navigationMethod: 'pagination',
-      page: 1,
-      size: ITEMS_PER_PAGE,
-    });
-    setDashboards(res.dashboards);
-    setTotalCount(res.totalCount);
+    try {
+      await postDashboards({ title: value.title, color: value.color });
+      setValue({
+        title: '',
+        color: '',
+      });
+      const res = await getDashboards({
+        navigationMethod: 'pagination',
+        page: 1,
+        size: ITEMS_PER_PAGE,
+      });
+      setDashboards(res.dashboards);
+      setTotalCount(res.totalCount);
+
+      closeModal('createDashboardModal');
+    } catch (error) {
+      console.error(error);
+    }
   };
   // 페이징 이전버튼
   const goToPreviousPage = () => {

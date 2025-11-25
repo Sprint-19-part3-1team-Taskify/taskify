@@ -3,6 +3,7 @@ import Input from '@/components/input/Input';
 import Textarea from '@/components/input/Textarea';
 import ImgUpload from '@/components/input/ImgUpload';
 import InputTag from '@/components/input/InputTag';
+import useValidation from '@/hook/useValidation';
 
 export default function Inputs() {
   /* Input */
@@ -16,6 +17,10 @@ export default function Inputs() {
     date: null,
     detail: '',
     commnet: '',
+  });
+  const { handleValidate, inputError, errorMsg } = useValidation({
+    email: true,
+    password: true,
   });
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -64,9 +69,11 @@ export default function Inputs() {
         id="passwordRepeat"
         name="passwordRepeat"
         placeholder="비밀번호를 입력해 주세요"
-        error="8자 이상 입력해 주세요."
         onChange={handleChange}
         value={value.passwordRepeat}
+        onBlur={handleValidate}
+        hasError={inputError.passwordRepeat}
+        error={errorMsg.passwordRepeat}
       />
       <Input
         label="제목"

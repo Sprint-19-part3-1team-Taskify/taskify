@@ -10,7 +10,8 @@ export async function postAuthLogin({ email, password }) {
     localStorage.setItem('accessToken', res.data.accessToken);
     return res.data;
   } catch (e) {
-    return e.response.data;
+    const errorMessage = e.response?.data?.message;
+    throw new Error(errorMessage);
   }
 }
 
