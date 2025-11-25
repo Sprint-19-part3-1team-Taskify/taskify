@@ -55,12 +55,12 @@ export default function Modal({
   // 보조액션
   const handleSecondary = () => {
     onSubClick?.();
-    closeModal(id);
+    if (secondaryBtn === '취소') closeModal(id);
   };
   // 주요액션
   const handlePrimary = () => {
     onClick?.();
-    closeModal(id);
+    if (variant === 'type2' || variant === 'alert') closeModal(id);
   };
   return (
     <>

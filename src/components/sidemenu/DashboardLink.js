@@ -21,12 +21,13 @@ import styles from './DashboardLink.module.scss';
  * />
  */
 export default function DashboardLink({ href, name, color, owner, active }) {
+  color = color.slice(1, 7);
   return (
     <Link
       href={href}
       className={[
         styles.dashboardLink,
-        color ? styles[color] : '',
+        color ? styles[`color${color}`] : '',
         owner ? styles.owner : '',
         active ? styles.active : '',
       ].join(' ')}
