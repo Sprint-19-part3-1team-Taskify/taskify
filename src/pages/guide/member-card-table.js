@@ -7,6 +7,7 @@ import EmptyDashboard from '../../components/cardtable/EmptyInvitedDashboard';
 import ProfileCard from '../../components/cardtable/ProfileCard';
 import ChangePasswordCard from '../../components/cardtable/ChangePasswordCard';
 import { ModalConfirmButton } from '@/components/button/ModalButton/ModalButton';
+import InvitedDashboardCardTable from '../../components/cardtable/InvitedDashboardCardTable';
 
 export default function MemberCardTableDemoPage() {
   const [members, setMembers] = useState([
@@ -134,6 +135,23 @@ export default function MemberCardTableDemoPage() {
           </div>
 
           <button onClick={handleAddInvite}>+ 초대 추가 (테스트용)</button>
+        </section>
+        {/* --- SECTION 3: InvitedDashboardCardTable - 초대받은 대시보드 --- */}
+
+        <section>
+          <h2>3. InvitedDashboardCardTable - 초대받은 대시보드</h2>
+
+          <div>
+            <InvitedDashboardCardTable
+              title="초대받은 대시보드"
+              dashboards={invitedDashboards}
+              itemsPerPage={6}
+              onAccept={handleAcceptDashboard}
+              onReject={handleRejectDashboard}
+              searchPlaceholder="검색"
+              emptyMessage="아직 초대받은 대시보드가 없어요!"
+            />
+          </div>
         </section>
 
         {/* --- SECTION 5: 빈 상태 테스트 --- */}
