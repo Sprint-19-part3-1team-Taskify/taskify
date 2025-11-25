@@ -35,6 +35,7 @@ export default function MemberCardTableDemoPage() {
     { id: 3, title: '개발팀 대시보드', inviter: '박민수', color: '#10B981' },
     { id: 4, title: 'Q4 목표 추적', inviter: '정수연', color: '#F59E0B' },
     { id: 5, title: '고객 피드백', inviter: '최동훈', color: '#EF4444' },
+    { id: 6, title: '개발팀 교육', inviter: '연동석', color: '#EC4899' },
   ]);
 
   const handleDeleteMember = (memberId) => {
