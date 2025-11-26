@@ -65,13 +65,16 @@ export default function Input({
   startDate,
   value,
   onChange,
+  onBlur,
+  hasError,
   ...rest
 }) {
   const [pwToggle, setPwToggle] = useState(false);
   const [pwType, setPwType] = useState('password');
 
   // 비밀번호 숨김/표시
-  const handlePassword = () => {
+  const handlePassword = (e) => {
+    e.preventDefault();
     setPwToggle(!pwToggle);
     setPwType((prev) => (prev === 'password' ? 'text' : 'password'));
   };
@@ -104,7 +107,9 @@ export default function Input({
             onChange={onChange}
             value={value}
             required={required}
+            onBlur={onBlur}
             {...rest}
+            autoComplete="off"
           />
         )}
         {type === 'password' && (
@@ -113,7 +118,7 @@ export default function Input({
           </button>
         )}
       </div>
-      {error && <div className="errorMsg">{error}</div>}
+      {hasError && <div className="errorMsg">{error}</div>}
     </div>
   );
 }

@@ -12,7 +12,8 @@ export async function postUsers(userData) {
     const res = await api.post('/users', userData);
     return res.data;
   } catch (e) {
-    return e.response.data;
+    const errorMessage = e.response?.data?.message;
+    throw new Error(errorMessage);
   }
 }
 

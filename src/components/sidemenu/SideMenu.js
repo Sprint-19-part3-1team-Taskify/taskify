@@ -1,6 +1,4 @@
-'use client';
 import { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useModal } from '@/context/modalProvider';
@@ -11,6 +9,7 @@ import Color from '@/components/common/Color';
 import { PaginationPairButton } from '@/components/button';
 import { getDashboards, postDashboards } from '@/api/dashboards';
 import styles from './SideMenu.module.scss';
+import { useRouter } from 'next/router';
 
 /**
  * SideMenu Component
@@ -36,7 +35,8 @@ const colorOptions = [
   { colorValue: '#e876ea', colorName: 'pink' },
 ];
 export default function SideMenu({ show }) {
-  const path = usePathname();
+  const router = useRouter();
+  const path = router.query.dashboardid;
   const [pageCount, setPageCount] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const lastPage = Math.ceil(totalCount / ITEMS_PER_PAGE);
@@ -71,22 +71,27 @@ export default function SideMenu({ show }) {
   // 새 대시보드 생성시
   const handleModalSubmit = async (e) => {
     if (!value.title || !value.color) {
-      console.log('없음');
       return null;
     }
 
-    await postDashboards({ title: value.title, color: value.color });
-    setValue({
-      title: '',
-      color: '',
-    });
-    const res = await getDashboards({
-      navigationMethod: 'pagination',
-      page: 1,
-      size: ITEMS_PER_PAGE,
-    });
-    setDashboards(res.dashboards);
-    setTotalCount(res.totalCount);
+    try {
+      await postDashboards({ title: value.title, color: value.color });
+      setValue({
+        title: '',
+        color: '',
+      });
+      const res = await getDashboards({
+        navigationMethod: 'pagination',
+        page: 1,
+        size: ITEMS_PER_PAGE,
+      });
+      setDashboards(res.dashboards);
+      setTotalCount(res.totalCount);
+
+      closeModal('createDashboardModal');
+    } catch (error) {
+      console.error(error);
+    }
   };
   // 페이징 이전버튼
   const goToPreviousPage = () => {
@@ -97,7 +102,6 @@ export default function SideMenu({ show }) {
     setPageCount((prev) => Math.min(prev + 1, lastPage));
   };
 
-  // 초기로딩시
   useEffect(() => {
     const getDashboarData = async () => {
       const res = await getDashboards({
@@ -130,21 +134,22 @@ export default function SideMenu({ show }) {
                   name={item.title}
                   color={item.color}
                   owner={item.createdByMe}
-                  active={`/mydashboard/${item.id}` === path}
+                  active={`${item.id}` === path}
                 />
               </li>
             ))}
           </ul>
-
-          <PaginationPairButton
-            size="large"
-            prevState={pageCount === 1 ? 'inactive' : 'active'}
-            nextState={pageCount === lastPage ? 'inactive' : 'active'}
-            prevColorSet={pageCount === 1 ? 'gray' : 'black'}
-            nextColorSet={pageCount === lastPage ? 'gray' : 'black'}
-            onPrev={goToPreviousPage}
-            onNext={goToNextPage}
-          />
+          {totalCount >= 11 && (
+            <PaginationPairButton
+              size="large"
+              prevState={pageCount === 1 ? 'inactive' : 'active'}
+              nextState={pageCount === lastPage ? 'inactive' : 'active'}
+              prevColorSet={pageCount === 1 ? 'gray' : 'black'}
+              nextColorSet={pageCount === lastPage ? 'gray' : 'black'}
+              onPrev={goToPreviousPage}
+              onNext={goToNextPage}
+            />
+          )}
         </nav>
       </section>
 
