@@ -139,16 +139,17 @@ export default function SideMenu({ show }) {
               </li>
             ))}
           </ul>
-
-          <PaginationPairButton
-            size="large"
-            prevState={pageCount === 1 ? 'inactive' : 'active'}
-            nextState={pageCount === lastPage ? 'inactive' : 'active'}
-            prevColorSet={pageCount === 1 ? 'gray' : 'black'}
-            nextColorSet={pageCount === lastPage ? 'gray' : 'black'}
-            onPrev={goToPreviousPage}
-            onNext={goToNextPage}
-          />
+          {totalCount >= 11 && (
+            <PaginationPairButton
+              size="large"
+              prevState={pageCount === 1 ? 'inactive' : 'active'}
+              nextState={pageCount === lastPage ? 'inactive' : 'active'}
+              prevColorSet={pageCount === 1 ? 'gray' : 'black'}
+              nextColorSet={pageCount === lastPage ? 'gray' : 'black'}
+              onPrev={goToPreviousPage}
+              onNext={goToNextPage}
+            />
+          )}
         </nav>
       </section>
 
