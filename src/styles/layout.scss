@@ -1,12 +1,17 @@
 @use '@styles/mixins' as *;
 @use '@styles/variables' as *;
 
-.mydashboard {
-  padding: 71px 0 0 300px;
+.subPage {
+  padding: 91px 20px 20px 320px;
   height: 100%;
+  background-color: #fafafa;
   & > header {
     position: fixed;
     left: 300px;
     right: 0;
+  }
+  &Inner {
+    width: 672px;
+    padding-bottom: 24px;
   }
 }

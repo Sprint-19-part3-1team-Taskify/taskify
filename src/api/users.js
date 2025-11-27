@@ -23,7 +23,8 @@ export async function getUsersMe() {
     const res = await api.get('/users/me');
     return res.data;
   } catch (e) {
-    return e.response.data;
+    const errorMessage = e.response?.data?.message || '사용자 정보를 불러올 수 없습니다.';
+    throw new Error(errorMessage);
   }
 }
 
@@ -38,7 +39,8 @@ export async function putUsersMe(userData) {
     const res = await api.put('/users/me', userData);
     return res.data;
   } catch (e) {
-    return e.response.data;
+    const errorMessage = e.response?.data?.message;
+    throw new Error(errorMessage);
   }
 }
 
@@ -55,6 +57,7 @@ export async function postUsersMeImage(image) {
     });
     return res.data;
   } catch (e) {
-    return e.response.data;
+    const errorMessage = e.response?.data?.message;
+    throw new Error(errorMessage);
   }
 }

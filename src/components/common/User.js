@@ -32,6 +32,9 @@ import styles from './User.module.scss';
 
 const colors = ['#FFC85A', '#FDD446', '#9DD7ED', '#C4B1A2', '#F4D7DA', '#A3C4A2'];
 export default function User({ value, type, hiddenName }) {
+
+  if (!value)  return null; 
+
   const first = value.slice(0, 1);
   const colorIndex = value.charCodeAt(0) % colors.length;
 
