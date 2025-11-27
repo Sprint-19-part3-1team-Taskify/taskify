@@ -1,17 +1,16 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
-import { useModal } from '@/context/modalProvider';
-import { useAuth } from '@/context/authProvider';
-import { LoginButton } from '@/components/button';
 import Input from '@/components/input/Input';
+import Link from 'next/link';
+import { LoginButton } from '@/components/button';
+import { useModal } from '@/context/modalProvider';
 import Modal from '@/components/modal/Modal';
-import useValidation from '@/hook/useValidation';
 import styles from './../signup/SignupPage.module.scss';
+import useValidation from '@/hook/useValidation';
+import { postAuthLogin } from '@/api/auth';
 
 export default function LoginPage() {
   const router = useRouter();
-  const { login } = useAuth();
   const { isOpen, openModal, closeModal } = useModal();
   const { handleValidate, inputError, errorMsg } = useValidation({
     email: true,
@@ -37,7 +36,7 @@ export default function LoginPage() {
     if (!hasFormError) return null;
 
     try {
-      await login(value);
+      const res = await postAuthLogin(value);
       router.push('/mydashboard');
     } catch (error) {
       setApiError(error.message);
@@ -104,5 +103,5 @@ export default function LoginPage() {
     </>
   );
 }
-
 LoginPage.headerType = 'none';
+LoginPage.mainClassName = 'userPage';

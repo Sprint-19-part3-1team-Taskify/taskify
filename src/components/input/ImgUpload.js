@@ -65,14 +65,14 @@ export default function ImgUpload({ label, img, setImg, type, update }) {
       <div className={`imgBox ${type} ${update ? isUpdate : ''}`}>
         {img?.trim() && <Image src={img} alt="" fill />}
         {(!img || isUpdate) && (
-        <>
-          <button className="btnUpload" onClick={handleFile}>
-            <span className="blind">이미지 등록</span>
-          </button>
-          <input type="file" onChange={handleImgUpload} accept="image/*" ref={fileInputRef} />
-        </>
+          <>
+            <button className="btnUpload" onClick={handleFile}>
+              <span className="blind">이미지 등록</span>
+            </button>
+            <input type="file" onChange={handleImgUpload} accept="image/*" ref={fileInputRef} />
+          </>
         )}
-        </div>
       </div>
-    );
-  }
+    </div>
+  );
+}

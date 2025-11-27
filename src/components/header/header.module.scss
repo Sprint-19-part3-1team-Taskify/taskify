@@ -118,6 +118,7 @@
   align-items: center;
   gap: 12px;
   padding-left: 24px;
+  border-left: 1px solid #d9d9d9;
   margin-left: auto; // 오른쪽 정렬을 위해
 
   .dark & {

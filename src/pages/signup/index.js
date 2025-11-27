@@ -157,3 +157,4 @@ export default function SignupPage() {
   );
 }
 SignupPage.headerType = 'none';
+SignupPage.mainClassName = 'userPage';

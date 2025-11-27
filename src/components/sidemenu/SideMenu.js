@@ -10,10 +10,20 @@ import { PaginationPairButton } from '@/components/button';
 import { getDashboards, postDashboards } from '@/api/dashboards';
 import styles from './SideMenu.module.scss';
 import { useRouter } from 'next/router';
-import { useAuth } from '@/context/authProvider';
 
 /**
  * SideMenu Component
+ * 애플리케이션의 좌측 메뉴 영역을 구성하는 컴포넌트입니다.
+ * 로고, 대시보드 생성 버튼, 대시보드 목록을 포함합니다.
+ *
+ * @component
+ * @returns {JSX.Element} SideMenu Component
+ *
+ * @example
+ * function MyDashboard() {
+ *  return <div>내 대시보드</div>;
+ * }
+ * MyDashBoard.sidemenuShow = true;
  **/
 
 const ITEMS_PER_PAGE = 10;
@@ -32,9 +42,10 @@ export default function SideMenu({ show }) {
   const lastPage = Math.ceil(totalCount / ITEMS_PER_PAGE);
   const { isOpen, openModal, closeModal } = useModal();
   const [dashboards, setDashboards] = useState([]);
-  const [value, setValue] = useState({ title: '', color: '' });
-
-  if (!show) return null;
+  const [value, setValue] = useState({
+    title: '',
+    color: '',
+  });
   const handleColorChange = (value) => {
     setValue((prev) => ({
       ...prev,
@@ -104,7 +115,6 @@ export default function SideMenu({ show }) {
     getDashboarData();
   }, [pageCount]);
   if (!show) return null;
-
   return (
     <>
       <section className={styles.sideMenu}>
