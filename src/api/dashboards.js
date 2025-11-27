@@ -28,7 +28,8 @@ export async function getDashboards({ navigationMethod, cursorId, page = 1, size
     });
     return res.data;
   } catch (e) {
-    return e.response.data;
+    const errorMessage = e.response?.data?.message || '대시보드를 불러올 수 없습니다.';
+    throw new Error(errorMessage);
   }
 }
 

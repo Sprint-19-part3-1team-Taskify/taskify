@@ -10,20 +10,10 @@ import { PaginationPairButton } from '@/components/button';
 import { getDashboards, postDashboards } from '@/api/dashboards';
 import styles from './SideMenu.module.scss';
 import { useRouter } from 'next/router';
+import { useAuth } from '@/context/authProvider';
 
 /**
  * SideMenu Component
- * 애플리케이션의 좌측 메뉴 영역을 구성하는 컴포넌트입니다.
- * 로고, 대시보드 생성 버튼, 대시보드 목록을 포함합니다.
- *
- * @component
- * @returns {JSX.Element} SideMenu Component
- *
- * @example
- * function MyDashboard() {
- *  return <div>내 대시보드</div>;
- * }
- * MyDashBoard.sidemenuShow = true;
  **/
 
 const ITEMS_PER_PAGE = 10;
@@ -37,15 +27,31 @@ const colorOptions = [
 export default function SideMenu({ show }) {
   const router = useRouter();
   const path = router.query.dashboardid;
+  const { user, isLoading } = useAuth(true);
   const [pageCount, setPageCount] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const lastPage = Math.ceil(totalCount / ITEMS_PER_PAGE);
   const { isOpen, openModal, closeModal } = useModal();
   const [dashboards, setDashboards] = useState([]);
-  const [value, setValue] = useState({
-    title: '',
-    color: '',
-  });
+  const [value, setValue] = useState({ title: '', color: '' });
+
+  useEffect(() => {
+    if (!isLoading && user) {
+      
+      const getDashboarData = async () => {
+        const res = await getDashboards({
+          navigationMethod: 'pagination',
+          page: pageCount,
+          size: ITEMS_PER_PAGE,
+        });
+        setDashboards(res.dashboards);
+        setTotalCount(res.totalCount);
+      };
+      getDashboarData();
+    }
+  }, [pageCount, isLoading, user]);
+  if (!show) return null;
+
   const handleColorChange = (value) => {
     setValue((prev) => ({
       ...prev,
@@ -102,19 +108,6 @@ export default function SideMenu({ show }) {
     setPageCount((prev) => Math.min(prev + 1, lastPage));
   };
 
-  useEffect(() => {
-    const getDashboarData = async () => {
-      const res = await getDashboards({
-        navigationMethod: 'pagination',
-        page: pageCount,
-        size: ITEMS_PER_PAGE,
-      });
-      setDashboards(res.dashboards);
-      setTotalCount(res.totalCount);
-    };
-    getDashboarData();
-  }, [pageCount]);
-  if (!show) return null;
   return (
     <>
       <section className={styles.sideMenu}>
@@ -130,7 +123,7 @@ export default function SideMenu({ show }) {
             {dashboards.map((item) => (
               <li key={item.id}>
                 <DashboardLink
-                  href={`/mydashboard/${item.id}`}
+                  href={`/dashboard/${item.id}`}
                   name={item.title}
                   color={item.color}
                   owner={item.createdByMe}
