@@ -19,7 +19,7 @@ export default function MyApp({ Component, pageProps }) {
       <ModalProvider>
         <main className={`appMain ${mainClassName}`}>
           <Header type={headerType} dashboardName={dashboardName} />
-          <SideMenu show={sidemenuShow} />
+          {/* <SideMenu show={sidemenuShow} /> */}
           <Component {...pageProps}></Component>
         </main>
       </ModalProvider>
