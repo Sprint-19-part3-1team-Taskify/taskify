@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
 export default function Home() {
-  const { user, isPending } = useAuth();
+  const { user, isLoading } = useAuth();
   const router = useRouter()
 
 
@@ -36,8 +36,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if(!isPending && user) {
-      console.log(user);
+    if(!isLoading && user) {
       router.push('/mypage')
     }
   }, [user])

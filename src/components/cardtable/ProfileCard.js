@@ -6,7 +6,7 @@ import { useModal } from '@/context/modalProvider';
 import Modal from '../modal/Modal';
 
 export default function ProfileCard() {
-  const { user, updateMe, isLoading, isRedirecting } = useAuth(true);
+  const { user, updateMe, isLoading } = useAuth(true);
   const { isOpen, openModal, closeModal } = useModal();
   const [preview, setPreview] = useState('');
   const [nickname, setNickname] = useState('');
@@ -19,10 +19,10 @@ export default function ProfileCard() {
     }
   }, [user]);
 
-  // 로딩 중이거나 리다이렉트 중이면 빈 화면
-  if (isLoading || isRedirecting) {
-    return null;
+  if (isLoading || !user) {
+    return null; // 로딩 중이거나 user가 없으면 렌더링 안 함
   }
+  
 
 
   const handleImageUpload = async (e) => {

@@ -62,7 +62,6 @@ export default function AuthProvider({ children }) {
     }catch(error) {
       throw error;
     }
-    await getMe();
   }
 
   useEffect(() => {
@@ -93,28 +92,15 @@ export function useAuth(required) {
   }
 
   useEffect(() => {
-    if (required && !context.user && !context.isPending) {
-      router.push('/login')
+    // 보호 페이지 접근 + user 정보 로딩 완료 + 로그아웃 상태 → 리다이렉트
+    // (pending 상태가 끝나야 user 여부 체크 완료 할수 있음)
+    if (required && !context.isPending && !context.user) {
+      router.push('/login');
     }
-  }, [context.user, context.isPending, required, router])
+  }, [required, context.isPending, context.user]);
 
-  // required가 true일 때 로딩 중이면 isLoading 반환
-  if (required && context.isPending) {
-    return {
-      ...context,
-      isLoading: true,
-      user: null,
-    };
-  }
-
-  // required가 true인데 user가 없으면 isRedirecting 반환
-  if (required && !context.user) {
-    return {
-      ...context,
-      isRedirecting: true,
-      user: null,
-    };
-  }
-
-  return context;
+  return {
+    ...context,
+    isLoading: context.isPending,
+  };
 }

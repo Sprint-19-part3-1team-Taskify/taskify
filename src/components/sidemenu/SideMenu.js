@@ -27,6 +27,7 @@ const colorOptions = [
 export default function SideMenu({ show }) {
   const router = useRouter();
   const path = router.query.dashboardid;
+  const { user, isLoading } = useAuth(true);
   const [pageCount, setPageCount] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const lastPage = Math.ceil(totalCount / ITEMS_PER_PAGE);
@@ -34,7 +35,23 @@ export default function SideMenu({ show }) {
   const [dashboards, setDashboards] = useState([]);
   const [value, setValue] = useState({ title: '', color: '' });
 
+  useEffect(() => {
+    if (!isLoading && user) {
+      
+      const getDashboarData = async () => {
+        const res = await getDashboards({
+          navigationMethod: 'pagination',
+          page: pageCount,
+          size: ITEMS_PER_PAGE,
+        });
+        setDashboards(res.dashboards);
+        setTotalCount(res.totalCount);
+      };
+      getDashboarData();
+    }
+  }, [pageCount, isLoading, user]);
   if (!show) return null;
+
   const handleColorChange = (value) => {
     setValue((prev) => ({
       ...prev,
@@ -91,20 +108,6 @@ export default function SideMenu({ show }) {
     setPageCount((prev) => Math.min(prev + 1, lastPage));
   };
 
-  useEffect(() => {
-    const getDashboarData = async () => {
-      const res = await getDashboards({
-        navigationMethod: 'pagination',
-        page: pageCount,
-        size: ITEMS_PER_PAGE,
-      });
-      setDashboards(res.dashboards);
-      setTotalCount(res.totalCount);
-    };
-    getDashboarData();
-  }, [pageCount]);
-  if (!show) return null;
-
   return (
     <>
       <section className={styles.sideMenu}>
@@ -120,7 +123,7 @@ export default function SideMenu({ show }) {
             {dashboards.map((item) => (
               <li key={item.id}>
                 <DashboardLink
-                  href={`/mydashboard/${item.id}`}
+                  href={`/dashboard/${item.id}`}
                   name={item.title}
                   color={item.color}
                   owner={item.createdByMe}
