@@ -91,6 +91,20 @@ export default function SideMenu({ show }) {
     setPageCount((prev) => Math.min(prev + 1, lastPage));
   };
 
+  useEffect(() => {
+    const getDashboarData = async () => {
+      const res = await getDashboards({
+        navigationMethod: 'pagination',
+        page: pageCount,
+        size: ITEMS_PER_PAGE,
+      });
+      setDashboards(res.dashboards);
+      setTotalCount(res.totalCount);
+    };
+    getDashboarData();
+  }, [pageCount]);
+  if (!show) return null;
+
   return (
     <>
       <section className={styles.sideMenu}>
