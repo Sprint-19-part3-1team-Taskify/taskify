@@ -4,18 +4,11 @@ import { useAuth } from '@/context/authProvider';
 import User from '@/components/common/User';
 import styles from './header.module.scss';
 
-import { useHeader } from '@/context/HeaderProvider';
-import { useModal } from '@/context/modalProvider';
-import sideStyles from '@/components/sidemenu/SideMenu.module.scss';
-
-// ⭐ 초대 모달 컨테이너
-import InviteModalContainer from '@/components/modal/InviteModalContainer';
-
 /**
  * Global Navigation Header Component
  *
  * @param {Object} props
- * @param {"default" | "header3" | "header4" | "header5"} props.type
+ * @param {"default" | "header"} props.type
  *   - default: 로그인/회원가입 영역
  *   - default darkMode={true}: 다크모드용 흰색 로고 + 로그인/회원가입
  *   - header3: 대시보드명 + 관리 + 초대하기 + 프로필
@@ -28,256 +21,85 @@ import InviteModalContainer from '@/components/modal/InviteModalContainer';
  * @param {string} [props.dashboardName]
  *   - header3/4/5에서 표시되는 대시보드명
  *
- * ```jsx
+ * @returns {JSX.Element} Header Component
+ * 이런식으로 사용
  * function MyDashboard() {
- *   return <div>내 대시보드</div>;
- * }
- *
- * MyDashboard.headerType = "header3";       // 헤더 타입 지정
- * MyDashboard.dashboardName = "내 대시보드"; // 대시보드명 지정
- *
- * export default MyDashboard;
- * ```
- *
- * 헤더를 숨기고 싶은 경우:
- *
- * ```jsx
- * function LoginPage() {
- *   return <div>로그인 화면</div>;
- * }
- *
- * LoginPage.headerType = "none"; // Header 숨김
- * LoginPage.dashboardName = "";
- *
- * export default LoginPage;
- * ```
- *
- * @typedef {"default" | "header3" | "header4" | "header5" | "header3Simple" | "none"} HeaderType
- *
- * @returns {JSX.Element | null} 렌더링된 헤더 요소 (headerType이 none이면 null)
- */
+  return <div>내 대시보드</div>;
+  }
 
-export default function Header() {
-  const {
-    headerType = 'default',
-    dashboardName = '내 대시보드',
-    showCrown = true,
-    dashboardId,
-  } = useHeader();
+    MyDashboard.headerType = "header3";
+    MyDashboard.dashboardName = "내 대시보드";
 
+    export default MyDashboard;
+    
+ headerType를 "none"으로 설정하여 헤더를 숨길 수도 있습니다.
+ 예를 들어, 로그인 페이지에서 헤더를 숨기고 싶다면 다음과 같이 설정할 수 있습니다.
+    function LoginPage() {
+  return <div>로그인 화면</div>;
+}
+
+LoginPage.headerType = "none";       // Header 숨기고 싶을 때
+LoginPage.dashboardName = "";        // 제목 없음
+
+export default LoginPage;
+ 
+    **/
+
+export default function Header({
+  type = 'default',
+  dashboardName = '내 대시보드',
+  darkMode = false,
+  userGroup = false,
+}) {
   const { user } = useAuth();
-  const { openModal } = useModal();
-
-  if (headerType === 'header' && !user) {
+  if (type === 'none') return null;
+  if (type === 'header' && !user) {
     return null;
   }
 
-  if (headerType === 'none') return null;
-
   return (
-    <>
-      <header className={`${styles.header}`}>
-        <div className={styles.inner}>
-          {/* ======================= */}
-          {/* 0️⃣ Default 로고 */}
-          {/* ======================= */}
-          {headerType === 'default' && (
-            <Link href="/" className={styles.logo}>
-              <Image src="/images/logo.svg" width={109} height={33} alt="Taskify" priority />
-            </Link>
+    <header className={`${styles.header} ${darkMode ? styles.dark : ''}`}>
+      <div className={styles.inner}>
+        {/* 로고 — default 에서만 표시 */}
+        {type === 'default' && (
+          <Link href="/" className={styles.logo}>
+            <Image src="/images/logo.svg" width={109} height={33} alt="Taskify" priority />
+          </Link>
+        )}
+
+        {/* 오른쪽 영역 */}
+        <nav className={styles.nav}>
+          {/* 1️⃣ default: 로그인 + 회원가입 */}
+          {type === 'default' && (
+            <div className={styles.authGroup}>
+              <Link href="/login" className={styles.textBtn}>
+                로그인
+              </Link>
+              <Link href="/signup" className={styles.textBtn}>
+                회원가입
+              </Link>
+            </div>
           )}
 
-          <nav
-            className={`${styles.nav} ${
-              headerType === 'header3Simple' ? styles.header3SimpleNav : ''
-            }`}
-          >
-            {/* 1️⃣ default */}
-            {headerType === 'default' && (
-              <div className={styles.authGroup}>
-                <Link href="/login" className={styles.textBtn}>
-                  로그인
+          {/* 2️⃣ header: 생성된대시보드 + 관리 + 초대하기 + 아바타 그룹 + 프로필 */}
+          {type === 'header' && (
+            <>
+              <div className={styles.dashboardNameWithDot}>
+                <span className={styles.dashboardName}>{dashboardName}</span>
+              </div>
+
+              <div className={styles.buttonGroup}>
+                <Link href="/manage" className={styles.outlineBtn}>
+                  <Image src="/images/settings.svg" width={20} height={20} alt="" />
+                  관리
                 </Link>
-                <Link href="/signup" className={styles.textBtn}>
-                  회원가입
+                <Link href="/mypage" className={styles.outlineBtn}>
+                  <Image src="/images/add_box.svg" width={20} height={20} alt="" />
+                  초대하기
                 </Link>
               </div>
-            )}
 
-            {/* 2️⃣ header3 */}
-            {headerType === 'header3' && (
-              <>
-                <Link href="/dashboard" className={styles.dashboardName}>
-                  {dashboardName}
-                  {showCrown && dashboardName !== '내 대시보드' && (
-                    <span className={sideStyles.crownIcon}>
-                      <Image
-                        src="/images/dashboard/ico_crown.svg"
-                        width={18}
-                        height={14}
-                        alt="owner"
-                      />
-                    </span>
-                  )}
-                </Link>
-
-                <div className={styles.buttonGroup}>
-                  <Link href={`/dashboard/${dashboardId}/edit`} className={styles.outlineBtn}>
-                    <Image src="/images/settings.svg" width={20} height={20} alt="" />
-                    관리
-                  </Link>
-
-                  {/* ⭐ 초대하기 = 모달 오픈 */}
-                  <button
-                    className={styles.outlineBtn}
-                    type="button"
-                    onClick={() => {
-                      console.log('=== 초대하기 버튼 클릭 ===');
-                      console.log('openModal 함수 존재:', typeof openModal);
-                      console.log('dashboardId:', dashboardId);
-                      openModal('inviteModal');
-                      console.log('openModal 실행 완료');
-                    }}
-                  >
-                    <Image src="/images/add_box.svg" width={20} height={20} alt="" />
-                    초대하기
-                  </button>
-                </div>
-
-                <div className={styles.profileSection}>
-                  <Link href="/mypage" className={styles.profileLink}>
-                    <User value={user?.nickname} type="large" />
-                  </Link>
-                </div>
-              </>
-            )}
-
-            {/* 3️⃣ header3Simple */}
-            {headerType === 'header3Simple' && (
-              <div className={styles.header3Simple}>
-                <Link href="/dashboard" className={styles.dashboardName}>
-                  {dashboardName}
-                  {showCrown && dashboardName !== '내 대시보드' && (
-                    <span className={sideStyles.crownIcon}>
-                      <Image
-                        src="/images/dashboard/ico_crown.svg"
-                        width={18}
-                        height={14}
-                        alt="owner"
-                      />
-                    </span>
-                  )}
-                </Link>
-
-                <div className={styles.profileSection}>
-                  <Link href="/mypage" className={styles.profileLink}>
-                    <User value={user?.nickname} type="large" />
-                  </Link>
-                </div>
-              </div>
-            )}
-
-            {/* 4️⃣ header4 */}
-            {headerType === 'header4' && (
-              <>
-                <Link href="/dashboard" className={styles.dashboardName}>
-                  {dashboardName}
-                  {showCrown && dashboardName !== '내 대시보드' && (
-                    <span className={sideStyles.crownIcon}>
-                      <Image
-                        src="/images/dashboard/ico_crown.svg"
-                        width={18}
-                        height={14}
-                        alt="owner"
-                      />
-                    </span>
-                  )}
-                </Link>
-
-                <div className={styles.buttonGroup}>
-                  <Link href={`/dashboard/${dashboardId}/edit`} className={styles.outlineBtn}>
-                    <Image src="/images/settings.svg" width={20} height={20} alt="" />
-                    관리
-                  </Link>
-
-                  <button
-                    className={styles.outlineBtn}
-                    type="button"
-                    onClick={() => {
-                      console.log('=== 초대하기 버튼 클릭 ===');
-                      console.log('openModal 함수 존재:', typeof openModal);
-                      console.log('dashboardId:', dashboardId);
-                      openModal('inviteModal');
-                      console.log('openModal 실행 완료');
-                    }}
-                  >
-                    <Image src="/images/add_box.svg" width={20} height={20} alt="" />
-                    초대하기
-                  </button>
-                </div>
-
-                <div className={styles.avatarGroup}>
-                  <div className={styles.avatarStack}>
-                    <div className={styles.stackedAvatar} style={{ background: '#FFC85A' }}>
-                      A
-                    </div>
-                    <div className={styles.stackedAvatar} style={{ background: '#9DD7ED' }}>
-                      B
-                    </div>
-                    <div className={styles.stackedAvatar} style={{ background: '#E876EA' }}>
-                      C
-                    </div>
-                    <div className={styles.moreCount}>+2</div>
-                  </div>
-                </div>
-
-                <div className={styles.profileSection}>
-                  <Link href="/mypage" className={styles.profileLink}>
-                    <User value={user?.nickname} type="large" />
-                  </Link>
-                </div>
-              </>
-            )}
-
-            {/* 5️⃣ header5 */}
-            {headerType === 'header5' && (
-              <>
-                <Link href="/dashboard" className={styles.dashboardName}>
-                  {dashboardName}
-                  {showCrown && dashboardName !== '내 대시보드' && (
-                    <span className={sideStyles.crownIcon}>
-                      <Image
-                        src="/images/dashboard/ico_crown.svg"
-                        width={18}
-                        height={14}
-                        alt="owner"
-                      />
-                    </span>
-                  )}
-                </Link>
-
-                <div className={styles.buttonGroup}>
-                  <Link href={`/dashboard/${dashboardId}/edit`} className={styles.outlineBtn}>
-                    <Image src="/images/settings.svg" width={20} height={20} alt="" />
-                    관리
-                  </Link>
-
-                  <button
-                    className={styles.outlineBtn}
-                    type="button"
-                    onClick={() => {
-                      console.log('=== 초대하기 버튼 클릭 ===');
-                      console.log('openModal 함수 존재:', typeof openModal);
-                      console.log('dashboardId:', dashboardId);
-                      openModal('inviteModal');
-                      console.log('openModal 실행 완료');
-                    }}
-                  >
-                    <Image src="/images/add_box.svg" width={20} height={20} alt="" />
-                    초대하기
-                  </button>
-                </div>
-
+              {userGroup && (
                 <div className={styles.avatarGroup}>
                   <div className={styles.avatarStack}>
                     <div className={styles.stackedAvatar} style={{ background: '#FFC85A' }}>
@@ -294,17 +116,17 @@ export default function Header() {
                     </div>
                   </div>
                 </div>
+              )}
 
-                <div className={styles.profileSection}>
-                  <Link href="/mypage" className={styles.profileLink}>
-                    <User value={user?.nickname} type="large" />
-                  </Link>
-                </div>
-              </>
-            )}
-          </nav>
-        </div>
-      </header>
-    </>
+              <div className={styles.profileSection}>
+                <Link href="/mypage" className={styles.profileLink}>
+                  <User value={user?.nickname} type="large" />
+                </Link>
+              </div>
+            </>
+          )}
+        </nav>
+      </div>
+    </header>
   );
 }
