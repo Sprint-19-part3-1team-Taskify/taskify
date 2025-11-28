@@ -1,8 +1,8 @@
-'use client';
-
-import styles from './header.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useAuth } from '@/context/authProvider';
+import User from '@/components/common/User';
+import styles from './header.module.scss';
 
 import { useHeader } from '@/context/HeaderProvider';
 import { useModal } from '@/context/modalProvider';
@@ -14,11 +14,19 @@ import InviteModalContainer from '@/components/modal/InviteModalContainer';
 /**
  * Global Navigation Header Component
  *
- * @component
+ * @param {Object} props
+ * @param {"default" | "header3" | "header4" | "header5"} props.type
+ *   - default: 로그인/회원가입 영역
+ *   - default darkMode={true}: 다크모드용 흰색 로고 + 로그인/회원가입
+ *   - header3: 대시보드명 + 관리 + 초대하기 + 프로필
+ *   - header4: header3 + 아바타 그룹
+ *   - header5: 동적 대시보드명 + 관리 + 초대하기 + 아바타 그룹 + 프로필
  *
- * @description
- * 페이지별 상단에 표시되는 전역 헤더 컴포넌트입니다.
- * Layout(Route Segment) 또는 Page 컴포넌트에서 아래와 같이 설정하여 헤더를 제어합니다.
+ * @param {boolean} [props.darkMode=false]
+ *   - type="default"일 때만 적용됨 (흰색 로고 사용)
+ *
+ * @param {string} [props.dashboardName]
+ *   - header3/4/5에서 표시되는 대시보드명
  *
  * ```jsx
  * function MyDashboard() {
@@ -56,8 +64,13 @@ export default function Header() {
     showCrown = true,
     dashboardId,
   } = useHeader();
-
+}
+{
+  const { user } = useAuth();
   const { openModal } = useModal();
+  if (headerType === 'header' && !user) {
+    return null;
+  }
 
   if (headerType === 'none') return null;
 
@@ -292,11 +305,8 @@ export default function Header() {
                 </div>
 
                 <div className={styles.profileSection}>
-                  <div className={styles.avatar}>
-                    <div className={styles.avatarPlaceholder} />
-                  </div>
-                  <Link href="/profile" className={styles.profileLink}>
-                    프로필
+                  <Link href="/mypage" className={styles.profileLink}>
+                    <User value={user?.nickname} type="large" />
                   </Link>
                 </div>
               </>

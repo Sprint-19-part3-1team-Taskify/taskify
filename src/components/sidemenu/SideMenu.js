@@ -18,17 +18,6 @@ import { PaginationPairButton } from '@/components/button';
 import styles from './SideMenu.module.scss';
 /**
  * SideMenu Component
- * 애플리케이션의 좌측 메뉴 영역을 구성하는 컴포넌트입니다.
- * 로고, 대시보드 생성 버튼, 대시보드 목록을 포함합니다.
- *
- * @component
- * @returns {JSX.Element} SideMenu Component
- *
- * @example
- * function MyDashboard() {
- *  return <div>내 대시보드</div>;
- * }
- * MyDashBoard.sidemenuShow = true;
  **/
 
 const ITEMS_PER_PAGE = 10;
@@ -121,14 +110,17 @@ export default function SideMenu() {
               );
             })}
           </ul>
-
-          <PaginationPairButton
-            size="large"
-            prevColorSet={pageCount === 1 ? 'gray' : 'black'}
-            nextColorSet={pageCount === lastPage ? 'gray' : 'black'}
-            onPrev={goToPreviousPage}
-            onNext={goToNextPage}
-          />
+          {totalCount >= 11 && (
+            <PaginationPairButton
+              size="large"
+              prevState={pageCount === 1 ? 'inactive' : 'active'}
+              nextState={pageCount === lastPage ? 'inactive' : 'active'}
+              prevColorSet={pageCount === 1 ? 'gray' : 'black'}
+              nextColorSet={pageCount === lastPage ? 'gray' : 'black'}
+              onPrev={goToPreviousPage}
+              onNext={goToNextPage}
+            />
+          )}
         </nav>
       </section>
 

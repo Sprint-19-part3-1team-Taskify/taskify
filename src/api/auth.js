@@ -10,7 +10,8 @@ export async function postAuthLogin({ email, password }) {
     localStorage.setItem('accessToken', res.data.accessToken);
     return res.data;
   } catch (e) {
-    return e.response.data;
+    const errorMessage = e.response?.data?.message;
+    throw new Error(errorMessage);
   }
 }
 
@@ -23,6 +24,7 @@ export async function putAuthPassword({ password, newPassword }) {
     const res = await api.put('/auth/password', { password, newPassword });
     return res.data;
   } catch (e) {
-    return e.response.data;
+    const errorMessage = e.response?.data?.message;
+    throw new Error(errorMessage);
   }
 }
