@@ -10,6 +10,7 @@
   padding: 20px 12px;
   background-color: #fff;
   border-right: 1px solid $gray3;
+  z-index: 1000;
   .logo {
     position: relative;
     display: flex;
@@ -45,4 +46,20 @@
       margin-top: 8px;
     }
   }
+}
+.dashboardLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 사이드바에서 쓰는 왕관 스타일 — 헤더에 재사용 가능하게 만듦 */
+.crownIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 6px;
+  transform: translateY(-1px); /* 수직 미세조정 */
+  width: 16px;
+  height: 16px;
 }
