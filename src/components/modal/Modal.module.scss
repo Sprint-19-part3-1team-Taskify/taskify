@@ -14,7 +14,7 @@
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 1000;
+    z-index: 10000;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -241,4 +241,8 @@
       }
     }
   }
+}
+.singleButton {
+  width: 100%; // 하나일 때는 꽉 채우기
+  justify-content: center;
 }

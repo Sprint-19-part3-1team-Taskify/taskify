@@ -10,7 +10,7 @@ const InvitationCardTable = ({
   invitations = [],
   itemsPerPage = 5,
   onCancelInvitation,
-  onInvite,
+  onInvite, // ← 모달을 열기 위한 콜백
   isInvited = false,
   paginationRightIcon,
 }) => {
@@ -33,7 +33,8 @@ const InvitationCardTable = ({
   // 취소 버튼 클릭
   const handleCancel = (invitationId) => {
     if (onCancelInvitation) onCancelInvitation(invitationId);
-    // 현재 페이지가 비어있으면 이전 페이지로
+
+    // 현재 페이지가 비어있으면 이전 페이지로 이동
     if (currentInvitations.length === 1 && currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
