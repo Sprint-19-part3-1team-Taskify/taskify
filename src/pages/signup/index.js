@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Input from '@/components/input/Input';
 import Link from 'next/link';
@@ -8,6 +8,7 @@ import Modal from '@/components/modal/Modal';
 import useValidation from '@/hook/useValidation';
 import styles from './SignupPage.module.scss';
 import { postUsers } from '@/api/users';
+import { useHeader } from '@/context/HeaderProvider';
 
 export default function SignupPage() {
   const router = useRouter();
@@ -56,6 +57,14 @@ export default function SignupPage() {
       openModal('signupError');
     }
   };
+
+  /* HeaderProvider 적용 */
+  const { setHeaderConfig } = useHeader();
+  useEffect(() => {
+    setHeaderConfig({
+      headerType: 'none',
+    });
+  }, [setHeaderConfig]);
 
   return (
     <>
@@ -156,4 +165,3 @@ export default function SignupPage() {
     </>
   );
 }
-SignupPage.headerType = 'none';

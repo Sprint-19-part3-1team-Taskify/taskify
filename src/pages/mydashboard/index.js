@@ -17,6 +17,7 @@ import Color from '@/components/common/Color';
 
 import { useDashboard } from '@/context/DashboardProvider';
 import { useHeader } from '@/context/HeaderProvider';
+import { withAuth } from '@/lib/auth';
 
 /* 선택 가능한 색상 */
 const colorOptions = [
