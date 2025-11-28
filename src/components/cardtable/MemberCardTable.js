@@ -72,10 +72,11 @@ const MemberCardTable = ({
           currentMembers.map((member) => (
             <div key={member.id} className={styles.memberItem}>
               <div className={styles.memberInfo}>
-                <div className={styles.avatar} style={{ backgroundColor: member.color }}>
-                  {member.avatar || member.name.charAt(0)}
+                <div className={styles.avatar} style={{ backgroundColor: member?.color }}>
+                  {member?.avatar || member?.name?.charAt(0) || ''}
                 </div>
-                <span className={styles.memberName}>{member.name}</span>
+
+                <span className={styles.memberName}>{member?.name || '이름 없음'}</span>
               </div>
               <DeleteButton onClick={() => handleAction(member.id)}>
                 {isInvited ? '취소' : '삭제'}
