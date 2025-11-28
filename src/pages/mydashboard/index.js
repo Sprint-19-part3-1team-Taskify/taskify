@@ -224,3 +224,4 @@ export default function MyDashboard() {
     </div>
   );
 }
+export const getServerSideProps = withAuth();

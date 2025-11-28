@@ -1,4 +1,4 @@
-import api from '@/lib/api';
+import api, { authApi } from '@/lib/api';
 
 // POST /auth/login
 export async function postAuthLogin({ email, password }) {
@@ -6,8 +6,7 @@ export async function postAuthLogin({ email, password }) {
   password: string;
   */
   try {
-    const res = await api.post('/auth/login', { email, password });
-    localStorage.setItem('accessToken', res.data.accessToken);
+    const res = await authApi.post('/auth/login', { email, password });
     return res.data;
   } catch (e) {
     const errorMessage = e.response?.data?.message;
