@@ -64,10 +64,10 @@ export default function Header() {
     showCrown = true,
     dashboardId,
   } = useHeader();
-}
-{
+
   const { user } = useAuth();
   const { openModal } = useModal();
+
   if (headerType === 'header' && !user) {
     return null;
   }
@@ -145,11 +145,8 @@ export default function Header() {
                 </div>
 
                 <div className={styles.profileSection}>
-                  <div className={styles.avatar}>
-                    <div className={styles.avatarPlaceholder} />
-                  </div>
-                  <Link href="/profile" className={styles.profileLink}>
-                    프로필
+                  <Link href="/mypage" className={styles.profileLink}>
+                    <User value={user?.nickname} type="large" />
                   </Link>
                 </div>
               </>
@@ -173,11 +170,8 @@ export default function Header() {
                 </Link>
 
                 <div className={styles.profileSection}>
-                  <div className={styles.avatar}>
-                    <div className={styles.avatarPlaceholder} />
-                  </div>
-                  <Link href="/profile" className={styles.profileLink}>
-                    프로필
+                  <Link href="/mypage" className={styles.profileLink}>
+                    <User value={user?.nickname} type="large" />
                   </Link>
                 </div>
               </div>
@@ -238,11 +232,8 @@ export default function Header() {
                 </div>
 
                 <div className={styles.profileSection}>
-                  <div className={styles.avatar}>
-                    <div className={styles.avatarPlaceholder} />
-                  </div>
-                  <Link href="/profile" className={styles.profileLink}>
-                    프로필
+                  <Link href="/mypage" className={styles.profileLink}>
+                    <User value={user?.nickname} type="large" />
                   </Link>
                 </div>
               </>
