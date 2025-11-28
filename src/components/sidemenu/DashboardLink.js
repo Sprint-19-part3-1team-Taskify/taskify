@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import styles from './DashboardLink.module.scss';
+
 /**
  * Dashboard Link Component
  *
@@ -21,13 +22,15 @@ import styles from './DashboardLink.module.scss';
  * />
  */
 export default function DashboardLink({ href, name, color, owner, active }) {
-  color = color.slice(1, 7);
+  // 🔥 slice 오류 방지 (색상 안전 처리)
+  const safeColor = color ? color.replace('#', '') : null;
+
   return (
     <Link
-      href={href}
+      href={href || '#'} // ⭐ null/undefined 보호 처리
       className={[
         styles.dashboardLink,
-        color ? styles[`color${color}`] : '',
+        safeColor ? styles[`color${safeColor}`] : '',
         owner ? styles.owner : '',
         active ? styles.active : '',
       ].join(' ')}
