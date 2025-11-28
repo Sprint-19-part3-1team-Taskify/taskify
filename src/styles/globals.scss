@@ -4,3 +4,40 @@
 @use './reset.scss';
 @use './input.scss';
 @use './mydashboard.scss';
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.layoutBody {
+  display: flex;
+  flex: 1;
+}
+
+.pageContent {
+  flex: 1;
+  width: 100%;
+  /* 🔥 사이드메뉴 너비만큼 왼쪽 패딩 추가 */
+  padding-left: 50px; /* 사이드메뉴의 너비 */
+  box-sizing: border-box;
+}
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* 🔥 Header를 사이드메뉴 너비만큼 이동 */
+
+.layoutBody {
+  display: flex;
+  flex: 1;
+}
+
+/* 🔥 pageContent도 사이드메뉴 너비만큼 이동 */
+.pageContent {
+  flex: 1;
+  width: 100%;
+  margin-left: 250px;
+}
