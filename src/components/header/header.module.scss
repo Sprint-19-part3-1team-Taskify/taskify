@@ -264,6 +264,27 @@
     }
   }
 }
+/* ================================ header3Simple 전용 레이아웃 ================================ */
+
+/* header3Simple 전용 */
+.header3Simple {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* 대시보드명 왼쪽 */
+.header3Simple .dashboardName {
+  margin-right: auto !important;
+  position: static !important;
+}
+
+/* 버튼/관리/초대 모두 숨김 */
+.header3Simple .buttonGroup,
+.header3Simple .outlineBtn,
+.header3Simple .dashboardNameWithDot {
+  display: none !important;
+}
 
 // 반응형
 @media (max-width: 1200px) {
@@ -331,4 +352,8 @@
   .authGroup {
     gap: 16px; // 모바일에서는 간격 줄이기
   }
+}
+/* header에서 dashboardName은 모두 absolute 금지 (header3~5 맞춤 고정) */
+.header .dashboardName {
+  position: static !important;
 }
