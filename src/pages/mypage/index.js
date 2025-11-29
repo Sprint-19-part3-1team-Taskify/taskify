@@ -11,5 +11,3 @@ export default function MyPage() {
     </div>
   );
 }
-MyPage.headerType = 'header';
-MyPage.dashboardName = '계정관리';
