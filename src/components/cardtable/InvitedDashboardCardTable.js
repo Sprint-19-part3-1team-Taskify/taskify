@@ -15,27 +15,35 @@ const InvitedDashboardCardTable = ({
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
 
+  // 안전하게 title, inviter 파싱
+  const normalizeTitle = (item) =>
+    item.dashboard?.title || item.title || item.name || '(제목 없음)';
+
+  const normalizeInviter = (item) => {
+    // DashboardProvider에서 정규화된 데이터 우선
+    if (item.inviterName) return item.inviterName;
+    if (item.inviterEmail) return item.inviterEmail;
+
+    // fallback
+    return '정보 없음';
+  };
+
+  // 검색
   const filteredDashboards = useMemo(() => {
     if (!searchTerm) return dashboards;
-    return dashboards.filter((d) => d.title.toLowerCase().includes(searchTerm.toLowerCase()));
+
+    return dashboards.filter((d) =>
+      normalizeTitle(d).toLowerCase().includes(searchTerm.toLowerCase()),
+    );
   }, [dashboards, searchTerm]);
 
   const totalPages = Math.ceil(filteredDashboards.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentDashboards = filteredDashboards.slice(startIndex, endIndex);
+  const currentDashboards = filteredDashboards.slice(startIndex, startIndex + itemsPerPage);
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
     setCurrentPage(1);
-  };
-
-  const handlePrevPage = () => {
-    if (currentPage > 1) setCurrentPage(currentPage - 1);
-  };
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
   };
 
   return (
@@ -43,7 +51,7 @@ const InvitedDashboardCardTable = ({
       <h2 className={styles.title}>{title}</h2>
 
       <div className={styles.searchWrapper}>
-        <img src="/images/Vector.svg" alt="add" />
+        <img src="/images/Vector.svg" alt="search" />
         <input
           type="text"
           placeholder={searchPlaceholder}
@@ -61,28 +69,34 @@ const InvitedDashboardCardTable = ({
             <th>수락 여부</th>
           </tr>
         </thead>
+
         <tbody>
           {currentDashboards.length > 0 ? (
-            currentDashboards.map((dashboard) => (
-              <tr key={dashboard.id}>
-                <td className={styles.nameCell}>{dashboard.title}</td>
-                <td className={styles.inviterCell}>{dashboard.inviter}</td>
-                <td className={styles.actionCell}>
-                  <button
-                    className={styles.acceptBtn}
-                    onClick={() => onAccept && onAccept(dashboard.id)}
-                  >
-                    수락
-                  </button>
-                  <button
-                    className={styles.rejectBtn}
-                    onClick={() => onReject && onReject(dashboard.id)}
-                  >
-                    거절
-                  </button>
-                </td>
-              </tr>
-            ))
+            currentDashboards.map((item) => {
+              const title = normalizeTitle(item);
+              const inviter = normalizeInviter(item);
+
+              return (
+                <tr key={item.id}>
+                  <td className={styles.nameCell}>{title}</td>
+                  <td className={styles.inviterCell}>{inviter}</td>
+                  <td className={styles.actionCell}>
+                    <button
+                      className={styles.acceptBtn}
+                      onClick={() => onAccept && onAccept(item.id)}
+                    >
+                      수락
+                    </button>
+                    <button
+                      className={styles.rejectBtn}
+                      onClick={() => onReject && onReject(item.id)}
+                    >
+                      거절
+                    </button>
+                  </td>
+                </tr>
+              );
+            })
           ) : (
             <tr>
               <td colSpan="3" className={styles.emptyState}>
@@ -93,15 +107,24 @@ const InvitedDashboardCardTable = ({
         </tbody>
       </table>
 
+      {/* 페이지네이션 */}
       {totalPages > 1 && (
         <div className={styles.pagination}>
-          <button onClick={handlePrevPage} disabled={currentPage === 1}>
+          <button
+            onClick={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
             이전
           </button>
+
           <span>
             {currentPage} / {totalPages}
           </span>
-          <button onClick={handleNextPage} disabled={currentPage === totalPages}>
+
+          <button
+            onClick={() => currentPage < totalPages && setCurrentPage(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
             다음
           </button>
         </div>
@@ -110,4 +133,4 @@ const InvitedDashboardCardTable = ({
   );
 };
 
-export default InvitedDashboardCardTable;
+export default InvitedDashboardCardTable; // ⭐ 이게 핵심!
