@@ -23,6 +23,10 @@ export async function getUsersMe() {
     const res = await api.get('/users/me');
     return res.data;
   } catch (e) {
+    // ⭐ 401 Unauthorized 에러는 null 반환 (로그인 안 한 상태)
+    if (e.response?.status === 401) {
+      return null;
+    }
     const errorMessage = e.response?.data?.message || '사용자 정보를 불러올 수 없습니다.';
     throw new Error(errorMessage);
   }

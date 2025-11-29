@@ -11,7 +11,7 @@ export async function postDashboards(dashboardData) {
     const res = await api.post('/dashboards', dashboardData);
     return res.data;
   } catch (e) {
-    return e.response.data;
+    return e.response?.data;
   }
 }
 
@@ -40,7 +40,7 @@ export async function getDashboardsId(dashboardId) {
     const res = await api.get(`/dashboards/${dashboardId}`);
     return res.data;
   } catch (e) {
-    return e.response.data;
+    return e.response?.data;
   }
 }
 
@@ -56,7 +56,7 @@ export async function putDashboardsId(dashboardId, dashboardData) {
     const res = await api.put(`/dashboards/${dashboardId}`, dashboardData);
     return res.data;
   } catch (e) {
-    return e.response.data;
+    return e.response?.data;
   }
 }
 
@@ -67,7 +67,7 @@ export async function deleteDashboardsId(dashboardId) {
     const res = await api.delete(`/dashboards/${dashboardId}`);
     return res.data;
   } catch (e) {
-    return e.response.data;
+    return e.response?.data;
   }
 }
 
@@ -77,7 +77,7 @@ export async function postDashboardsIdInvitations(dashboardId, email) {
   email: string;
   */
   try {
-    const res = await api.post(`/dashboards/${dashboardId}/invitations`, { email });
+    const res = await api.post(`/dashboards/${dashboardId}/invitations`, emailData);
     return res.data;
   } catch (e) {
     return e.response.data;
@@ -91,24 +91,29 @@ export async function getDashboardsIdInvitations(dashboardId, { page = 1, size =
   size: number;
   */
   try {
-    const res = await api.get(`/dashboards/${dashboardId}/invitations`, {
-      params: { page, size },
-    });
+    const res = await api.get(`/dashboards/${dashboardId}/invitations`);
     return res.data;
   } catch (e) {
-    return e.response.data;
+    return e.response?.data;
   }
 }
 
 // DELETE /dashboards/:dashboardId/invitations/:invitationId
 export async function deleteDashboardsIdInvitations(dashboardId, invitationId) {
-  /* dashboardId: number;
-  invitationId: number;
-  */
   try {
     const res = await api.delete(`/dashboards/${dashboardId}/invitations/${invitationId}`);
     return res.data;
   } catch (e) {
-    return e.response.data;
+    return e.response?.data;
+  }
+}
+
+// DELETE /dashboards/:dashboardId/members/:memberId
+export async function deleteDashboardsIdMembers(dashboardId, memberId) {
+  try {
+    const res = await api.delete(`/dashboards/${dashboardId}/members/${memberId}`);
+    return res.data;
+  } catch (e) {
+    return e.response?.data;
   }
 }

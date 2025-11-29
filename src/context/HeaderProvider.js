@@ -10,11 +10,13 @@ export function HeaderProvider({ children }) {
   const [mainClassName, setMainClassName] = useState('');
   const [sidemenuShow, setSidemenuShow] = useState(false);
 
-  // ⭐ 추가된 부분
   const [dashboardId, setDashboardId] = useState(null);
 
+  // ⭐ 내가 만든 대시보드인지 여부
+  const [isOwner, setIsOwner] = useState(false);
+
   /**
-   * 페이지에서 한 번에 헤더 설정할 수 있는 유틸
+   * 페이지에서 한 번에 헤더 설정 가능
    */
   const setHeaderConfig = (config = {}) => {
     if ('headerType' in config) setHeaderType(config.headerType);
@@ -22,8 +24,10 @@ export function HeaderProvider({ children }) {
     if ('mainClassName' in config) setMainClassName(config.mainClassName);
     if ('sidemenuShow' in config) setSidemenuShow(config.sidemenuShow);
 
-    // ⭐ 대시보드 ID 추가
     if ('dashboardId' in config) setDashboardId(config.dashboardId);
+
+    // ⭐ owner 여부 등록
+    if ('isOwner' in config) setIsOwner(config.isOwner);
   };
 
   return (
@@ -34,12 +38,14 @@ export function HeaderProvider({ children }) {
         mainClassName,
         sidemenuShow,
         dashboardId,
+        isOwner,
 
         setHeaderType,
         setDashboardName,
         setMainClassName,
         setSidemenuShow,
         setDashboardId,
+        setIsOwner,
         setHeaderConfig,
       }}
     >
