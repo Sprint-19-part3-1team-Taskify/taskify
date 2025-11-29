@@ -59,11 +59,6 @@ export default function AuthProvider({ children }) {
     try {
       const res = await postAuthLogin({ email, password });
 
-      // 🔥 로그인 성공 시 token 저장
-      if (res?.accessToken) {
-        localStorage.setItem('accessToken', res.accessToken);
-      }
-
       await getMe();
     } catch (error) {
       throw error;
@@ -71,9 +66,6 @@ export default function AuthProvider({ children }) {
   }
 
   async function logout() {
-    // 🔥 로그아웃 시 토큰 제거
-    localStorage.removeItem('accessToken');
-
     setValues({
       user: null,
       isPending: false,
