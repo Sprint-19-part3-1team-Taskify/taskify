@@ -8,7 +8,6 @@ import { useHeader } from '@/context/HeaderProvider';
 import { useModal } from '@/context/modalProvider';
 import sideStyles from '@/components/sidemenu/SideMenu.module.scss';
 
-// ⭐ 초대 모달 컨테이너
 import InviteModalContainer from '@/components/modal/InviteModalContainer';
 
 /**
@@ -59,10 +58,11 @@ import InviteModalContainer from '@/components/modal/InviteModalContainer';
 
 export default function Header() {
   const {
-    headerType = 'default',
+    headerType = 'header3',
     dashboardName = '내 대시보드',
     showCrown = true,
     dashboardId,
+    isOwner,
   } = useHeader();
 
   const { user } = useAuth();
@@ -78,9 +78,6 @@ export default function Header() {
     <>
       <header className={`${styles.header}`}>
         <div className={styles.inner}>
-          {/* ======================= */}
-          {/* 0️⃣ Default 로고 */}
-          {/* ======================= */}
           {headerType === 'default' && (
             <Link href="/" className={styles.logo}>
               <Image src="/images/logo.svg" width={109} height={33} alt="Taskify" priority />
@@ -92,7 +89,6 @@ export default function Header() {
               headerType === 'header3Simple' ? styles.header3SimpleNav : ''
             }`}
           >
-            {/* 1️⃣ default */}
             {headerType === 'default' && (
               <div className={styles.authGroup}>
                 <Link href="/login" className={styles.textBtn}>
@@ -104,12 +100,14 @@ export default function Header() {
               </div>
             )}
 
-            {/* 2️⃣ header3 */}
+            {/* ================================================== */}
+            {/* 2️⃣ header3 - 여기 왕관 조건만 수정됨 */}
+            {/* ================================================== */}
             {headerType === 'header3' && (
               <>
                 <Link href="/dashboard" className={styles.dashboardName}>
                   {dashboardName}
-                  {showCrown && dashboardName !== '내 대시보드' && (
+                  {showCrown && isOwner && (
                     <span className={sideStyles.crownIcon}>
                       <Image
                         src="/images/dashboard/ico_crown.svg"
@@ -127,17 +125,10 @@ export default function Header() {
                     관리
                   </Link>
 
-                  {/* ⭐ 초대하기 = 모달 오픈 */}
                   <button
                     className={styles.outlineBtn}
                     type="button"
-                    onClick={() => {
-                      console.log('=== 초대하기 버튼 클릭 ===');
-                      console.log('openModal 함수 존재:', typeof openModal);
-                      console.log('dashboardId:', dashboardId);
-                      openModal('inviteModal');
-                      console.log('openModal 실행 완료');
-                    }}
+                    onClick={() => openModal('inviteModal')}
                   >
                     <Image src="/images/add_box.svg" width={20} height={20} alt="" />
                     초대하기
@@ -152,12 +143,14 @@ export default function Header() {
               </>
             )}
 
-            {/* 3️⃣ header3Simple */}
+            {/* ================================================== */}
+            {/* 3️⃣ header3Simple - 왕관 조건만 수정 */}
+            {/* ================================================== */}
             {headerType === 'header3Simple' && (
               <div className={styles.header3Simple}>
                 <Link href="/dashboard" className={styles.dashboardName}>
                   {dashboardName}
-                  {showCrown && dashboardName !== '내 대시보드' && (
+                  {showCrown && isOwner && (
                     <span className={sideStyles.crownIcon}>
                       <Image
                         src="/images/dashboard/ico_crown.svg"
@@ -177,12 +170,14 @@ export default function Header() {
               </div>
             )}
 
-            {/* 4️⃣ header4 */}
+            {/* ================================================== */}
+            {/* 4️⃣ header4 - 왕관 조건만 수정 */}
+            {/* ================================================== */}
             {headerType === 'header4' && (
               <>
                 <Link href="/dashboard" className={styles.dashboardName}>
                   {dashboardName}
-                  {showCrown && dashboardName !== '내 대시보드' && (
+                  {showCrown && isOwner && (
                     <span className={sideStyles.crownIcon}>
                       <Image
                         src="/images/dashboard/ico_crown.svg"
@@ -203,13 +198,7 @@ export default function Header() {
                   <button
                     className={styles.outlineBtn}
                     type="button"
-                    onClick={() => {
-                      console.log('=== 초대하기 버튼 클릭 ===');
-                      console.log('openModal 함수 존재:', typeof openModal);
-                      console.log('dashboardId:', dashboardId);
-                      openModal('inviteModal');
-                      console.log('openModal 실행 완료');
-                    }}
+                    onClick={() => openModal('inviteModal')}
                   >
                     <Image src="/images/add_box.svg" width={20} height={20} alt="" />
                     초대하기
@@ -239,12 +228,14 @@ export default function Header() {
               </>
             )}
 
-            {/* 5️⃣ header5 */}
+            {/* ================================================== */}
+            {/* 5️⃣ header5 - 왕관 조건만 수정 */}
+            {/* ================================================== */}
             {headerType === 'header5' && (
               <>
                 <Link href="/dashboard" className={styles.dashboardName}>
                   {dashboardName}
-                  {showCrown && dashboardName !== '내 대시보드' && (
+                  {showCrown && isOwner && (
                     <span className={sideStyles.crownIcon}>
                       <Image
                         src="/images/dashboard/ico_crown.svg"
@@ -265,13 +256,7 @@ export default function Header() {
                   <button
                     className={styles.outlineBtn}
                     type="button"
-                    onClick={() => {
-                      console.log('=== 초대하기 버튼 클릭 ===');
-                      console.log('openModal 함수 존재:', typeof openModal);
-                      console.log('dashboardId:', dashboardId);
-                      openModal('inviteModal');
-                      console.log('openModal 실행 완료');
-                    }}
+                    onClick={() => openModal('inviteModal')}
                   >
                     <Image src="/images/add_box.svg" width={20} height={20} alt="" />
                     초대하기
