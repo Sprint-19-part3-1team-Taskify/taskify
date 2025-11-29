@@ -26,7 +26,7 @@ export default function MyApp({ Component, pageProps }) {
       <App>
         <main className={`appMain ${shouldSidemenu && 'subPage'} ${isUserPage && 'userPage'}`}>
           <Header type={headerType} dashboardName={dashboardName} />
-          <SideMenu show={shouldSidemenu} />
+          {shouldSidemenu && <SideMenu show={shouldSidemenu} />}
           <Component {...pageProps}></Component>
         </main>
       </App>
