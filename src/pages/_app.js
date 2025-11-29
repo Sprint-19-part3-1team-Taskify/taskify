@@ -87,9 +87,14 @@ export default function MyApp({ Component, pageProps }) {
       <Head>
         <title>Taskify</title>
       </Head>
+
       <HeaderProvider>
-        <DashboardProvider>
-          <AuthProvider>
+        <AuthProvider>
+          {' '}
+          {/* ← 맨 위 */}
+          <DashboardProvider>
+            {' '}
+            {/* ← 이제 Auth 이후라서 안전 */}
             <ModalProvider>
               <Layout>
                 <Component {...pageProps} />
@@ -97,8 +102,8 @@ export default function MyApp({ Component, pageProps }) {
               <InviteModalContainer />
               <GlobalMessageModal />
             </ModalProvider>
-          </AuthProvider>
-        </DashboardProvider>
+          </DashboardProvider>
+        </AuthProvider>
       </HeaderProvider>
     </>
   );
