@@ -1,11 +1,11 @@
-import { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { getUsersMe, putUsersMe } from '@/api/users';
 import { postAuthLogin } from '@/api/auth';
 import { useRouter } from 'next/router';
 
 const AuthContext = createContext({
   user: null,
-  isPending : true,
+  isPending: true,
   login: () => {},
   logout: () => {},
   updateMe: () => {},
@@ -13,53 +13,81 @@ const AuthContext = createContext({
 
 export default function AuthProvider({ children }) {
   const [values, setValues] = useState({
-    user : null,
-    isPending : true
-  })
+    user: null,
+    isPending: true,
+  });
 
   const getMe = async () => {
+    // ⭐ 토큰이 없으면 API 호출하지 않음
+    const token = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null;
+
+    if (!token) {
+      setValues({
+        user: null,
+        isPending: false,
+      });
+      return;
+    }
+
     setValues((prevValue) => ({
       ...prevValue,
-      isPending : true,
-    }))
+      isPending: true,
+    }));
 
-    let nextUser;
+    let nextUser = null;
 
     try {
       const res = await getUsersMe();
       nextUser = res;
-    } catch {
-
+    } catch (error) {
+      console.error('사용자 정보 조회 실패:', error);
+      // ⭐ 401 에러 시 토큰 제거
+      if (error.response?.status === 401) {
+        localStorage.removeItem('accessToken');
+      }
+      nextUser = null;
     } finally {
       setValues((prevValue) => ({
         ...prevValue,
-        user : nextUser,
-        isPending : false,
-      }))
+        user: nextUser,
+        isPending: false,
+      }));
     }
   };
 
   async function login({ email, password }) {
     try {
       const res = await postAuthLogin({ email, password });
+
+      // 🔥 로그인 성공 시 token 저장
+      if (res?.accessToken) {
+        localStorage.setItem('accessToken', res.accessToken);
+      }
+
       await getMe();
     } catch (error) {
       throw error;
     }
   }
+
   async function logout() {
-    /*** 로그아웃 */
+    // 🔥 로그아웃 시 토큰 제거
+    localStorage.removeItem('accessToken');
+
+    setValues({
+      user: null,
+      isPending: false,
+    });
   }
 
   async function updateMe({ nickname, profileImageUrl }) {
     try {
       const res = await putUsersMe({ nickname, profileImageUrl });
-      const nextUser = res;
       setValues((prevValue) => ({
         ...prevValue,
-        user : nextUser,
-      }))
-    }catch(error) {
+        user: res,
+      }));
+    } catch (error) {
       throw error;
     }
   }
@@ -72,17 +100,21 @@ export default function AuthProvider({ children }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ 
-        user : values.user, 
-        isPending : values.isPending, 
-        getMe, 
-        login, 
-        logout, 
-        updateMe }}>
+    <AuthContext.Provider
+      value={{
+        user: values.user,
+        isPending: values.isPending,
+        getMe,
+        login,
+        logout,
+        updateMe,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
 }
+
 export function useAuth(required) {
   const context = useContext(AuthContext);
   const router = useRouter();
@@ -92,12 +124,10 @@ export function useAuth(required) {
   }
 
   useEffect(() => {
-    // 보호 페이지 접근 + user 정보 로딩 완료 + 로그아웃 상태 → 리다이렉트
-    // (pending 상태가 끝나야 user 여부 체크 완료 할수 있음)
     if (required && !context.isPending && !context.user) {
       router.push('/login');
     }
-  }, [required, context.isPending, context.user]);
+  }, [required, context.isPending, context.user, router]);
 
   return {
     ...context,
