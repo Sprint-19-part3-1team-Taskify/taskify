@@ -1,4 +1,5 @@
 'use client';
+
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -24,17 +25,13 @@ import { getMembers, deleteMembersId } from '@/api/members';
 import { DashboardDeleteButton } from '@/components/button';
 import Modal from '@/components/modal/Modal';
 
-/* --------------------------
-   삭제 확인 모달 (이건 유지)
---------------------------- */
+/* 삭제 확인 모달 */
 function ConfirmDeleteModal({ open, onCancel, onConfirm }) {
   if (!open) return null;
-
   return (
     <div style={overlayStyle}>
       <div style={modalStyle}>
         <p style={{ marginBottom: 16 }}>정말로 대시보드를 삭제하시겠습니까?</p>
-
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
           <button
             style={{
@@ -46,7 +43,6 @@ function ConfirmDeleteModal({ open, onCancel, onConfirm }) {
           >
             취소
           </button>
-
           <button style={confirmBtn} onClick={onConfirm}>
             삭제하기
           </button>
@@ -56,10 +52,7 @@ function ConfirmDeleteModal({ open, onCancel, onConfirm }) {
   );
 }
 
-/* --------------------------
-   스타일 정의
---------------------------- */
-
+/* 스타일 상수*/
 const layout = {
   padding: '40px 32px',
   maxWidth: 680,
@@ -68,7 +61,6 @@ const layout = {
   borderRadius: 16,
   border: '1px solid #eee',
 };
-
 const sectionCard = {
   padding: '28px 32px',
   background: '#fafafa',
@@ -76,13 +68,11 @@ const sectionCard = {
   border: '1px solid #e5e5e5',
   marginTop: 48,
 };
-
 const sectionTitle = {
   fontSize: 18,
   fontWeight: 700,
   marginBottom: 24,
 };
-
 const backBtn = {
   display: 'flex',
   alignItems: 'center',
@@ -94,7 +84,6 @@ const backBtn = {
   fontSize: 14,
   cursor: 'pointer',
 };
-
 const saveBtn = {
   width: '100%',
   padding: '12px 16px',
@@ -107,7 +96,6 @@ const saveBtn = {
   marginTop: 24,
   cursor: 'pointer',
 };
-
 const overlayStyle = {
   position: 'fixed',
   top: 0,
@@ -120,7 +108,6 @@ const overlayStyle = {
   alignItems: 'center',
   zIndex: 9999,
 };
-
 const modalStyle = {
   background: '#fff',
   padding: 24,
@@ -128,7 +115,6 @@ const modalStyle = {
   maxWidth: 400,
   textAlign: 'center',
 };
-
 const confirmBtn = {
   padding: '8px 16px',
   borderRadius: 6,
@@ -138,10 +124,6 @@ const confirmBtn = {
   fontWeight: 600,
   cursor: 'pointer',
 };
-
-/* --------------------------
-   대시보드 수정 페이지
---------------------------- */
 
 export default function DashboardEdit() {
   const router = useRouter();
@@ -165,7 +147,7 @@ export default function DashboardEdit() {
   const [newInviteEmail, setNewInviteEmail] = useState('');
   const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
 
-  /* ⭐ 초대 모달 상태 */
+  /* 초대 모달 상태 */
   const [isInviteOpen, setInviteOpen] = useState(false);
   const openInviteModal = () => setInviteOpen(true);
   const closeInviteModal = () => setInviteOpen(false);
@@ -182,15 +164,6 @@ export default function DashboardEdit() {
       dashboardId: fixedId,
     });
   }, [dashboard, fixedId]);
-
-  /* 헤더 padding 조정 */
-  useEffect(() => {
-    const header = document.querySelector('header');
-    if (header) header.style.paddingLeft = '300px';
-    return () => {
-      if (header) header.style.paddingLeft = '';
-    };
-  }, []);
 
   /* 데이터 로딩 */
   useEffect(() => {
@@ -216,23 +189,31 @@ export default function DashboardEdit() {
         }
       }
 
+      // 멤버 (nickname 등 포함)
       const membersRes = await getMembers({
         dashboardId: fixedId,
         page: 1,
-        size: 20,
+        size: 50,
       });
 
       if (membersRes?.members) {
+        // members API가 nickname 포함한다고 가정
         setMembers(membersRes.members);
+      } else {
+        // fallback: dashboard.members
+        setMembers(data?.members || []);
       }
 
+      // 초대 목록 (대시보드 스코프)
       const invitationsRes = await getDashboardsIdInvitations(fixedId, {
         page: 1,
-        size: 20,
+        size: 50,
       });
 
       if (invitationsRes?.invitations) {
         setInvitedMembers(invitationsRes.invitations);
+      } else {
+        setInvitedMembers([]);
       }
 
       setLoading(false);
@@ -241,7 +222,7 @@ export default function DashboardEdit() {
     fetchData();
   }, [router.isReady, fixedId]);
 
-  /* 구성원 삭제 */
+  /* 구성원 삭제 (멤버 리소스 사용) */
   const handleDeleteMember = async (memberId) => {
     const res = await deleteMembersId(memberId);
 
@@ -274,7 +255,7 @@ export default function DashboardEdit() {
     }
   };
 
-  /* 초대 취소 */
+  /* 초대 취소 (오너가 초대 취소할 때) */
   const handleCancelInvitation = async (invitationId) => {
     const res = await deleteDashboardsIdInvitations(fixedId, invitationId);
 
@@ -286,7 +267,7 @@ export default function DashboardEdit() {
     }
   };
 
-  /* ⭐ 초대하기 */
+  /* 초대하기 */
   const handleInviteSubmit = async () => {
     if (!newInviteEmail.trim()) {
       showMessage('이메일을 입력해주세요.');
@@ -365,7 +346,12 @@ export default function DashboardEdit() {
 
       {/* 구성원 목록 */}
       <div style={{ marginTop: 48 }}>
-        <MemberCardTable members={members} itemsPerPage={4} onDeleteMember={handleDeleteMember} />
+        <MemberCardTable
+          members={members}
+          itemsPerPage={4}
+          onDeleteMember={handleDeleteMember}
+          showDelete={true}
+        />
       </div>
 
       {/* 초대 목록 */}
@@ -373,7 +359,7 @@ export default function DashboardEdit() {
         <InvitationCardTable
           invitations={invitedMembers}
           itemsPerPage={4}
-          isInvited={true}
+          showCancel={true}
           onInvite={openInviteModal}
           onCancelInvitation={handleCancelInvitation}
         />
@@ -393,7 +379,7 @@ export default function DashboardEdit() {
         onConfirm={handleDeleteConfirm}
       />
 
-      {/* ⭐ 초대 모달 */}
+      {/* 초대 모달 */}
       <Modal
         id="inviteModal"
         variant="type1"
