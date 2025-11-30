@@ -30,6 +30,7 @@
   }
   // 내용
   &Content {
+    min-height: 0; // empty rule fix
   }
   // 하단버튼영역
   &Footer {
@@ -120,10 +121,24 @@
             height: 32px;
             color: $black3;
             border-radius: 4px;
-
+            transition: background-color 0.2s;
+            // 수정하기 버튼: 기본 투명, hover 시 배경 등장
             &:first-child {
               color: $violet1;
-              background-color: $violet2;
+              background: transparent;
+            }
+            &:first-child:hover {
+              background: $violet2;
+            }
+            &:first-child:active {
+              background: darken($violet2, 5%);
+            }
+            // 삭제하기 등 기타 버튼 기본 투명, hover 시 회색
+            &:not(:first-child):hover {
+              background: $gray4;
+            }
+            &:not(:first-child):active {
+              background: $gray3;
             }
           }
         }
@@ -145,8 +160,12 @@
 
       .infoBox {
         flex-shrink: 0;
-        width: 180px;
-        height: 155px;
+        // 마감일이 잘리지 않도록 폭을 내용에 맞게 확장
+        width: max-content;
+        min-width: 180px;
+        max-width: 260px;
+        min-height: 155px; // 내용에 따라 확장
+        max-height: 220px; // 세로 전체가 아닌 적당한 높이로 제한
         padding: 14px 16px;
         border: 1px solid $gray3;
         border-radius: 8px;
@@ -162,6 +181,12 @@
           @include txtStyle('md', R);
           display: block;
           color: $black3;
+          word-break: break-word;
+          overflow-wrap: anywhere;
+          // 한 줄로 표시하되, 정보가 잘리지 않도록 클리핑/확장
+          white-space: nowrap; // 한 줄 표시
+          overflow: visible;
+          text-overflow: clip;
         }
       }
       .detail {
@@ -234,6 +259,27 @@
                 @include txtStyle('xs', R);
                 color: $gray2;
                 margin-right: 14px;
+                text-decoration: underline; // 액션 밑줄
+              }
+            }
+            .editActions {
+              margin-top: 8px;
+              button {
+                @include txtStyle('xs', R);
+                color: $gray2;
+                margin-right: 14px;
+                text-decoration: underline;
+              }
+            }
+
+            // 수정 인풋 폼 높이 절반 정도로 축소
+            .editWrapper {
+              .textarea {
+                height: 40px;
+                textarea {
+                  min-height: 40px;
+                  height: 40px;
+                }
               }
             }
           }
