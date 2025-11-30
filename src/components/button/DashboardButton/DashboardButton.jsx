@@ -3,25 +3,26 @@ import styles from './DashboardButton.module.scss';
 
 export function DashboardButton({
   size = 'large',
-  icon, // 왕관(ico_crown)
-  arrow, // 오른쪽 화살표
-  children, // "비브리지"
+  icon,
+  arrow,
+  children,
+  color, // 🔥 color props 추가
   ...props
 }) {
   return (
     <BaseButton className={`${styles.dashboardButton} ${styles[size]}`} {...props}>
       <div className={styles.content}>
-        {/* indicator (초록 동그라미) */}
-        <span className={styles.indicator}></span>
+        {/* indicator */}
+        <span
+          className={styles.indicator}
+          style={{ backgroundColor: color }} // 🔥 여기서 색상 적용
+        ></span>
 
-        {/* text */}
         <span className={styles.text}>{children}</span>
 
-        {/* icon (왕관) */}
         {icon && <span className={styles.icon}>{icon}</span>}
       </div>
 
-      {/* arrow (>) */}
       {arrow && <span className={styles.arrow}>{arrow}</span>}
     </BaseButton>
   );

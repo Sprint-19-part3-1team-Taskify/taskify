@@ -113,7 +113,11 @@ export default function Input({
           />
         )}
         {type === 'password' && (
-          <button className={`btnPwToggle ${pwToggle ? '' : 'on'}`} onClick={handlePassword}>
+          <button
+            type="button"
+            className={`btnPwToggle ${pwToggle ? '' : 'on'}`}
+            onClick={handlePassword}
+          >
             <span className="blind">비밀번호 숨김</span>
           </button>
         )}

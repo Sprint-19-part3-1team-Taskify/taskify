@@ -1,4 +1,5 @@
-import api from '@/lib/api';
+import api, { authApi } from '@/lib/api';
+import { useRouter } from 'next/router';
 
 // POST /auth/login
 export async function postAuthLogin({ email, password }) {
@@ -6,8 +7,7 @@ export async function postAuthLogin({ email, password }) {
   password: string;
   */
   try {
-    const res = await api.post('/auth/login', { email, password });
-    localStorage.setItem('accessToken', res.data.accessToken);
+    const res = await authApi.post('/auth/login', { email, password });
     return res.data;
   } catch (e) {
     const errorMessage = e.response?.data?.message;
@@ -23,6 +23,21 @@ export async function putAuthPassword({ password, newPassword }) {
   try {
     const res = await api.put('/auth/password', { password, newPassword });
     return res.data;
+  } catch (e) {
+    const errorMessage = e.response?.data?.message;
+    throw new Error(errorMessage);
+  }
+}
+
+// POST /auth/logout
+export async function postAuthLogout() {
+  try {
+    const res = await authApi.post('/auth/logout', {
+      method: 'POST',
+    });
+    if (res.status === 200) {
+      return res.data;
+    }
   } catch (e) {
     const errorMessage = e.response?.data?.message;
     throw new Error(errorMessage);

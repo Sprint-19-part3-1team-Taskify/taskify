@@ -42,6 +42,7 @@ export default function Modal({
   primaryBtn,
   onClick,
   onSubClick,
+  singleButton = false,
 }) {
   const [more, setMore] = useState(false);
   useModalLock(isOpen); // 배경 스크롤 방지
@@ -95,14 +96,19 @@ export default function Modal({
             <div className={styles.modalContent}>{children}</div>
             {/*  modalFooter*/}
             {variant !== 'type2' && (
-              // 하단버튼
               <div className={styles.modalFooter}>
-                {secondaryBtn && (
+                {/* ⭐ singleButton 옵션: secondaryBtn 출력 안함 */}
+                {!singleButton && secondaryBtn && (
                   <ModalCancelButton size="large" onClick={handleSecondary}>
                     {secondaryBtn}
                   </ModalCancelButton>
                 )}
-                <ModalConfirmButton size="large" onClick={handlePrimary}>
+
+                <ModalConfirmButton
+                  size="large"
+                  onClick={handlePrimary}
+                  className={singleButton ? styles.singleButton : ''}
+                >
                   {primaryBtn}
                 </ModalConfirmButton>
               </div>

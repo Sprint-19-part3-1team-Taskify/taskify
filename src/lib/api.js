@@ -1,20 +1,20 @@
+// /api/api.js
 import axios from 'axios';
 
-const BASE_URL = 'https://sp-taskify-api.vercel.app/19-1';
-
+// 브라우저에서는 /api/external을 통해 자동으로 프록시됨
 const api = axios.create({
-  baseURL: BASE_URL,
+  baseURL: '/api/external',
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-api.interceptors.request.use((config) => {
-  const accessToken = localStorage.getItem('accessToken');
-  if (accessToken) {
-    config.headers.Authorization = `Bearer ${accessToken}`;
-  }
-  return config;
+// 내부 Next.js API 라우트용 (로그인 등)
+export const authApi = axios.create({
+  baseURL: '/api',
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
 export default api;

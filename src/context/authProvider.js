@@ -1,41 +1,44 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { getUsersMe, putUsersMe } from '@/api/users';
-import { postAuthLogin } from '@/api/auth';
+import { postAuthLogin, postAuthLogout } from '@/api/auth';
 import { useRouter } from 'next/router';
 
 const AuthContext = createContext({
   user: null,
-  isPending : true,
+  isPending: true,
   login: () => {},
   logout: () => {},
   updateMe: () => {},
 });
 
 export default function AuthProvider({ children }) {
+  const router = useRouter();
   const [values, setValues] = useState({
-    user : null,
-    isPending : true
-  })
+    user: null,
+    isPending: true,
+  });
 
   const getMe = async () => {
     setValues((prevValue) => ({
       ...prevValue,
-      isPending : true,
-    }))
+      isPending: true,
+    }));
 
     let nextUser;
 
     try {
       const res = await getUsersMe();
       nextUser = res;
-    } catch {
-
+    } catch (error) {
+      if (error.response?.status !== 401) {
+        console.error(error);
+      }
     } finally {
       setValues((prevValue) => ({
         ...prevValue,
-        user : nextUser,
-        isPending : false,
-      }))
+        user: nextUser,
+        isPending: false,
+      }));
     }
   };
 
@@ -48,7 +51,16 @@ export default function AuthProvider({ children }) {
     }
   }
   async function logout() {
-    /*** 로그아웃 */
+    try {
+      const res = await postAuthLogout();
+      setValues({ user: null, isPending: false }); // 로컬 상태 초기화
+      router.push('/');
+    } catch (error) {
+      if (error.response?.status !== 401) {
+        console.error(error);
+      }
+      // throw error;
+    }
   }
 
   async function updateMe({ nickname, profileImageUrl }) {
@@ -57,28 +69,37 @@ export default function AuthProvider({ children }) {
       const nextUser = res;
       setValues((prevValue) => ({
         ...prevValue,
-        user : nextUser,
-      }))
-    }catch(error) {
+        user: nextUser,
+      }));
+    } catch (error) {
       throw error;
     }
   }
 
+  const publicPages = ['/', '/login', '/signup'];
+
   useEffect(() => {
-    const initAuth = async () => {
-      await getMe();
-    };
-    initAuth();
+    // 공개 페이지면 바로 isPending false
+    if (publicPages.includes(router.pathname)) {
+      setValues({ user: null, isPending: false });
+      return;
+    }
+
+    // 보호된 페이지에서만 유저 정보 확인
+    getMe();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ 
-        user : values.user, 
-        isPending : values.isPending, 
-        getMe, 
-        login, 
-        logout, 
-        updateMe }}>
+    <AuthContext.Provider
+      value={{
+        user: values.user,
+        isPending: values.isPending,
+        getMe,
+        login,
+        logout,
+        updateMe,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
