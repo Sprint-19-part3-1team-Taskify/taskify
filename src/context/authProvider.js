@@ -18,17 +18,6 @@ export default function AuthProvider({ children }) {
   });
 
   const getMe = async () => {
-    // ⭐ 토큰이 없으면 API 호출하지 않음
-    const token = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null;
-
-    if (!token) {
-      setValues({
-        user: null,
-        isPending: false,
-      });
-      return;
-    }
-
     setValues((prevValue) => ({
       ...prevValue,
       isPending: true,
@@ -41,10 +30,6 @@ export default function AuthProvider({ children }) {
       nextUser = res;
     } catch (error) {
       console.error('사용자 정보 조회 실패:', error);
-      // ⭐ 401 에러 시 토큰 제거
-      if (error.response?.status === 401) {
-        localStorage.removeItem('accessToken');
-      }
       nextUser = null;
     } finally {
       setValues((prevValue) => ({
@@ -59,11 +44,6 @@ export default function AuthProvider({ children }) {
     try {
       const res = await postAuthLogin({ email, password });
 
-      // 🔥 로그인 성공 시 token 저장
-      if (res?.accessToken) {
-        localStorage.setItem('accessToken', res.accessToken);
-      }
-
       await getMe();
     } catch (error) {
       throw error;
@@ -71,9 +51,6 @@ export default function AuthProvider({ children }) {
   }
 
   async function logout() {
-    // 🔥 로그아웃 시 토큰 제거
-    localStorage.removeItem('accessToken');
-
     setValues({
       user: null,
       isPending: false,
