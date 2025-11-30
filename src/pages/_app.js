@@ -70,10 +70,13 @@ function Layout({ children }) {
   const pagesWithoutSidemenu = [...indexPage, ...authPages];
   const isGuidePage = router.pathname.startsWith('/guide');
   const isUserPage = authPages.includes(router.pathname);
+  const isIndexPage = indexPage.includes(router.pathname);
   const shouldSidemenu = !pagesWithoutSidemenu.includes(router.pathname) && !isGuidePage;
   const { sidemenuShow } = useHeader();
   return (
-    <main className={`appMain ${shouldSidemenu && 'subPage'} ${isUserPage && 'userPage'}`}>
+    <main
+      className={`appMain ${shouldSidemenu ? 'subPage' : ''} ${isUserPage ? 'userPage' : ''}  ${isIndexPage ? 'landingPage' : ''}`}
+    >
       <Header />
       {sidemenuShow && <SideMenu />}
       <div className="pageContent">{children}</div>

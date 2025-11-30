@@ -65,12 +65,8 @@ export default function Header() {
     isOwner,
   } = useHeader();
 
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const { openModal } = useModal();
-
-  if (headerType === 'header' && !user) {
-    return null;
-  }
 
   if (headerType === 'none') return null;
 
@@ -91,12 +87,22 @@ export default function Header() {
           >
             {headerType === 'default' && (
               <div className={styles.authGroup}>
-                <Link href="/login" className={styles.textBtn}>
-                  로그인
-                </Link>
-                <Link href="/signup" className={styles.textBtn}>
-                  회원가입
-                </Link>
+                {user ? (
+                  <>
+                    <button onClick={logout} className={styles.textBtn}>
+                      로그아웃
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Link href="/login" className={styles.textBtn}>
+                      로그인
+                    </Link>
+                    <Link href="/signup" className={styles.textBtn}>
+                      회원가입
+                    </Link>
+                  </>
+                )}
               </div>
             )}
 
