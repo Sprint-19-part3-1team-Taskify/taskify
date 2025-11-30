@@ -1,13 +1,12 @@
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import { useHeader } from '@/context/HeaderProvider';
-import { LoginButton } from '@/components/button';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
-
-import styles from './landing.module.scss';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useHeader } from '@/context/HeaderProvider';
 import { useAuth } from '@/context/authProvider';
 import { getDashboards } from '@/api/dashboards';
+import { LoginButton } from '@/components/button';
+import styles from './index.module.scss';
 
 export default function Home() {
   const { user } = useAuth();

@@ -10,8 +10,10 @@ export default function MyPage() {
 
   useEffect(() => {
     setHeaderConfig({
-      headerType: 'header3Simple',
+      headerType: 'header5',
       dashboardName: '계정관리',
+      showCrown: false,
+      isOwner: false,
       sidemenuShow: true,
     });
   }, [setHeaderConfig]);

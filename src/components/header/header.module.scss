@@ -154,52 +154,6 @@
   }
 }
 
-// 아바타 그룹
-.avatarGroup {
-  display: flex;
-  align-items: center;
-}
-
-.avatarStack {
-  display: flex;
-  align-items: center;
-  margin-left: -8px;
-}
-
-.stackedAvatar {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: 2px solid #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  font-weight: 600;
-  color: #ffffff;
-  margin-left: -8px;
-  overflow: hidden;
-
-  &:first-child {
-    margin-left: 0;
-  }
-
-  .dark & {
-    border-color: #1f1f1f;
-  }
-
-  // User 컴포넌트가 내부에 있을 때
-  :global(.user) {
-    margin: 0;
-
-    :global(.first) {
-      width: 34px;
-      height: 34px;
-      border: none;
-    }
-  }
-}
-
 .moreCount {
   width: 38px;
   height: 38px;

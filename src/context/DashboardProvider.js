@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useAuth } from '@/context/authProvider';
 import { getDashboards, postDashboards, putDashboardsId } from '@/api/dashboards';
 import { getInvitations, putInvitationsId } from '@/api/invitations';
+import { getMembers } from '@/api/members';
 
 const DashboardContext = createContext(null);
 
@@ -16,6 +17,7 @@ export function DashboardProvider({ children }) {
   const [loadingMy, setLoadingMy] = useState(true);
   const [loadingInvited, setLoadingInvited] = useState(true);
   const [currentDashboard, setCurrentDashboard] = useState(null);
+  const [members, setMembers] = useState([]);
 
   const pathname = usePathname();
 
@@ -133,6 +135,23 @@ export function DashboardProvider({ children }) {
   }, []);
 
   /* -------------------------
+     대시보드 멤버 목록 조회
+     ------------------------- */
+  const loadMembers = useCallback(async (dashboardId) => {
+    if (!dashboardId) {
+      setMembers([]);
+      return;
+    }
+
+    try {
+      const res = await getMembers({ dashboardId });
+      setMembers(res.members || []);
+    } catch (err) {
+      console.error('❌ 대시보드 멤버 목록:', err);
+    }
+  }, []);
+
+  /* -------------------------
      로그인 상태 변할 때 대시보드 로드
      ------------------------- */
   useEffect(() => {
@@ -156,12 +175,24 @@ export function DashboardProvider({ children }) {
     const match = pathname?.match(/\/dashboard\/(\d+)/);
     if (!match) {
       setCurrentDashboard(null);
+      setMembers([]);
       return;
     }
     const dashboardId = Number(match[1]);
     const found = myDashboards.find((d) => Number(d.id) === Number(dashboardId));
     setCurrentDashboard(found || null);
   }, [pathname, myDashboards]);
+
+  /* -------------------------
+   currentDashboard 변경 시 멤버 자동 로드 (👈 이게 핵심!)
+   ------------------------- */
+  useEffect(() => {
+    if (currentDashboard?.id) {
+      loadMembers(currentDashboard.id);
+    } else {
+      setMembers([]); // 대시보드 없으면 멤버도 비우기
+    }
+  }, [currentDashboard?.id, loadMembers]);
 
   /* -------------------------
      대시보드 수정
@@ -268,6 +299,7 @@ export function DashboardProvider({ children }) {
         loadingMy,
         loadingInvited,
         currentDashboard,
+        members,
         setCurrentDashboard,
         loadMyDashboards,
         loadInvitedDashboards,
