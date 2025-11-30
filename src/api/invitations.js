@@ -1,11 +1,12 @@
 // /api/invitations.js
 import api from '@/lib/api';
 
-/* ------------------------------
-   GET /invitations
-   내가 받은 초대 목록 조회
------------------------------- */
+// GET /invitations
 export async function getInvitations({ size = 10, cursorId, title } = {}) {
+  /* size: number;
+  cursorId: number;
+  title: string;
+  */
   try {
     const res = await api.get('/invitations', {
       params: { size, cursorId, title },
@@ -16,12 +17,11 @@ export async function getInvitations({ size = 10, cursorId, title } = {}) {
   }
 }
 
-/* ------------------------------
-   PUT /invitations/:invitationId
-   초대 응답(수락/거절)
-   ⚠ Swagger 명세: { inviteAccepted: boolean }
------------------------------- */
+// PUT /invitations/:invitationId
 export async function putInvitationsId(invitationId, inviteAccepted) {
+  /* invitationId: number;
+  inviteAccepted: boolean;
+  */
   try {
     const res = await api.put(`/invitations/${invitationId}`, {
       inviteAccepted,
