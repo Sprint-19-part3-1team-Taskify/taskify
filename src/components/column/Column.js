@@ -1,4 +1,5 @@
 import { useRef, useEffect } from 'react';
+import { useDroppable } from '@dnd-kit/core';
 import { AddTodoButton } from '../button';
 import styles from './Column.module.scss';
 
@@ -8,8 +9,10 @@ import styles from './Column.module.scss';
  * - 무한 스크롤 지원
  * - + 버튼 (할 일 생성)
  * - 톱니바퀴 버튼 (컬럼 관리)
+ * - DnD Droppable 영역
  */
 export default function Column({
+  columnId,
   title,
   cardCount,
   children,
@@ -22,33 +25,50 @@ export default function Column({
   const scrollRef = useRef(null);
   const observerTarget = useRef(null);
 
+  // Droppable 설정
+  const { setNodeRef, isOver } = useDroppable({
+    id: columnId,
+  });
+
   // 무한 스크롤 옵저버
   useEffect(() => {
-    if (!hasMore || loading || !onLoadMore) return;
+    // hasMore가 명시적으로 false일 때만 중단 (undefined는 허용)
+    if (hasMore === false || !onLoadMore) return;
+
+    const scrollContainer = scrollRef.current;
+    const target = observerTarget.current;
+
+    if (!scrollContainer || !target) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) {
+        if (entries[0].isIntersecting && !loading) {
           onLoadMore();
         }
       },
-      { threshold: 0.1, root: scrollRef.current },
+      {
+        threshold: 0.1,
+        root: scrollContainer,
+        rootMargin: '200px',
+      },
     );
 
-    const target = observerTarget.current;
-    if (target) {
-      observer.observe(target);
-    }
+    observer.observe(target);
 
     return () => {
-      if (target) {
-        observer.unobserve(target);
-      }
+      observer.unobserve(target);
     };
-  }, [hasMore, loading, onLoadMore]);
+  }, [hasMore, onLoadMore, columnId, loading]);
 
   return (
-    <div className={styles.column}>
+    <div
+      ref={setNodeRef}
+      className={styles.column}
+      style={{
+        backgroundColor: isOver ? 'rgba(85, 52, 218, 0.05)' : 'transparent',
+        transition: 'background-color 0.2s',
+      }}
+    >
       <div className={styles.frame2610633}>
         <div className={styles.frame2610632}>
           <svg
@@ -83,13 +103,13 @@ export default function Column({
       <div className={styles.frame2000} ref={scrollRef}>
         <AddTodoButton type="1" onClick={onAddTodo} />
         {children}
-        {/* 무한 스크롤 트리거 */}
-        {hasMore && <div ref={observerTarget} style={{ height: '20px' }} />}
-        {/* {loading && (
+        {/* 무한 스크롤 트리거 - hasMore가 명시적으로 false가 아니면 표시 */}
+        {hasMore !== false && <div ref={observerTarget} style={{ height: '20px' }} />}
+        {loading && (
           <div style={{ textAlign: 'center', padding: '10px', fontSize: '14px', color: '#787486' }}>
             로딩 중...
           </div>
-        )} */}
+        )}
       </div>
     </div>
   );

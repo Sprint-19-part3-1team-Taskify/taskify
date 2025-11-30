@@ -37,17 +37,20 @@ import { InputSubmitButton } from '@/components/button';
  * />
  */
 
-export default function Textarea({ label, id, required, onClick, ...rest }) {
+export default function Textarea({ label, id, required, onClick, value, ...rest }) {
+  // 입력값이 비어있는지 확인 (trim하여 공백만 있어도 비활성화)
+  const isDisabled = !value || value.trim() === '';
+
   return (
     <div className="iptBox">
       <label htmlFor={id} className={required ? 'required' : ''}>
         {label}
       </label>
       <div className={`textarea ${!onClick ? 'lg' : ''}`}>
-        <textarea id={id} required={required} {...rest} />
+        <textarea id={id} required={required} value={value} {...rest} />
         {onClick && (
           //@공통컴퍼넌트 변경예정
-          <InputSubmitButton type="1" onClick={onClick} />
+          <InputSubmitButton type="1" onClick={onClick} disabled={isDisabled} />
         )}
       </div>
     </div>

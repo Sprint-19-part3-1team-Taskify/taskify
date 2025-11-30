@@ -64,7 +64,7 @@ export async function putDashboardsId(dashboardId, dashboardData) {
 export async function deleteDashboardsId(dashboardId) {
   /* dashboardId: number; */
   try {
-    const res = await api.delete(`/dashboards/${dashboardId}`);
+    const res = await api.delete(`/dashboards/${dashboardId}`, { data: {} });
     return res.data;
   } catch (e) {
     return e.response?.data;
@@ -101,7 +101,9 @@ export async function getDashboardsIdInvitations(dashboardId, { page = 1, size =
 // DELETE /dashboards/:dashboardId/invitations/:invitationId
 export async function deleteDashboardsIdInvitations(dashboardId, invitationId) {
   try {
-    const res = await api.delete(`/dashboards/${dashboardId}/invitations/${invitationId}`);
+    const res = await api.delete(`/dashboards/${dashboardId}/invitations/${invitationId}`, {
+      data: {},
+    });
     return res.data;
   } catch (e) {
     return e.response?.data;

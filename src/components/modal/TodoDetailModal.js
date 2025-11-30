@@ -22,11 +22,14 @@ export default function TodoDetailModal({
   cardData,
   dashboardId,
   columnId,
+  columns = [],
   userId,
   onEdit,
   onDelete,
   onUpdate,
 }) {
+  // 컬럼 이름 찾기
+  const columnName = columns.find((col) => col.id === columnId)?.title || '컬럼';
   const [comments, setComments] = useState([]);
   const [commentInput, setCommentInput] = useState('');
   const [editingCommentId, setEditingCommentId] = useState(null); // unique key (id or index)
@@ -79,7 +82,8 @@ export default function TodoDetailModal({
 
   // 무한 스크롤 옵저버
   useEffect(() => {
-    if (!hasMore || loading) return;
+    // hasMore가 명시적으로 false일 때만 중단 (undefined는 허용)
+    if (hasMore === false || loading) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -274,7 +278,7 @@ export default function TodoDetailModal({
             {/* 상태 및 태그 */}
             <div className={styles.state}>
               <div className={styles.todoProgress}>
-                <Progress value={'To Do'} />
+                <Progress value={columnName} />
               </div>
               {cardData.tags && cardData.tags.length > 0 && (
                 <div className={styles.todoTag}>

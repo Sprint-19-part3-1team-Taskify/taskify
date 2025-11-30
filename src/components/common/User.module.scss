@@ -73,6 +73,15 @@
       @include txtStyle(14px, B);
     }
   }
+  // 헤더 아바타 스택용 타입
+  &.avatar {
+    .first {
+      @include txtStyle('md', SB);
+      width: 38px;
+      height: 38px;
+      border: none;
+    }
+  }
 }
 
 [class*='userGroup'] {

@@ -67,6 +67,6 @@ export async function postColumnsIdCardImage(columnId, image) {
     });
     return res.data;
   } catch (e) {
-    return e.response.data;
+    return e.response?.data || { error: 'Image upload failed' };
   }
 }
