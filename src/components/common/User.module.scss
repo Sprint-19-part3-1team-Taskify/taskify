@@ -1,6 +1,12 @@
 @use '@styles/variables' as *;
 @use '@styles/mixins' as *;
 
+@mixin firstMediumStyle {
+  @include txtStyle('lg', SB);
+  width: 34px;
+  height: 34px;
+}
+
 .user {
   display: inline-flex;
   align-items: center;
@@ -24,6 +30,7 @@
     @include txtStyle('lg', R);
     margin-left: 6px;
   }
+
   &.large {
     .first {
       @include txtStyle('lg', SB);
@@ -32,17 +39,17 @@
       &:only-child {
         border: 2px solid $white;
       }
+      &.remain {
+        text-indent: -2px;
+        color: #d25b68;
+        background-color: #f4d7da !important;
+      }
     }
     .name {
       margin-left: 12px;
       @include txtStyle('lg', M);
       color: $black3;
     }
-  }
-  @mixin firstMediumStyle {
-    @include txtStyle('lg', SB);
-    width: 34px;
-    height: 34px;
   }
   &.medium {
     .first {
@@ -67,15 +74,12 @@
     }
   }
 }
-:global(.userGroup) {
-  display: inline-flex;
+
+[class*='userGroup'] {
   .user {
     margin-left: -8px;
     &:first-child {
       margin-left: 0;
-    }
-    .first {
-      text-indent: -2px;
     }
   }
 }
