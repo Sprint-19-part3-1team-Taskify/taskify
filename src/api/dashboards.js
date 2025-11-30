@@ -72,15 +72,15 @@ export async function deleteDashboardsId(dashboardId) {
 }
 
 // POST /dashboards/:dashboardId/invitations *대시보드 생성자만 초대 가능
-export async function postDashboardsIdInvitations(dashboardId, email) {
+export async function postDashboardsIdInvitations(dashboardId, emailData) {
   /* dashboardId: number;
-  email: string;
+  emailData: { email: string }
   */
   try {
     const res = await api.post(`/dashboards/${dashboardId}/invitations`, emailData);
     return res.data;
   } catch (e) {
-    return e.response.data;
+    return e.response?.data || { message: '초대에 실패했습니다.' };
   }
 }
 
