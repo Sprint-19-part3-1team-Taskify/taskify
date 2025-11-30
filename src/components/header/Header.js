@@ -7,51 +7,23 @@ import styles from './header.module.scss';
 import { useHeader } from '@/context/HeaderProvider';
 import { useModal } from '@/context/modalProvider';
 import sideStyles from '@/components/sidemenu/SideMenu.module.scss';
-
-import InviteModalContainer from '@/components/modal/InviteModalContainer';
+import Users from '@/components/common/Users';
+import UserMenu from '@/components/header/UserMenu';
 
 /**
  * Global Navigation Header Component
  *
- * @param {Object} props
- * @param {"default" | "header3" | "header4" | "header5"} props.type
+ * @param {Object} props*
+ * @typedef {"default" | "header3" | "header4" | "header5" | "header3Simple" | "none"} HeaderType
+ * props.type
  *   - default: 로그인/회원가입 영역
  *   - default darkMode={true}: 다크모드용 흰색 로고 + 로그인/회원가입
  *   - header3: 대시보드명 + 관리 + 초대하기 + 프로필
  *   - header4: header3 + 아바타 그룹
  *   - header5: 동적 대시보드명 + 관리 + 초대하기 + 아바타 그룹 + 프로필
  *
- * @param {boolean} [props.darkMode=false]
- *   - type="default"일 때만 적용됨 (흰색 로고 사용)
- *
  * @param {string} [props.dashboardName]
  *   - header3/4/5에서 표시되는 대시보드명
- *
- * ```jsx
- * function MyDashboard() {
- *   return <div>내 대시보드</div>;
- * }
- *
- * MyDashboard.headerType = "header3";       // 헤더 타입 지정
- * MyDashboard.dashboardName = "내 대시보드"; // 대시보드명 지정
- *
- * export default MyDashboard;
- * ```
- *
- * 헤더를 숨기고 싶은 경우:
- *
- * ```jsx
- * function LoginPage() {
- *   return <div>로그인 화면</div>;
- * }
- *
- * LoginPage.headerType = "none"; // Header 숨김
- * LoginPage.dashboardName = "";
- *
- * export default LoginPage;
- * ```
- *
- * @typedef {"default" | "header3" | "header4" | "header5" | "header3Simple" | "none"} HeaderType
  *
  * @returns {JSX.Element | null} 렌더링된 헤더 요소 (headerType이 none이면 null)
  */
@@ -142,9 +114,7 @@ export default function Header() {
                 </div>
 
                 <div className={styles.profileSection}>
-                  <Link href="/mypage" className={styles.profileLink}>
-                    <User value={user?.nickname} type="large" />
-                  </Link>
+                  <UserMenu />
                 </div>
               </>
             )}
@@ -169,9 +139,7 @@ export default function Header() {
                 </Link>
 
                 <div className={styles.profileSection}>
-                  <Link href="/mypage" className={styles.profileLink}>
-                    <User value={user?.nickname} type="large" />
-                  </Link>
+                  <UserMenu />
                 </div>
               </div>
             )}
@@ -211,25 +179,11 @@ export default function Header() {
                   </button>
                 </div>
 
-                <div className={styles.avatarGroup}>
-                  <div className={styles.avatarStack}>
-                    <div className={styles.stackedAvatar} style={{ background: '#FFC85A' }}>
-                      A
-                    </div>
-                    <div className={styles.stackedAvatar} style={{ background: '#9DD7ED' }}>
-                      B
-                    </div>
-                    <div className={styles.stackedAvatar} style={{ background: '#E876EA' }}>
-                      C
-                    </div>
-                    <div className={styles.moreCount}>+2</div>
-                  </div>
-                </div>
+                {/* 대시보드 멤버  */}
+                <Users />
 
                 <div className={styles.profileSection}>
-                  <Link href="/mypage" className={styles.profileLink}>
-                    <User value={user?.nickname} type="large" />
-                  </Link>
+                  <UserMenu />
                 </div>
               </>
             )}
@@ -239,7 +193,7 @@ export default function Header() {
             {/* ================================================== */}
             {headerType === 'header5' && (
               <>
-                <Link href="/dashboard" className={styles.dashboardName}>
+                <div className={styles.dashboardName}>
                   {dashboardName}
                   {showCrown && isOwner && (
                     <span className={sideStyles.crownIcon}>
@@ -251,7 +205,7 @@ export default function Header() {
                       />
                     </span>
                   )}
-                </Link>
+                </div>
 
                 <div className={styles.buttonGroup}>
                   <Link href={`/dashboard/${dashboardId}/edit`} className={styles.outlineBtn}>
@@ -269,27 +223,11 @@ export default function Header() {
                   </button>
                 </div>
 
-                <div className={styles.avatarGroup}>
-                  <div className={styles.avatarStack}>
-                    <div className={styles.stackedAvatar} style={{ background: '#FFC85A' }}>
-                      A
-                    </div>
-                    <div className={styles.stackedAvatar} style={{ background: '#9DD7ED' }}>
-                      B
-                    </div>
-                    <div className={styles.stackedAvatar} style={{ background: '#E876EA' }}>
-                      C
-                    </div>
-                    <div className={styles.stackedAvatar} style={{ background: '#76A5EA' }}>
-                      D
-                    </div>
-                  </div>
-                </div>
+                {/* 대시보드 멤버  */}
+                <Users />
 
                 <div className={styles.profileSection}>
-                  <Link href="/mypage" className={styles.profileLink}>
-                    <User value={user?.nickname} type="large" />
-                  </Link>
+                  <UserMenu />
                 </div>
               </>
             )}
