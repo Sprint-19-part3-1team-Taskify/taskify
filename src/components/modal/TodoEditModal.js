@@ -20,6 +20,7 @@ export default function TodoEditModal({
   columnId,
   dashboardId,
   members,
+  columns = [], // 컬럼 목록 추가
   onSuccess,
 }) {
   const [formData, setFormData] = useState({
@@ -29,6 +30,7 @@ export default function TodoEditModal({
     assigneeUserId: null,
     tags: [],
     imageUrl: null,
+    columnId: null, // 컬럼 ID 추가
   });
 
   const [originalData, setOriginalData] = useState(null);
@@ -43,6 +45,7 @@ export default function TodoEditModal({
       assigneeUserId: cardData.assignee?.userId || null,
       tags: cardData.tags || [],
       imageUrl: cardData.imageUrl || null,
+      columnId: columnId || null, // 현재 컬럼 ID 저장
     };
     setFormData(initialData);
     setOriginalData(initialData);
@@ -87,12 +90,22 @@ export default function TodoEditModal({
   const handleSubmit = async () => {
     if (!isChanged) return;
 
+    // dueDate를 YYYY-MM-DD HH:MM 형식으로 변환
+    const formatDueDate = (date) => {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      return `${year}-${month}-${day} ${hours}:${minutes}`;
+    };
+
     const updatedData = {
-      columnId: columnId,
+      columnId: formData.columnId || columnId, // 변경된 컬럼 ID 사용
       assigneeUserId: formData.assigneeUserId,
       title: formData.title,
       description: formData.description,
-      dueDate: formData.dueDate.toISOString(),
+      dueDate: formatDueDate(formData.dueDate),
       tags: formData.tags,
       imageUrl: formData.imageUrl || undefined,
     };
@@ -109,6 +122,22 @@ export default function TodoEditModal({
     const found = members.find((m) => m.userId === formData.assigneeUserId);
     return found ? found.nickname || found.email : '';
   })();
+
+  // 컬럼 드롭다운용 컬럼 이름 배열
+  const columnNames = columns.map((col) => col.title);
+
+  // 현재 컬럼 이름
+  const currentColumnName = (() => {
+    const currentColId = formData.columnId || columnId;
+    const found = columns.find((col) => col.id === currentColId);
+    return found ? found.title : '';
+  })();
+
+  // 컬럼 변경 핸들러
+  const handleColumnChange = (selectedColumnName) => {
+    const found = columns.find((col) => col.title === selectedColumnName);
+    if (found) setFormData((prev) => ({ ...prev, columnId: found.id }));
+  };
 
   return (
     <Modal
@@ -127,9 +156,9 @@ export default function TodoEditModal({
         <Dropdown
           type="progress"
           label="상태"
-          content={['To Do', 'On Progress', 'Done']}
-          onChange={() => {}}
-          initValue={'To Do'}
+          content={columnNames}
+          onChange={handleColumnChange}
+          initValue={currentColumnName}
         />
         <Dropdown
           type="member"

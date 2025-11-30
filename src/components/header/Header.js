@@ -35,10 +35,15 @@ export default function Header() {
     showCrown = true,
     dashboardId,
     isOwner,
+    members = [],
   } = useHeader();
 
   const { user, logout } = useAuth();
   const { openModal } = useModal();
+
+  // 멤버 표시 (최대 4명 + 더보기)
+  const displayMembers = members.slice(0, 4);
+  const remainingCount = members.length > 4 ? members.length - 4 : 0;
 
   if (headerType === 'none') return null;
 
@@ -164,10 +169,12 @@ export default function Header() {
                 </Link>
 
                 <div className={styles.buttonGroup}>
-                  <Link href={`/dashboard/${dashboardId}/edit`} className={styles.outlineBtn}>
-                    <Image src="/images/settings.svg" width={20} height={20} alt="" />
-                    관리
-                  </Link>
+                  {isOwner && (
+                    <Link href={`/dashboard/${dashboardId}/edit`} className={styles.outlineBtn}>
+                      <Image src="/images/settings.svg" width={20} height={20} alt="" />
+                      관리
+                    </Link>
+                  )}
 
                   <button
                     className={styles.outlineBtn}
@@ -208,10 +215,12 @@ export default function Header() {
                 </div>
 
                 <div className={styles.buttonGroup}>
-                  <Link href={`/dashboard/${dashboardId}/edit`} className={styles.outlineBtn}>
-                    <Image src="/images/settings.svg" width={20} height={20} alt="" />
-                    관리
-                  </Link>
+                  {isOwner && (
+                    <Link href={`/dashboard/${dashboardId}/edit`} className={styles.outlineBtn}>
+                      <Image src="/images/settings.svg" width={20} height={20} alt="" />
+                      관리
+                    </Link>
+                  )}
 
                   <button
                     className={styles.outlineBtn}

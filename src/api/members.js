@@ -22,7 +22,7 @@ export async function getMembers({ page = 1, size = 20, dashboardId }) {
 export async function deleteMembersId(memberId) {
   /* memberId: number; */
   try {
-    const res = await api.delete(`/members/${memberId}`);
+    const res = await api.delete(`/members/${memberId}`, { data: {} });
     return res.data;
   } catch (e) {
     return e.response.data;

@@ -81,30 +81,20 @@ const InvitationCardTable = ({
       </div>
 
       {/* label 변경: 오너/사용자 위치에 따라 달라짐 */}
-      <div className={styles.label}>
-        대시보드 / 이메일 / {showCancel ? '초대받은 사람' : '초대한 사람'}
-      </div>
+      <div className={styles.label}>이메일</div>
 
       <div className={styles.invitationList}>
         {currentInvitations.length > 0 ? (
           currentInvitations.map((inv) => (
             <div key={inv.id} className={styles.invitationItem}>
               <div style={{ display: 'flex', gap: 12, alignItems: 'center', flex: 1 }}>
-                <div className={styles.dashboardName}>{dashboardTitle(inv)}</div>
-
                 {/* 오너 화면: 초대한 대상 표시(invitee) */}
-                {showCancel && (
-                  <div className={styles.email}>
-                    {getInviteeEmail(inv)} —{' '}
-                    <span className={styles.inviter}>{getInviteeName(inv)}</span>
-                  </div>
-                )}
+                {showCancel && <div className={styles.email}>{getInviteeEmail(inv)}</div>}
 
                 {/* 초대받은 사용자: 초대한 사람 표시(inviter) */}
                 {showRespond && (
                   <div className={styles.email}>
                     <span className={styles.inviter}>{getInviterName(inv)}</span>
-                    {' — 나를 초대함'}
                   </div>
                 )}
               </div>

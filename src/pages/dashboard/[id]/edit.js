@@ -194,11 +194,17 @@ export default function DashboardEdit() {
       });
 
       if (membersRes?.members) {
-        // members API가 nickname 포함한다고 가정
-        setMembers(membersRes.members);
+        const rawMembers = membersRes.members;
+        // 오너 제외 (role 이나 권한 플래그 기반)
+        const filtered = Array.isArray(rawMembers)
+          ? rawMembers.filter((m) => m?.role !== 'OWNER' && m?.isOwner !== true)
+          : [];
+        setMembers(filtered);
       } else {
         // fallback: dashboard.members
-        setMembers(data?.members || []);
+        const rawMembers = Array.isArray(data?.members) ? data.members : [];
+        const filtered = rawMembers.filter((m) => m?.role !== 'OWNER' && m?.isOwner !== true);
+        setMembers(filtered);
       }
 
       // 초대 목록 (대시보드 스코프)
@@ -220,12 +226,17 @@ export default function DashboardEdit() {
 
   /* 구성원 삭제 (멤버 리소스 사용) */
   const handleDeleteMember = async (memberId) => {
-    const res = await deleteMembersId(memberId);
-
-    if (res?.message) {
-      setMembers((prev) => prev.filter((m) => m.id !== memberId));
-      showMessage('구성원이 삭제되었습니다!');
-    } else {
+    try {
+      const res = await deleteMembersId(memberId);
+      // 백엔드 응답 형태에 따라 성공 판정 보강
+      const isError = res?.error === true || res?.message === 'error';
+      if (!isError) {
+        setMembers((prev) => prev.filter((m) => m.id !== memberId));
+        showMessage('구성원이 삭제되었습니다!');
+      } else {
+        showMessage(res?.message || '삭제 중 오류가 발생했습니다.');
+      }
+    } catch (e) {
       showMessage('삭제 중 오류가 발생했습니다.');
     }
   };
@@ -253,12 +264,16 @@ export default function DashboardEdit() {
 
   /* 초대 취소 (오너가 초대 취소할 때) */
   const handleCancelInvitation = async (invitationId) => {
-    const res = await deleteDashboardsIdInvitations(fixedId, invitationId);
-
-    if (res?.message) {
-      setInvitedMembers((prev) => prev.filter((m) => m.id !== invitationId));
-      showMessage('초대가 취소되었습니다.');
-    } else {
+    try {
+      const res = await deleteDashboardsIdInvitations(fixedId, invitationId);
+      const isError = res?.error === true || res?.message === 'error';
+      if (!isError) {
+        setInvitedMembers((prev) => prev.filter((m) => m.id !== invitationId));
+        showMessage('초대가 취소되었습니다.');
+      } else {
+        showMessage(res?.message || '취소 중 오류가 발생했습니다.');
+      }
+    } catch (e) {
       showMessage('취소 중 오류가 발생했습니다.');
     }
   };
@@ -275,7 +290,20 @@ export default function DashboardEdit() {
       return;
     }
 
-    const res = await postDashboardsIdInvitations(fixedId, { email: newInviteEmail.trim() });
+    const email = newInviteEmail.trim().toLowerCase();
+
+    // 이미 보낸 초대 중 대기 상태가 있으면 재발송 금지
+    const hasPending = invitedMembers.some(
+      (inv) =>
+        inv?.email?.toLowerCase() === email &&
+        (inv?.status === 'pending' || inv?.status === 'REQUESTED'),
+    );
+    if (hasPending) {
+      showMessage('이미 대기 중인 초대가 있습니다. 응답을 기다려주세요.');
+      return;
+    }
+
+    const res = await postDashboardsIdInvitations(fixedId, { email });
 
     if (res?.id) {
       setInvitedMembers((prev) => [...prev, res]);

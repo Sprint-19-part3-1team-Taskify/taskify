@@ -15,6 +15,9 @@ export function HeaderProvider({ children }) {
   // ⭐ 내가 만든 대시보드인지 여부
   const [isOwner, setIsOwner] = useState(false);
 
+  // ⭐ 대시보드 멤버 목록
+  const [members, setMembers] = useState([]);
+
   /**
    * 페이지에서 한 번에 헤더 설정 가능
    */
@@ -28,6 +31,9 @@ export function HeaderProvider({ children }) {
 
     // ⭐ owner 여부 등록
     if ('isOwner' in config) setIsOwner(config.isOwner);
+
+    // ⭐ members 등록
+    if ('members' in config) setMembers(config.members);
   };
 
   return (
@@ -39,6 +45,7 @@ export function HeaderProvider({ children }) {
         sidemenuShow,
         dashboardId,
         isOwner,
+        members,
 
         setHeaderType,
         setDashboardName,
@@ -46,6 +53,7 @@ export function HeaderProvider({ children }) {
         setSidemenuShow,
         setDashboardId,
         setIsOwner,
+        setMembers,
         setHeaderConfig,
       }}
     >
