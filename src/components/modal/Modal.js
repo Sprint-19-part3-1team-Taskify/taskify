@@ -43,6 +43,9 @@ export default function Modal({
   onClick,
   onSubClick,
   singleButton = false,
+  disabled = false,
+  onEdit,
+  onDelete,
 }) {
   const [more, setMore] = useState(false);
   useModalLock(isOpen); // 배경 스크롤 방지
@@ -63,6 +66,19 @@ export default function Modal({
     onClick?.();
     if (variant === 'type2' || variant === 'alert') closeModal(id);
   };
+
+  // 수정하기 핸들러
+  const handleEdit = () => {
+    setMore(false);
+    onEdit?.();
+  };
+
+  // 삭제하기 핸들러
+  const handleDelete = () => {
+    setMore(false);
+    onDelete?.();
+  };
+
   return (
     <>
       <div className={styles.modalOverlay} ref={modalRef} onClick={handleModalOverlay}>
@@ -84,8 +100,8 @@ export default function Modal({
                     </div>
                     {more && (
                       <div className={styles.menu}>
-                        <button>수정하기</button>
-                        <button>삭제하기</button>
+                        <button onClick={handleEdit}>수정하기</button>
+                        <button onClick={handleDelete}>삭제하기</button>
                       </div>
                     )}
                   </div>
@@ -108,6 +124,7 @@ export default function Modal({
                   size="large"
                   onClick={handlePrimary}
                   className={singleButton ? styles.singleButton : ''}
+                  disabled={disabled}
                 >
                   {primaryBtn}
                 </ModalConfirmButton>

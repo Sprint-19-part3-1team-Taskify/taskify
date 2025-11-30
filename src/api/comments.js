@@ -50,7 +50,7 @@ export async function putCommentsId(commentId, content) {
 export async function deleteCommentsId(commentId) {
   /* commentId: number; */
   try {
-    const res = await api.delete(`/comments/${commentId}`);
+    const res = await api.delete(`/comments/${commentId}`, { data: {} });
     return res.data;
   } catch (e) {
     return e.response.data;

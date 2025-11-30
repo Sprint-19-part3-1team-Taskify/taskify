@@ -37,3 +37,11 @@
   border: 1px solid #d9d9d9;
   color: #787486;
 }
+
+/* Disabled state */
+.button:disabled {
+  background: #e9eef4; /* light gray */
+  border: 1px solid #d9d9d9;
+  color: #b0b7c3; /* muted text */
+  cursor: default;
+}

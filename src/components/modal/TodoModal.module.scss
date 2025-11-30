@@ -1,0 +1,270 @@
+.todoForm {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+
+  textarea {
+    width: 100%;
+    padding: 16px;
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: inherit;
+    resize: vertical;
+
+    &:focus {
+      outline: none;
+      border-color: #5534da;
+    }
+
+    &::placeholder {
+      color: #9fa6b2;
+    }
+  }
+}
+
+.todoDetail {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-height: 70vh;
+  overflow-y: auto;
+
+  .section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .label {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333236;
+  }
+
+  .content {
+    font-size: 14px;
+    color: #333236;
+    line-height: 1.6;
+  }
+
+  .assignee {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    img {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .name {
+      font-size: 14px;
+      color: #333236;
+    }
+  }
+
+  .cardImage {
+    width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+
+  .comments {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .commentInput {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      textarea {
+        width: 100%;
+        padding: 16px;
+        border: 1px solid #d9d9d9;
+        border-radius: 8px;
+        font-size: 14px;
+        font-family: inherit;
+        resize: none;
+        min-height: 70px;
+
+        &:focus {
+          outline: none;
+          border-color: #5534da;
+        }
+      }
+
+      button {
+        align-self: flex-end;
+        padding: 8px 46px;
+        background: #5534da;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 14px;
+        cursor: pointer;
+
+        &:disabled {
+          background: #d9d9d9;
+          cursor: not-allowed;
+        }
+
+        &:hover:not(:disabled) {
+          background: #4225b8;
+        }
+      }
+    }
+
+    .commentList {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .comment {
+      display: flex;
+      gap: 10px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #eeeeee;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      img {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        object-fit: cover;
+        flex-shrink: 0;
+      }
+
+      .commentContent {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        .commentHeader {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          .author {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333236;
+          }
+
+          .actions {
+            display: flex;
+            gap: 12px;
+
+            button {
+              font-size: 12px;
+              color: #9fa6b2;
+              background: none;
+              border: none;
+              cursor: pointer;
+              text-decoration: underline;
+
+              &:hover {
+                color: #5534da;
+              }
+            }
+          }
+        }
+
+        .commentText {
+          font-size: 14px;
+          color: #333236;
+          line-height: 1.5;
+        }
+
+        .timestamp {
+          font-size: 12px;
+          color: #9fa6b2;
+        }
+
+        .editForm {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+
+          textarea {
+            padding: 12px;
+            border: 1px solid #d9d9d9;
+            border-radius: 8px;
+            font-size: 14px;
+            resize: none;
+            min-height: 70px;
+
+            &:focus {
+              outline: none;
+              border-color: #5534da;
+            }
+          }
+
+          .editActions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+
+            button {
+              padding: 6px 20px;
+              border: none;
+              border-radius: 4px;
+              font-size: 12px;
+              cursor: pointer;
+
+              &.save {
+                background: #5534da;
+                color: white;
+
+                &:hover {
+                  background: #4225b8;
+                }
+              }
+
+              &.cancel {
+                background: white;
+                color: #333236;
+                border: 1px solid #d9d9d9;
+
+                &:hover {
+                  background: #fafafa;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .loadMore {
+      padding: 10px;
+      text-align: center;
+      color: #5534da;
+      font-size: 14px;
+      cursor: pointer;
+      background: none;
+      border: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

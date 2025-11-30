@@ -27,7 +27,16 @@ import styles from './Tag.module.scss';
  * <Tag index={1}>디자인</Tag>
  */
 
-export default function Tag({ children, index }) {
+export default function Tag({ children, index, onClick }) {
   const colorIndex = index % 4;
-  return <span className={`${styles.tag} ${styles[`c${colorIndex}`]}`}>{children}</span>;
+  return (
+    <span
+      className={`${styles.tag} ${styles[`c${colorIndex}`]}`}
+      onClick={onClick}
+      role={onClick ? 'button' : undefined}
+      tabIndex={onClick ? 0 : undefined}
+    >
+      {children}
+    </span>
+  );
 }
