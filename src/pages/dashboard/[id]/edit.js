@@ -264,12 +264,16 @@ export default function DashboardEdit() {
 
   /* 초대 취소 (오너가 초대 취소할 때) */
   const handleCancelInvitation = async (invitationId) => {
-    const res = await deleteDashboardsIdInvitations(fixedId, invitationId);
-
-    if (res?.message) {
-      setInvitedMembers((prev) => prev.filter((m) => m.id !== invitationId));
-      showMessage('초대가 취소되었습니다.');
-    } else {
+    try {
+      const res = await deleteDashboardsIdInvitations(fixedId, invitationId);
+      const isError = res?.error === true || res?.message === 'error';
+      if (!isError) {
+        setInvitedMembers((prev) => prev.filter((m) => m.id !== invitationId));
+        showMessage('초대가 취소되었습니다.');
+      } else {
+        showMessage(res?.message || '취소 중 오류가 발생했습니다.');
+      }
+    } catch (e) {
       showMessage('취소 중 오류가 발생했습니다.');
     }
   };
