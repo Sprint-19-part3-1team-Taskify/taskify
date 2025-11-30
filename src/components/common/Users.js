@@ -7,15 +7,23 @@ export default function Users() {
   const { user } = useAuth();
   const { members } = useDashboard();
 
-  const visibleMembers = members.slice(0, LIMIT_MEMBERS);
-  const RemainMembers = members.length - LIMIT_MEMBERS;
+  const safeMembers = Array.isArray(members) ? members : [];
+  const visibleMembers = safeMembers.slice(0, LIMIT_MEMBERS);
+  const RemainMembers = Math.max(0, safeMembers.length - LIMIT_MEMBERS);
   return (
-    members.length > 1 && (
+    safeMembers.length > 1 && (
       <div className="userGroup">
         {visibleMembers
-          .filter((item) => item.nickname !== user.nickname)
+          .filter((item) => item && item.nickname && user?.nickname !== undefined ? item.nickname !== user.nickname : true)
           .map((item) => {
-            return <User key={item.userId} value={item.nickname} type="large" hiddenName="true" />;
+            return (
+              <User
+                key={item?.userId ?? `${item?.nickname ?? 'unknown'}-${Math.random()}`}
+                value={item?.nickname ?? ''}
+                type="large"
+                hiddenName="true"
+              />
+            );
           })}
         {RemainMembers > 0 && (
           <User value={`${RemainMembers}`} type="large" hiddenName="true" remain />

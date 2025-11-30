@@ -121,7 +121,7 @@ export default function MyDashboard() {
               {loadingMy ? (
                 <p>로딩중...</p>
               ) : myDashboards?.length === 0 ? (
-                <p>대시보드가 없습니다</p>
+                <p></p>
               ) : (
                 visibleMyDashboards.map((item) => (
                   <DashboardButton
