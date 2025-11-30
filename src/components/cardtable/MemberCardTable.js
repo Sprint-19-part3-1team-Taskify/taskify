@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import styles from './MemberCardTable.module.scss';
 import PaginationPairButton from '../../components/button/PaginationPairButton/PaginationPairButton';
 import { DeleteButton } from '../../components/button/DeleteButton/DeleteButton';
+import User from '@/components/common/User';
 
 const MemberCardTable = ({
   title = '구성원',
@@ -31,10 +32,7 @@ const MemberCardTable = ({
   };
 
   const safeName = (m) => m?.nickname || m?.name || m?.email || '이름 없음';
-  const safeAvatarChar = (m) => {
-    const name = safeName(m);
-    return m?.avatar || (typeof name === 'string' && name.charAt(0).toUpperCase()) || '';
-  };
+  // 기존 아바타 문자 로직은 User 컴포넌트로 대체
 
   return (
     <div className={styles.cardTable}>
@@ -68,9 +66,7 @@ const MemberCardTable = ({
           currentMembers.map((member) => (
             <div key={member.id} className={styles.memberItem}>
               <div className={styles.memberInfo}>
-                <div className={styles.avatar} style={{ backgroundColor: member?.color || '#ddd' }}>
-                  {safeAvatarChar(member)}
-                </div>
+                <User value={safeName(member)} type="medium" hiddenName={true} />
 
                 <div>
                   <div className={styles.memberName}>{safeName(member)}</div>

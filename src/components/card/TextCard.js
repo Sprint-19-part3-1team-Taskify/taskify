@@ -2,7 +2,7 @@ import Tags from '@/components/common/Tags';
 import User from '@/components/common/User';
 import styles from './TextCard.module.scss';
 
-export default function TextCard({ imageUrl, title, tags, date }) {
+export default function TextCard({ imageUrl, title, tags, date, assignee }) {
   return (
     <div className={`${styles.textCard} ${imageUrl ? '' : styles.textCardBoarder}`}>
       <div className={styles.frame1997}>
@@ -28,7 +28,13 @@ export default function TextCard({ imageUrl, title, tags, date }) {
             </svg>
             <span>{date}</span>
           </div>
-          <User value="김철수" hiddenName={true} />
+          {assignee && (
+            <User
+              value={assignee.nickname || assignee.email || '담당자 없음'}
+              profileImageUrl={assignee.profileImageUrl}
+              hiddenName={true}
+            />
+          )}
         </div>
       </div>
     </div>

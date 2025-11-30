@@ -107,13 +107,3 @@ export async function deleteDashboardsIdInvitations(dashboardId, invitationId) {
     return e.response?.data;
   }
 }
-
-// DELETE /dashboards/:dashboardId/members/:memberId
-export async function deleteDashboardsIdMembers(dashboardId, memberId) {
-  try {
-    const res = await api.delete(`/dashboards/${dashboardId}/members/${memberId}`);
-    return res.data;
-  } catch (e) {
-    return e.response?.data;
-  }
-}

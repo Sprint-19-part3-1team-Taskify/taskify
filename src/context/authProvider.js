@@ -30,9 +30,8 @@ export default function AuthProvider({ children }) {
       const res = await getUsersMe();
       nextUser = res;
     } catch (error) {
-      if (error.response?.status !== 401) {
-        console.error(error);
-      }
+      console.error('사용자 정보 조회 실패:', error);
+      nextUser = null;
     } finally {
       setValues((prevValue) => ({
         ...prevValue,

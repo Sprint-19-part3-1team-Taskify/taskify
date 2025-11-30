@@ -75,7 +75,7 @@ export async function getCardsId(cardId) {
 export async function deleteCardsId(cardId) {
   /* cardId: number; */
   try {
-    const res = await api.delete(`/cards/${cardId}`);
+    const res = await api.delete(`/cards/${cardId}`, { data: {} });
     return res.data;
   } catch (e) {
     return e.response.data;

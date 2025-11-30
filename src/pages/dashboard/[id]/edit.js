@@ -1,5 +1,3 @@
-'use client';
-
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -163,7 +161,7 @@ export default function DashboardEdit() {
       showCrown: false,
       dashboardId: fixedId,
     });
-  }, [dashboard, fixedId]);
+  }, [dashboard, fixedId, setHeaderConfig]);
 
   /* 데이터 로딩 */
   useEffect(() => {
@@ -193,7 +191,6 @@ export default function DashboardEdit() {
       const membersRes = await getMembers({
         dashboardId: fixedId,
         page: 1,
-        size: 50,
       });
 
       if (membersRes?.members) {
@@ -207,7 +204,6 @@ export default function DashboardEdit() {
       // 초대 목록 (대시보드 스코프)
       const invitationsRes = await getDashboardsIdInvitations(fixedId, {
         page: 1,
-        size: 50,
       });
 
       if (invitationsRes?.invitations) {
@@ -220,7 +216,7 @@ export default function DashboardEdit() {
     };
 
     fetchData();
-  }, [router.isReady, fixedId]);
+  }, [router.isReady, fixedId, myDashboards, setCurrentDashboard]);
 
   /* 구성원 삭제 (멤버 리소스 사용) */
   const handleDeleteMember = async (memberId) => {
@@ -317,9 +313,6 @@ export default function DashboardEdit() {
       showMessage('삭제 중 오류가 발생했습니다.');
     }
   };
-
-  if (loading) return <>로딩중...</>;
-  if (!dashboard) return <>대시보드를 찾을 수 없습니다.</>;
 
   return (
     <div style={layout}>
