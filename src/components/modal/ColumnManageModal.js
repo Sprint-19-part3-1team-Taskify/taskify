@@ -25,6 +25,8 @@ export default function ColumnManageModal({
   if (isOpen && columnData && columnData.id !== initializedColumnId) {
     setColumnName(columnData.title || '');
     setInitializedColumnId(columnData.id);
+    setErrorMsg('');
+    setHasError(false);
   }
 
   // 컬럼 이름 수정
@@ -45,7 +47,7 @@ export default function ColumnManageModal({
       .some((c) => (c.title || '').trim() === columnName.trim());
 
     if (isDuplicate) {
-      setErrorMsg('중복된 컬럼 이름입니다');
+      setErrorMsg('중복된 컬럼 이름입니다.');
       setHasError(true);
       return;
     }

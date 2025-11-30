@@ -17,13 +17,23 @@ export default function ColumnCreateModal({
 }) {
   const [columnName, setColumnName] = useState('');
   const [error, setError] = useState('');
+  const [hasError, setHasError] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
+
+  // 모달 닫기 핸들러 (에러 상태 초기화)
+  const handleClose = () => {
+    setError('');
+    setHasError(false);
+    setColumnName('');
+    closeModal();
+  };
 
   // 컬럼 이름 변경 핸들러
   const handleNameChange = (e) => {
     setColumnName(e.target.value);
     setError('');
+    setHasError(false);
   };
 
   // 컬럼 생성
@@ -46,8 +56,8 @@ export default function ColumnCreateModal({
     );
 
     if (isDuplicate) {
-      setAlertMessage('중복된 컬럼 이름입니다');
-      setAlertOpen(true);
+      setError('중복된 컬럼 이름입니다.');
+      setHasError(true);
       return;
     }
 
@@ -61,6 +71,7 @@ export default function ColumnCreateModal({
     // 폼 초기화
     setColumnName('');
     setError('');
+    setHasError(false);
   };
 
   return (
@@ -69,7 +80,7 @@ export default function ColumnCreateModal({
       variant="default"
       title="새 컬럼 생성"
       isOpen={isOpen}
-      closeModal={closeModal}
+      closeModal={handleClose}
       secondaryBtn="취소"
       primaryBtn="생성"
       onClick={handleSubmit}
@@ -84,6 +95,7 @@ export default function ColumnCreateModal({
           value={columnName}
           onChange={handleNameChange}
           error={error}
+          hasError={hasError}
           required
         />
         {existingColumns && (
