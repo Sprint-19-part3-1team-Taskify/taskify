@@ -8,7 +8,7 @@ const COLOR_LIST = [
   { color: 'purple', value: '#760dde' },
   { color: 'orange', value: '#ffa500' },
   { color: 'blue', value: '#76a5ea' },
-  { color: 'pink', value: '#e287b7' },
+  { color: 'pink', value: '#e876ea' },
 ];
 
 export default function DashboardForm({ title, setTitle, color, setColor }) {
