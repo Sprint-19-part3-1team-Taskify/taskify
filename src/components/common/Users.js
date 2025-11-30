@@ -14,7 +14,11 @@ export default function Users() {
     safeMembers.length > 1 && (
       <div className="userGroup">
         {visibleMembers
-          .filter((item) => item && item.nickname && user?.nickname !== undefined ? item.nickname !== user.nickname : true)
+          .filter((item) =>
+            item && item.nickname && user?.nickname !== undefined
+              ? item.nickname !== user.nickname
+              : true,
+          )
           .map((item) => {
             return (
               <User
