@@ -48,10 +48,62 @@
 
   border-radius: 4px;
   background: var(--gray-gray_EEEEEE, #eee);
+  font-size: 12px;
+  font-weight: 500;
+  color: #787486;
+}
+
+.settingsButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    opacity: 0.7;
+  }
 }
 
 .frame2000 {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  width: 100%;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+  overflow-x: hidden; // 가로 스크롤 숨김
+  padding-right: 16px; // 스크롤바 공간 더 확보하여 카드 잘림 방지
+  scroll-padding-right: 16px; // 스크롤 위치 이동 시도 시 오른쪽 여백 고려
+  scrollbar-gutter: stable; // 지원 브라우저에서 콘텐츠와 스크롤바 간격 유지
+
+  // 상단 AddTodoButton 고정 크기 및 축소 방지
+  > :first-child {
+    flex: 0 0 auto;
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #d9d9d9;
+    border-radius: 3px;
+
+    &:hover {
+      background: #c0c0c0;
+    }
+  }
+}
+
+// 컬럼 사이 구분선 (부모에서 nth-child로 조정 가능하게 기본 클래스 제공)
+.withDivider {
+  border-left: 1px solid #e0e0e0;
 }

@@ -11,6 +11,11 @@
   height: 28px;
   border-radius: 4px;
   word-break: keep-all;
+  cursor: default;
+  &:hover {
+    cursor: pointer;
+    opacity: 0.95;
+  }
   &.c0 {
     color: #d58d49;
     background-color: #f9eee3;
