@@ -82,6 +82,7 @@ export default function ColumnManageModal({
         closeModal={closeModal}
         secondaryBtn="삭제"
         primaryBtn="변경"
+        disabled={columnData && columnName.trim() === (columnData.title || '').trim()}
         onClick={handleUpdate}
         onSubClick={handleDeleteClick}
       >
