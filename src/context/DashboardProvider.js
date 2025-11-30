@@ -19,6 +19,10 @@ export function DashboardProvider({ children }) {
   const [currentDashboard, setCurrentDashboard] = useState(null);
   const [members, setMembers] = useState([]);
 
+  // 무한스크롤 상태
+  const [invitedCursor, setInvitedCursor] = useState(null);
+  const [invitedHasMore, setInvitedHasMore] = useState(true);
+
   const pathname = usePathname();
 
   /* -------------------------
@@ -87,52 +91,64 @@ export function DashboardProvider({ children }) {
   }, [user?.id]);
 
   /* -------------------------
-     초대받은 대시보드 조회
+     초대받은 대시보드 조회 (무한스크롤)
      ------------------------- */
-  const loadInvitedDashboards = useCallback(async () => {
-    try {
-      setLoadingInvited(true);
-      const res = await getInvitations({ size: 100 });
+  const loadInvitedDashboards = useCallback(
+    async (reset = false) => {
+      try {
+        setLoadingInvited(true);
 
-      const invitations = Array.isArray(res?.invitations)
-        ? res.invitations
-        : Array.isArray(res?.data)
-          ? res.data
-          : [];
+        const cursor = reset ? null : invitedCursor;
+        const res = await getInvitations({ size: 10, cursorId: cursor });
 
-      const parsed = [];
-      const seenIds = new Set();
+        const invitations = Array.isArray(res?.invitations)
+          ? res.invitations
+          : Array.isArray(res?.data)
+            ? res.data
+            : [];
 
-      invitations.forEach((item) => {
-        const id = item?.id;
-        if (!id || seenIds.has(id)) return;
-        seenIds.add(id);
+        const parsed = [];
+        const seenIds = new Set();
 
-        parsed.push({
-          id,
-          dashboardId: item.dashboard?.id ?? item.dashboardId,
-          title: item.dashboard?.title ?? item.dashboardTitle ?? '이름 없음',
-          inviterName:
-            item.inviter?.nickname ??
-            item.invitedBy?.name ??
-            item.inviterName ??
-            item.invitedBy?.email ??
-            '알 수 없음',
-          inviterEmail:
-            item.inviter?.email ?? item.invitedBy?.email ?? item.inviterEmail ?? '알 수 없음',
-          status: item.status ?? item.invitationStatus ?? null,
-          raw: item,
+        invitations.forEach((item) => {
+          const id = item?.id;
+          if (!id || seenIds.has(id)) return;
+          seenIds.add(id);
+
+          parsed.push({
+            id,
+            dashboardId: item.dashboard?.id ?? item.dashboardId,
+            title: item.dashboard?.title ?? item.dashboardTitle ?? '이름 없음',
+            inviterName:
+              item.inviter?.nickname ??
+              item.invitedBy?.name ??
+              item.inviterName ??
+              item.invitedBy?.email ??
+              '알 수 없음',
+            inviterEmail:
+              item.inviter?.email ?? item.invitedBy?.email ?? item.inviterEmail ?? '알 수 없음',
+            status: item.status ?? item.invitationStatus ?? null,
+            raw: item,
+          });
         });
-      });
 
-      setInvitedDashboards(parsed);
-    } catch (err) {
-      console.error('❌ 초대받은 대시보드 조회 실패:', err);
-      setInvitedDashboards([]);
-    } finally {
-      setLoadingInvited(false);
-    }
-  }, []);
+        if (reset) {
+          setInvitedDashboards(parsed);
+        } else {
+          setInvitedDashboards((prev) => [...prev, ...parsed]);
+        }
+
+        setInvitedCursor(res?.cursorId || null);
+        setInvitedHasMore(!!res?.cursorId);
+      } catch (err) {
+        console.error('❌ 초대받은 대시보드 조회 실패:', err);
+        if (reset) setInvitedDashboards([]);
+      } finally {
+        setLoadingInvited(false);
+      }
+    },
+    [invitedCursor],
+  );
 
   /* -------------------------
      대시보드 멤버 목록 조회
@@ -164,7 +180,7 @@ export function DashboardProvider({ children }) {
     }
 
     loadMyDashboards();
-    loadInvitedDashboards();
+    loadInvitedDashboards(true);
   }, [isPending, user, loadMyDashboards, loadInvitedDashboards]);
 
   /* -------------------------
@@ -303,6 +319,7 @@ export function DashboardProvider({ children }) {
         setCurrentDashboard,
         loadMyDashboards,
         loadInvitedDashboards,
+        invitedHasMore,
         createDashboard,
         updateDashboard,
         acceptInvitation,

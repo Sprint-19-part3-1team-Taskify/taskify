@@ -1,19 +1,21 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import styles from './InvitedDashboardCardTable.module.scss';
 
 const InvitedDashboardCardTable = ({
   title = '초대받은 대시보드',
   dashboards = [],
-  itemsPerPage = 6,
   onAccept,
   onReject,
+  onLoadMore,
+  hasMore,
+  loading,
   searchPlaceholder = '검색',
   emptyMessage = '아직 초대받은 대시보드가 없어요',
 }) => {
-  const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
+  const observerTarget = useRef(null);
 
   // 안전하게 title, inviter 파싱
   const normalizeTitle = (item) =>
@@ -37,14 +39,30 @@ const InvitedDashboardCardTable = ({
     );
   }, [dashboards, searchTerm]);
 
-  const totalPages = Math.ceil(filteredDashboards.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentDashboards = filteredDashboards.slice(startIndex, startIndex + itemsPerPage);
-
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
-    setCurrentPage(1);
   };
+
+  // 무한 스크롤
+  useEffect(() => {
+    if (!onLoadMore || hasMore === false) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !loading && hasMore) {
+          onLoadMore();
+        }
+      },
+      { threshold: 0.1 },
+    );
+
+    const target = observerTarget.current;
+    if (target) observer.observe(target);
+
+    return () => {
+      if (target) observer.unobserve(target);
+    };
+  }, [onLoadMore, hasMore, loading]);
 
   return (
     <div className={styles.tableContainer}>
@@ -71,8 +89,8 @@ const InvitedDashboardCardTable = ({
         </thead>
 
         <tbody>
-          {currentDashboards.length > 0 ? (
-            currentDashboards.map((item) => {
+          {filteredDashboards.length > 0 ? (
+            filteredDashboards.map((item) => {
               const title = normalizeTitle(item);
               const inviter = normalizeInviter(item);
 
@@ -107,27 +125,10 @@ const InvitedDashboardCardTable = ({
         </tbody>
       </table>
 
-      {/* 페이지네이션 */}
-      {totalPages > 1 && (
-        <div className={styles.pagination}>
-          <button
-            onClick={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            이전
-          </button>
-
-          <span>
-            {currentPage} / {totalPages}
-          </span>
-
-          <button
-            onClick={() => currentPage < totalPages && setCurrentPage(currentPage + 1)}
-            disabled={currentPage === totalPages}
-          >
-            다음
-          </button>
-        </div>
+      {/* 무한 스크롤 트리거 */}
+      {hasMore && <div ref={observerTarget} style={{ height: '20px' }} />}
+      {loading && (
+        <div style={{ textAlign: 'center', padding: '20px', color: '#787486' }}>로딩 중...</div>
       )}
     </div>
   );

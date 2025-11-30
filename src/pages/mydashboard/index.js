@@ -51,10 +51,12 @@ export default function MyDashboard() {
     invitedDashboards,
     loadingMy,
     loadingInvited,
+    invitedHasMore,
     createDashboard,
     acceptInvitation,
     rejectInvitation,
     loadMyDashboards,
+    loadInvitedDashboards,
   } = useDashboard();
 
   /* 생성 모달 */
@@ -179,9 +181,11 @@ export default function MyDashboard() {
             ) : (
               <InvitedDashboardCardTable
                 dashboards={invitedDashboards}
-                itemsPerPage={6}
                 onAccept={handleAccept}
                 onReject={handleReject}
+                onLoadMore={() => loadInvitedDashboards(false)}
+                hasMore={invitedHasMore}
+                loading={loadingInvited}
               />
             )}
           </section>
