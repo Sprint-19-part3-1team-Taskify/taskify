@@ -45,7 +45,7 @@ export async function putColumnsId(columnId, title) {
 export async function deleteColumnsId(columnId) {
   /* columnId: number; */
   try {
-    const res = await api.delete(`/columns/${columnId}`);
+    const res = await api.delete(`/columns/${columnId}`, { data: {} });
     return res.data;
   } catch (e) {
     return e.response.data;
