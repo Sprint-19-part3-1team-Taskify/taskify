@@ -11,4 +11,4 @@ export { InviteRejectButton } from './InviteRejectButton/InviteRejectButton';
 export { DeleteButton } from './DeleteButton/DeleteButton';
 export { InputSubmitButton } from './InputsubmitButton/InputSubmitButton';
 export { PaginationButton } from './PaginationButton/PaginationButton';
-export { default as PaginationPairButton } from './PaginationpairButton/PaginationPairButton';
+export { default as PaginationPairButton } from './PaginationPairButton/PaginationPairButton';
