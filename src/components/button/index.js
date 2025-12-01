@@ -9,6 +9,6 @@ export { AddTodoButton } from './AddTodoButton/AddTodoButton';
 export { InviteAcceptButton } from './InviteAcceptButton/InviteAcceptButton';
 export { InviteRejectButton } from './InviteRejectButton/InviteRejectButton';
 export { DeleteButton } from './DeleteButton/DeleteButton';
-export { InputSubmitButton } from './InputsubmitButton/InputSubmitButton';
+export { InputSubmitButton } from './InputSubmitButton/InputSubmitButton';
 export { PaginationButton } from './PaginationButton/PaginationButton';
 export { default as PaginationPairButton } from './PaginationPairButton/PaginationPairButton';
