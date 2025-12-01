@@ -1,4 +1,4 @@
-import BaseButton from '../basebutton/BaseButton';
+import BaseButton from '../BaseButton/BaseButton';
 import styles from './DashboardDeleteButton.module.scss';
 
 export const DashboardDeleteButton = ({

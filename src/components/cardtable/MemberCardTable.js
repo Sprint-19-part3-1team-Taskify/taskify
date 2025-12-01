@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './MemberCardTable.module.scss';
-import PaginationPairButton from '../button/paginationpairbutton/PaginationPairButton';
-import { DeleteButton } from '../button/deletebutton/DeleteButton';
+import PaginationPairButton from '../button/PaginationpairButton/PaginationPairButton';
+import { DeleteButton } from '../button/DeleteButton/DeleteButton';
 import User from '@/components/common/User';
 
 const MemberCardTable = ({

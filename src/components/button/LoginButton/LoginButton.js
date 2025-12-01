@@ -1,4 +1,4 @@
-import BaseButton from '../basebutton/BaseButton';
+import BaseButton from '../BaseButton/BaseButton';
 
 export default function LoginButton({
   size = 'large',
