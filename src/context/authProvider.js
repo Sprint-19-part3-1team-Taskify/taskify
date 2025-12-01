@@ -6,9 +6,9 @@ import { useRouter } from 'next/router';
 const AuthContext = createContext({
   user: null,
   isPending: true,
-  login: () => {},
-  logout: () => {},
-  updateMe: () => {},
+  login: async () => {},
+  logout: async () => {},
+  updateMe: async () => {},
 });
 
 export default function AuthProvider({ children }) {

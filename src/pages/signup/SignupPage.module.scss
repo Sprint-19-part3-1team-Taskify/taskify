@@ -7,6 +7,7 @@
   justify-content: center;
 }
 .authWrap {
+  width: 520px;
   .logo {
     display: inline-block;
     width: 100%;
@@ -34,6 +35,9 @@
     }
     .btmBtn {
       margin-top: 24px;
+      button {
+        width: 100%;
+      }
     }
     .checkbox {
       position: relative;
@@ -84,6 +88,18 @@
       margin-left: 6px;
       color: $violet1;
       border-bottom: 1px solid $violet1;
+    }
+  }
+}
+
+/* mobile (743px 이하) */
+@media (max-width: 743px) {
+  .authWrap {
+    width: 100%;
+    .logoWrap {
+      .massage {
+        @include txtStyle('2lg', M);
+      }
     }
   }
 }

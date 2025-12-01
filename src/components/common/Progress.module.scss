@@ -3,12 +3,13 @@
 
 .progress {
   position: relative;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   height: 32px;
   padding: 0 10px 0 22px;
   border-radius: 16px;
   background-color: $violet2;
+  flex-shrink: 0;
   &::before {
     content: '';
     position: absolute;
