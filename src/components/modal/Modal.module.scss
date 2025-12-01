@@ -311,10 +311,22 @@
     &.type2 {
       width: 100%;
       padding: 16px 16px 16px;
-      overflow-y: scroll;
       max-height: calc(100vh - 32px);
     }
 
+    &.type1,
+    &.type2 {
+      .modalContent {
+        overflow-y: scroll;
+        margin-right: -16px;
+        padding-right: 16px;
+      }
+    }
+    &.type1 {
+      .modalContent {
+        height: calc(100vh - 250px);
+      }
+    }
     &.type2 {
       padding-top: 56px;
       .modalHeader {
@@ -323,12 +335,6 @@
           top: 16px;
           right: 16px;
         }
-      }
-      .modalContent {
-        height: auto;
-        overflow-y: visible;
-        margin-right: 0;
-        padding-right: 0;
       }
 
       // 할일 상세
