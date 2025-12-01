@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useHeader } from '@/context/HeaderProvider';
 import ProfileCard from '@/components/cardtable/ProfileCard';
 import ChangePasswordCard from '@/components/cardtable/ChangePasswordCard';
-import BackPageButton from '@/components/button/BackPageButton/BackPageButton';
+import BackPageButton from '@/components/button/backpagebutton/BackPageButton';
 
 export default function MyPage() {
   const { setHeaderConfig } = useHeader();

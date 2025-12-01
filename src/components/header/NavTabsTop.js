@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import styles from './nav-tabs-top.module.scss';
+import styles from './Nav-Tabs-Top.module.scss';
 
 const tabs = [{ name: '내 대시보드', path: '/my-dashboard' }];
 
