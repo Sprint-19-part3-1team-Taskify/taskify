@@ -1,5 +1,3 @@
-'use client';
-
 // Auth API
 import { postAuthLogin, putAuthPassword } from '@/api/auth';
 
