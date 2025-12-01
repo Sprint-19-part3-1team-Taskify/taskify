@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import Header from '@/components/header/Header';
+import Header from '@/components/Header/Header';
 import SideMenu from '@/components/sidemenu/SideMenu';
 import InviteModalContainer from '@/components/modal/InviteModalContainer';
 
