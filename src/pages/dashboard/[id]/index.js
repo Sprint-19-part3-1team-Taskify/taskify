@@ -27,6 +27,8 @@ import Column from '@/components/column/Column';
 import Card from '@/components/card/Card';
 import { AddColumnButton } from '@/components/button';
 
+import styles from './index.module.scss';
+
 // Modals
 import TodoCreateModal from '@/components/modal/TodoCreateModal';
 import TodoEditModal from '@/components/modal/TodoEditModal';
@@ -502,76 +504,48 @@ export default function DashboardDetail() {
       onDragEnd={handleDragEnd}
     >
       {/* 컬럼 영역 */}
-      <div style={{ padding: '24px' }}>
-        <div
-          style={{
-            display: 'flex',
-            gap: 24,
-            overflowX: 'auto',
-            paddingTop: 24,
-            alignItems: 'flex-start',
-          }}
-        >
-          {columns.map((column, idx) => (
-            <div key={column.id} style={{ display: 'flex' }}>
-              <Column
-                columnId={column.id}
-                title={column.title}
-                cardCount={columnTotalCount[column.id] || 0}
-                onAddTodo={() => openModal('todoCreate', column)}
-                onManageColumn={() => openModal('columnManage', column)}
-                onLoadMore={() => fetchColumnCards(column.id)}
-                hasMore={columnHasMore[column.id]}
-                loading={columnLoading[column.id]}
-              >
-                <SortableContext
-                  items={(columnCards[column.id] || []).map((card) => card.id)}
-                  strategy={verticalListSortingStrategy}
-                >
-                  {columnCards[column.id]?.map((card) => (
-                    <Card
-                      key={card.id}
-                      cardId={card.id}
-                      imageUrl={card.imageUrl}
-                      title={card.title}
-                      tags={card.tags}
-                      date={card.dueDate}
-                      assignee={card.assignee}
-                      onClick={() => handleCardClick(card, column)}
-                    />
-                  ))}
-                </SortableContext>
-              </Column>
-              {idx < columns.length - 1 && (
-                <div
-                  style={{
-                    width: 1,
-                    background: '#E0E0E0',
-                    alignSelf: 'stretch',
-                    margin: '0 12px',
-                  }}
-                />
-              )}
-            </div>
-          ))}
-
-          {/* 새로운 컬럼 추가 버튼 */}
-          {columns.length < 10 && (
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                marginLeft: '8px',
-                paddingLeft: '24px',
-                borderLeft: '1px solid #d9d9d9',
-              }}
+      <div className={styles.columnsWrap}>
+        {columns.map((column, idx) => (
+          <div key={column.id} className={styles.columnsBox}>
+            <Column
+              columnId={column.id}
+              title={column.title}
+              cardCount={columnTotalCount[column.id] || 0}
+              onAddTodo={() => openModal('todoCreate', column)}
+              onManageColumn={() => openModal('columnManage', column)}
+              onLoadMore={() => fetchColumnCards(column.id)}
+              hasMore={columnHasMore[column.id]}
+              loading={columnLoading[column.id]}
             >
-              <AddColumnButton onClick={() => openModal('columnCreate')}>
-                새로운 컬럼 추가하기
-              </AddColumnButton>
-            </div>
-          )}
-        </div>
+              <SortableContext
+                items={(columnCards[column.id] || []).map((card) => card.id)}
+                strategy={verticalListSortingStrategy}
+              >
+                {columnCards[column.id]?.map((card) => (
+                  <Card
+                    key={card.id}
+                    cardId={card.id}
+                    imageUrl={card.imageUrl}
+                    title={card.title}
+                    tags={card.tags}
+                    date={card.dueDate}
+                    assignee={card.assignee}
+                    onClick={() => handleCardClick(card, column)}
+                  />
+                ))}
+              </SortableContext>
+            </Column>
+          </div>
+        ))}
+
+        {/* 새로운 컬럼 추가 버튼 */}
+        {columns.length < 10 && (
+          <div className={styles.columnsBtnBox}>
+            <AddColumnButton onClick={() => openModal('columnCreate')}>
+              새로운 컬럼 추가하기
+            </AddColumnButton>
+          </div>
+        )}
       </div>
 
       {/* DragOverlay: 드래그 중인 카드 표시 */}
