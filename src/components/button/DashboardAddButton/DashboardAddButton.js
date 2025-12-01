@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import BaseButton from '../basebutton/BaseButton';
+import BaseButton from '../BaseButton/BaseButton';
 import styles from './DashboardAddButton.module.scss';
 
 export const DashboardAddButton = ({

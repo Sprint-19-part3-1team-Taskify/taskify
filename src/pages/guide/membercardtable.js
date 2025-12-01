@@ -4,7 +4,7 @@ import InvitationCardTable from '../../components/cardtable/InvitationCardTable'
 import EmptyDashboard from '../../components/cardtable/EmptyInvitedDashboard';
 import ProfileCard from '../../components/cardtable/ProfileCard';
 import ChangePasswordCard from '../../components/cardtable/ChangePasswordCard';
-import { ModalConfirmButton } from '@/components/button/modalbutton/ModalButton';
+import { ModalConfirmButton } from '@/components/button/ModalButton/ModalButton';
 import InvitedDashboardCardTable from '../../components/cardtable/InvitedDashboardCardTable';
 
 export default function MemberCardTableDemoPage() {
