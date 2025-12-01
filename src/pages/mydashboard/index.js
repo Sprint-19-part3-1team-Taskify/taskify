@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 
 import styles from '@/pages/mydashboard/index.module.scss';
 
-import SideMenu from '@/components/sidemenu/SideMenu';
 import { DashboardAddButton, DashboardButton, PaginationPairButton } from '@/components/button';
 import { withAuth } from '@/lib/auth';
 import { useAuth } from '@/context/authProvider';

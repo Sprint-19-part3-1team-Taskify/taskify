@@ -7,9 +7,17 @@
   display: flex;
   align-items: center;
   width: 100%;
-  height: 42px;
-  padding-left: 36px;
+  min-height: 50px;
+  padding: 12px 12px 12px 36px;
   color: $gray1;
+  word-break: break-word;
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
   &.active {
     border-radius: 4px;
     background: rgba($color: $violet2, $alpha: 0.8);
@@ -21,6 +29,7 @@
     width: 18px;
     height: 14px;
     background: url(/images/dashboard/ico_crown.svg) no-repeat 0 0;
+    flex-shrink: 0;
   }
 
   &::before {
@@ -51,5 +60,24 @@
   }
   &.colorFF5733::before {
     background: #ff5733;
+  }
+}
+
+/* Tablet (1200px 이하) */
+@media (max-width: 1280px) {
+}
+/* mobile (743px 이하) */
+@media (max-width: 743px) {
+  .dashboardLink {
+    min-height: 40px;
+    padding: 0;
+    &:before {
+      left: 50%;
+      margin-left: -4px;
+    }
+    span,
+    &.owner::after {
+      display: none;
+    }
   }
 }

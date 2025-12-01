@@ -3,26 +3,21 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 24px;
-
-  @media (min-width: 1024px) {
-    padding: 22px 20px;
-    height: 100%;
-    flex-shrink: 0;
-    background: var(--gray-gray_FAFAFA, #fafafa);
-  }
+  width: 100%;
+  padding: 22px 0 22px 20px;
+  height: 100%;
+  flex-shrink: 0;
+  background: var(--gray-gray_FAFAFA, #fafafa);
 }
 
 .frame2610633 {
+  width: 100%;
+  padding-right: 22px;
   display: flex;
-  width: 284px;
   justify-content: space-between;
   align-items: center;
   gap: 8px;
   min-width: 0; // flex item이 내용보다 작아질 수 있도록
-
-  @media (min-width: 1024px) {
-    width: 314px;
-  }
 }
 
 .frame2610632 {
@@ -95,13 +90,14 @@
   max-height: calc(100vh - 200px);
   overflow-y: auto;
   overflow-x: visible; // 드래그 시 좌우 잘림 방지
-  padding-right: 16px; // 스크롤바 공간 더 확보하여 카드 잘림 방지
-  scroll-padding-right: 16px; // 스크롤 위치 이동 시도 시 오른쪽 여백 고려
+  padding-right: 20px; // 스크롤바 공간 더 확보하여 카드 잘림 방지
+  scroll-padding-right: 20px; // 스크롤 위치 이동 시도 시 오른쪽 여백 고려
   scrollbar-gutter: stable; // 지원 브라우저에서 콘텐츠와 스크롤바 간격 유지
 
   // 상단 AddTodoButton 고정 크기 및 축소 방지
-  > :first-child {
+  > button:first-child {
     flex: 0 0 auto;
+    width: 100%;
   }
 
   &::-webkit-scrollbar {
@@ -126,4 +122,21 @@
 // 컬럼 사이 구분선 (부모에서 nth-child로 조정 가능하게 기본 클래스 제공)
 .withDivider {
   border-left: 1px solid #e0e0e0;
+}
+
+/* Tablet (1200px 이하) */
+@media (max-width: 1280px) {
+  .frame2000 {
+    overflow: visible;
+    max-height: initial;
+  }
+}
+/* mobile (743px 이하) */
+@media (max-width: 743px) {
+  .frame2000 {
+    padding-right: 12px;
+  }
+  .column {
+    padding: 16px 0 16px 12px;
+  }
 }

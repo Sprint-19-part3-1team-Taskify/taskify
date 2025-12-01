@@ -292,3 +292,75 @@
   width: 100%; // 하나일 때는 꽉 채우기
   justify-content: center;
 }
+
+/* mobile (743px 이하) */
+@media (max-width: 743px) {
+  .modal {
+    width: 100%;
+    padding: 16px;
+
+    &Overlay {
+      padding: 16px;
+      > section {
+        width: 100%;
+      }
+    }
+    &.alert,
+    &.confirm,
+    &.type1,
+    &.type2 {
+      width: 100%;
+      padding: 16px 16px 16px;
+      overflow-y: scroll;
+      max-height: calc(100vh - 32px);
+    }
+
+    &.type2 {
+      padding-top: 56px;
+      .modalHeader {
+        padding-right: 0;
+        .moreMenu {
+          top: 16px;
+          right: 16px;
+        }
+      }
+      .modalContent {
+        height: auto;
+        overflow-y: visible;
+        margin-right: 0;
+        padding-right: 0;
+      }
+
+      // 할일 상세
+      .todoDetail {
+        flex-direction: column;
+        .infoBox {
+          display: flex;
+          width: 100%;
+          max-width: 100%;
+          min-height: auto;
+          max-height: auto;
+          padding: 14px 16px;
+          margin-bottom: 16px;
+          li {
+            width: 100%;
+            &:first-child {
+              margin-bottom: 0;
+            }
+          }
+          .tit {
+            @include txtStyle('xs', B);
+            display: block;
+            margin-bottom: 6px;
+          }
+        }
+        .detail {
+          width: 100%;
+        }
+      }
+    }
+    &.confirm {
+      padding: 24px;
+    }
+  }
+}

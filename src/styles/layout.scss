@@ -15,4 +15,35 @@
     padding: 20px;
     width: 672px;
   }
+  .pageContent {
+    height: 100%;
+  }
+}
+
+/* Tablet (1200px 이하) */
+@media (max-width: 1280px) {
+  .subPage {
+    padding-left: 160px;
+    & > header {
+      left: 160px;
+    }
+  }
+}
+/* mobile (743px 이하) */
+@media (max-width: 743px) {
+  .subPage {
+    padding-top: 61px;
+    padding-left: 67px;
+    & > header {
+      left: 67px;
+    }
+  } /* mobile (743px 이하) */
+  .userPage {
+    padding: 70px 12px;
+    height: auto;
+    .pageContent {
+      width: 100%;
+      max-width: 320px;
+    }
+  }
 }

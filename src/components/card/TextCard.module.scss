@@ -1,8 +1,6 @@
 .textCard {
   display: flex;
-  width: 284px;
-  height: 95px;
-  padding: 5px 12px;
+  padding: 16px;
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;
@@ -10,13 +8,6 @@
   transition:
     transform 0.1s ease,
     box-shadow 0.2s ease;
-
-  /* pc */
-  @media (min-width: 1024px) {
-    width: 314px;
-    padding: 16px;
-    height: 125px;
-  }
 }
 
 .textCardBoarder {
@@ -35,6 +26,7 @@
 }
 
 .frame1997 {
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -76,8 +68,8 @@
 }
 
 .frame1995 {
+  width: 100%;
   display: flex;
-  width: 260px;
   justify-content: space-between;
   align-items: center;
 }
@@ -97,4 +89,17 @@
   font-style: normal;
   font-weight: 500;
   line-height: 18px; /* 150% */
+}
+
+/* Tablet (1200px 이하) */
+@media (max-width: 1280px) {
+  .textCard {
+    padding: 14px 20px;
+  }
+}
+/* mobile (743px 이하) */
+@media (max-width: 743px) {
+  .textCard {
+    padding: 12px;
+  }
 }
