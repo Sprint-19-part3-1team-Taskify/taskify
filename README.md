@@ -42,7 +42,7 @@ Taskify는 커뮤니티를 생성하고 멤버를 초대하여 일정과 할 일
 
 ### 설치 및 실행
 
-```bash
+`````bash
 # 저장소 클론
 git clone https://github.com/Sprint-19-part3-1team-Taksify/taskify.git
 
@@ -54,121 +54,71 @@ npm install
 
 # 개발 서버 실행
 npm run dev
-```
 
+````markdown
 ## 📁 프로젝트 구조
 
 📦 project
 ├── 📂 public
-│ ├── 🔷 favicon.svg
-│ │ # 파비콘 파일
-│ ├── 📂 images
-│ │ # UI 이미지 저장
-│ └── 📂 fonts
-│ # 폰트 파일(Pretendard 등)
+│ ├── 🔷 favicon.svg # 파비콘 파일
+│ ├── 📂 images # UI 이미지 저장
+│ └── 📂 fonts # Pretendard 등 폰트 파일
 │
 ├── 📂 src
-│ ├── 📂 api
-│ │ # API 통신 함수 모음
-│ │
+│ ├── 📂 api # API 통신 함수 모음
 │ ├── 📂 components
-│ │ ├── 📂 button
-│ │ │ # 버튼 UI
-│ │ ├── 📂 card
-│ │ │ # 카드 UI
-│ │ ├── 📂 cardtable
-│ │ │ # 카드 + 테이블 UI
-│ │ ├── 📂 column
-│ │ │ # 테이블 컬럼 UI
-│ │ ├── 📂 common
-│ │ │ # 공통 UI(아이콘, 컬러 등)
-│ │ ├── 📂 dashboard
-│ │ │ # 대시보드 전용 UI
-│ │ ├── 📂 header
-│ │ │ # 상단 헤더
-│ │ ├── 📂 input
-│ │ │ # 인풋 UI
-│ │ ├── 📂 modal
-│ │ │ # 모달 UI
-│ │ ├── 📂 sidemenu
-│ │ # 사이드 메뉴 UI
+│ │ ├── 📂 button # 버튼 UI
+│ │ ├── 📂 card # 카드 UI
+│ │ ├── 📂 cardtable # 카드 + 테이블 UI
+│ │ ├── 📂 column # 테이블 컬럼 UI
+│ │ ├── 📂 common # 공통 UI(아이콘, 컬러 등)
+│ │ ├── 📂 dashboard # 대시보드 전용 UI
+│ │ ├── 📂 header # 상단 헤더
+│ │ ├── 📂 input # 인풋 UI
+│ │ ├── 📂 modal # 모달 UI
+│ │ └── 📂 sidemenu # 사이드 메뉴 UI
 │ │
-│ ├── 📂 context
-│ │ # 전역 상태관리(Context API)
-│
-│ ├── 📂 hook
-│ │ # 커스텀 훅
-│
-│ ├── 📂 lib
-│ │ # 유틸 함수 모음
-│
+│ ├── 📂 context # 전역 상태관리(Context API)
+│ ├── 📂 hook # 커스텀 훅
+│ ├── 📂 lib # 유틸 함수
 │ ├── 📂 pages
 │ │ ├── 📂 api
-│ │ │ ├── 📂 auth
-│ │ │ │ # 인증 API
-│ │ │ └── 📂 external
-│ │ │ # 외부 연동 API
+│ │ │ ├── 📂 auth # 인증 API
+│ │ │ └── 📂 external # 외부 연동 API
 │ │ ├── 📂 dashboard
-│ │ │ └── 📂 [id]
-│ │ │ # 동적 라우트
-│ │ ├── 📂 guide
-│ │ │ # 가이드 페이지
-│ │ ├── 📂 login
-│ │ │ # 로그인 페이지
-│ │ ├── 📂 mydashboard
-│ │ │ # 나의 대시보드 관리
-│ │ ├── 📂 mypage
-│ │ │ # 마이페이지
-│ │ ├── 📂 signup
-│ │ │ # 회원가입
-│ │ ├── 📄 \_app.js
-│ │ │ # 전역 레이아웃/Provider
-│ │ ├── 📄 \_document.js
-│ │ │ # HTML 문서 커스텀
-│ │ ├── [...slug].js
-│ │ │ # 나머지 라우트 처리
-│ │ ├── index.js
-│ │ │ # 홈 페이지
-│ │ └── index.module.scss
-│ │ # 홈 페이지 스타일
-│
+│ │ │ └── 📂 [id] # 동적 라우트
+│ │ ├── 📂 guide # 가이드 페이지
+│ │ ├── 📂 login # 로그인 페이지
+│ │ ├── 📂 mydashboard # 나의 대시보드 관리
+│ │ ├── 📂 mypage # 마이페이지
+│ │ ├── 📂 signup # 회원가입
+│ │ ├── 📄 _app.js # 전역 레이아웃/Provider
+│ │ ├── 📄 _document.js # HTML 문서 커스텀
+│ │ ├── 📄 [...slug].js # 나머지 라우트 처리
+│ │ ├── 📄 index.js # 홈 페이지
+│ │ └── 📄 index.module.scss # 홈 스타일
+│ │
 │ ├── 📂 styles
-│ │ ├── \_mixins.scss
-│ │ │ # SCSS 믹스인
-│ │ ├── \_variables.scss
-│ │ │ # SCSS 변수
-│ │ ├── font.scss
-│ │ │ # 폰트 스타일
-│ │ ├── globals.scss
-│ │ │ # 글로벌 스타일
-│ │ ├── input.scss
-│ │ │ # 인풋 스타일
-│ │ ├── layout.scss
-│ │ │ # 레이아웃 스타일
-│ │ └── reset.scss
-│ # Reset CSS
+│ │ ├── _mixins.scss # SCSS 믹스인
+│ │ ├── _variables.scss # SCSS 변수
+│ │ ├── font.scss # 폰트 스타일
+│ │ ├── globals.scss # 글로벌 스타일
+│ │ ├── input.scss # 인풋 스타일
+│ │ ├── layout.scss # 레이아웃 스타일
+│ │ └── reset.scss # Reset CSS
 │
-├── ⚙️ .env
-│ # 환경 변수
-├── 📝 .eslintrc.json
-│ # ESLint 설정
-├── 📝 .gitignore
-│ # Git 제외 파일
-├── 📝 .prettierrc
-│ # Prettier 설정
-├── 📝 .eslint.config.mjs
-│ # ESLint 설정 확장
-├── 📦 jsconfig.json
-│ # 절대 경로 설정
-├── ▲ next.config.mjs
-│ # Next.js 설정
-├── 📦 package-lock.json
-│ # 패키지 버전 고정
-├── 📦 package.json
-│ # 의존성 목록
+├── ⚙️ .env # 환경 변수
+├── 📝 .eslintrc.json # ESLint 설정
+├── 📝 .gitignore # Git 제외 파일
+├── 📝 .prettierrc # Prettier 설정
+├── 📝 .eslint.config.mjs # ESLint 확장 설정
+├── 📦 jsconfig.json # 절대 경로 설정
+├── ▲ next.config.mjs # Next.js 설정
+├── 📦 package-lock.json # 패키지 버전 고정
+├── 📦 package.json # 의존성 목록
 └── 📝 README.md # 프로젝트 설명
 
-```
+`````
 
 ## 🔗 API 문서
 
@@ -199,4 +149,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🙏 감사의 글
 
 이 프로젝트는 **코드잇 스프린트 Front-End 19기** 교육 과정의 팀 프로젝트로 제작되었습니다.
+
+```
+
 ```
