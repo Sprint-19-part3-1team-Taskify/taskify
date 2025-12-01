@@ -8,7 +8,7 @@ import { useHeader } from '@/context/HeaderProvider';
 import { useModal } from '@/context/modalProvider';
 import sideStyles from '@/components/sidemenu/SideMenu.module.scss';
 import Users from '@/components/common/Users';
-import UserMenu from '@/components/Header/UserMenu';
+import UserMenu from '@/components/header/UserMenu';
 
 /**
  * Global Navigation Header Component
