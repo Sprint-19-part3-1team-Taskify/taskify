@@ -98,3 +98,13 @@
     }
   }
 }
+
+/* mobile (743px 이하) */
+@media (max-width: 743px) {
+  .profileTop {
+    flex-direction: column;
+    .fields {
+      width: 100%;
+    }
+  }
+}

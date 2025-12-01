@@ -65,6 +65,7 @@
   display: flex;
   align-items: flex-start;
   gap: 6px;
+  flex-wrap: wrap;
 }
 
 .frame1995 {
@@ -91,7 +92,7 @@
   line-height: 18px; /* 150% */
 }
 
-/* Tablet (1200px 이하) */
+/* Tablet (1280px 이하) */
 @media (max-width: 1280px) {
   .textCard {
     padding: 14px 20px;
