@@ -1,4 +1,4 @@
-import BaseButton from '../BaseButton/BaseButton';
+import BaseButton from '../basebutton/BaseButton';
 import styles from './DashboardButton.module.scss';
 
 export function DashboardButton({

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { putAuthPassword } from '@/api/auth';
-import ModalConfirmButton from '@/components/button/ModalButton/ModalButton';
+import ModalConfirmButton from '@/components/button/modalbutton/ModalButton';
 import { useModal } from '@/context/modalProvider';
 import Modal from '@/components/modal/Modal';
 import styles from './ChangePasswordCard.module.scss';

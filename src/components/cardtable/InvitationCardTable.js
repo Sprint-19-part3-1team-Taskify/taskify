@@ -1,9 +1,7 @@
-'use client';
-
 import React, { useState } from 'react';
 import styles from './InvitationCardTable.module.scss';
-import PaginationPairButton from '../../components/button/PaginationPairButton/PaginationPairButton';
-import { DeleteButton } from '../../components/button/DeleteButton/DeleteButton';
+import PaginationPairButton from '../button/paginationpairbutton/PaginationPairButton';
+import { DeleteButton } from '../button/deletebutton/DeleteButton';
 
 const InvitationCardTable = ({
   title = '초대 내역',

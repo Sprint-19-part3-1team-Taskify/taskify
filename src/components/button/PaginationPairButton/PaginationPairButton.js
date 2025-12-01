@@ -1,4 +1,4 @@
-import PaginationButton from '../PaginationButton/PaginationButton';
+import PaginationButton from '../paginationbutton/PaginationButton';
 import styles from './PaginationPairButton.module.scss';
 
 export default function PaginationPairButton({

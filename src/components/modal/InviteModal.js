@@ -1,5 +1,3 @@
-'use client';
-
 import styles from './InviteModal.module.scss';
 
 export default function InviteModal({ email, setEmail, error, loading, onSubmit, onClose }) {

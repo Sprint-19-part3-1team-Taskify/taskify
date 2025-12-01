@@ -1,12 +1,10 @@
-'use client';
-
 import { useState } from 'react';
 import MemberCardTable from '../../components/cardtable/MemberCardTable';
 import InvitationCardTable from '../../components/cardtable/InvitationCardTable';
 import EmptyDashboard from '../../components/cardtable/EmptyInvitedDashboard';
 import ProfileCard from '../../components/cardtable/ProfileCard';
 import ChangePasswordCard from '../../components/cardtable/ChangePasswordCard';
-import { ModalConfirmButton } from '@/components/button/ModalButton/ModalButton';
+import { ModalConfirmButton } from '@/components/button/modalbutton/ModalButton';
 import InvitedDashboardCardTable from '../../components/cardtable/InvitedDashboardCardTable';
 
 export default function MemberCardTableDemoPage() {

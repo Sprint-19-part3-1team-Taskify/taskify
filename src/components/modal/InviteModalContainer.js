@@ -1,5 +1,3 @@
-'use client';
-
 import { useState } from 'react';
 import { postDashboardsIdInvitations } from '@/api/dashboards';
 import { useModal } from '@/context/modalProvider';
