@@ -1,0 +1,68 @@
+.columnsWrap {
+  display: flex;
+  overflow-x: auto;
+  height: 100%;
+}
+.columnsBox {
+  display: flex;
+  flex-shrink: 0;
+  width: 354px;
+  height: 100%;
+  &:not(:last-child) {
+    border-right: 1px solid #e0e0e0;
+  }
+}
+.columnsBtnBox {
+  padding: 68px 20px 20px;
+  height: 100%;
+}
+
+/* Tablet (1280px 이하) */
+@media (max-width: 1280px) {
+  .columnsWrap {
+    height: auto;
+    position: relative;
+    flex-direction: column;
+    overflow: visible;
+    padding-bottom: 110px;
+    .columnsBox {
+      width: 100%;
+      height: auto;
+      border-right: none;
+    }
+    .columnsBtnBox {
+      position: fixed;
+      bottom: 0;
+      left: 160px;
+      right: 0;
+      padding: 20px;
+      height: 110px;
+      background-color: #fafafa;
+      button[class*='type1'] {
+        width: 100%;
+      }
+    }
+  }
+}
+/* mobile (743px 이하) */
+@media (max-width: 743px) {
+  .columnsWrap {
+    padding-bottom: 100px;
+    overflow: initial;
+    .columnsBox {
+    }
+    .columnsBtnBox {
+      left: 67px;
+      padding: 16px 16px;
+      height: 98px;
+      button[class*='type1'] {
+        height: 66px;
+        font-size: 16px;
+        img {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+  }
+}
