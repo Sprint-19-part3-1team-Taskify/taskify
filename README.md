@@ -54,9 +54,9 @@ npm install
 
 # 개발 서버 실행
 npm run dev
-```
 
 ## 📁 프로젝트 구조
+```
 
 📦 project
 ├── 📂 public
