@@ -1,9 +1,7 @@
-'use client';
-
 import React, { useState } from 'react';
 import styles from './MemberCardTable.module.scss';
-import PaginationPairButton from '../../components/button/PaginationPairButton/PaginationPairButton';
-import { DeleteButton } from '../../components/button/DeleteButton/DeleteButton';
+import PaginationPairButton from '../button/PaginationPairButton/PaginationPairButton';
+import { DeleteButton } from '../button/DeleteButton/DeleteButton';
 import User from '@/components/common/User';
 
 const MemberCardTable = ({

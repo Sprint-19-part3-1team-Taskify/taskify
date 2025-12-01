@@ -1,5 +1,3 @@
-'use client';
-
 import { useState } from 'react';
 import MemberCardTable from '../../components/cardtable/MemberCardTable';
 import InvitationCardTable from '../../components/cardtable/InvitationCardTable';

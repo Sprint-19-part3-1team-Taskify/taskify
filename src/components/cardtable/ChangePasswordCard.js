@@ -7,16 +7,58 @@ import styles from './ChangePasswordCard.module.scss';
 
 export default function ChangePasswordCard() {
   const { isOpen, openModal, closeModal } = useModal();
+  const [mismatchError, setMismatchError] = useState(false);
   const [currentPw, setCurrentPw] = useState('');
   const [newPw, setNewPw] = useState('');
   const [newPwCheck, setNewPwCheck] = useState('');
   const [apiError, setApiError] = useState('');
-  
-  const handlePasswordSave = async () => {
-    if(newPw !== newPwCheck) {
-      openModal('passwordMismatch');
-      return null;
+
+  const [errors, setErrors] = useState({
+    oldPassword: null,
+    newPassword: null,
+    newPasswordCheck: null,
+  });
+
+  const allTrue = Object.values(errors).every((value) => value === false);
+
+  const handleErrorCheck = (e) => {
+    const name = e.target.name;
+    const val = e.target.value;
+
+    switch (name) {
+      case 'oldPassword':
+        setErrors((prev) => ({
+          ...prev,
+          oldPassword: val.length < 8,
+        }));
+        break;
+      case 'newPassword':
+        setErrors((prev) => ({
+          ...prev,
+          newPassword: val.length < 8,
+        }));
+        if (newPwCheck) {
+          setErrors((prev) => ({
+            ...prev,
+            newPasswordCheck: val !== newPwCheck || newPwCheck.length < 8,
+          }));
+        }
+        break;
+      case 'newPasswordCheck':
+        setErrors((prev) => ({
+          ...prev,
+          newPasswordCheck: val !== newPw || val.length < 8,
+        }));
+
+        if (val !== newPw) {
+          setMismatchError(true);
+        } else {
+          setMismatchError(false);
+        }
+        break;
     }
+  };
+  const handlePasswordSave = async () => {
     try {
       await putAuthPassword({
         password: currentPw?.trim(),
@@ -27,7 +69,7 @@ export default function ChangePasswordCard() {
       setApiError(error.message);
       openModal('errorModal');
     }
-  }
+  };
 
   return (
     <>
@@ -36,21 +78,47 @@ export default function ChangePasswordCard() {
 
         <div className={styles.field}>
           <label>현재 비밀번호</label>
-          <input type="password" value={currentPw} onChange={(e) => setCurrentPw(e.target.value)} />
+          <input
+            type="password"
+            name="oldPassword"
+            value={currentPw}
+            onChange={(e) => setCurrentPw(e.target.value)}
+            onBlur={handleErrorCheck}
+          />
         </div>
 
         <div className={styles.field}>
           <label>새 비밀번호</label>
-          <input type="password" value={newPw} onChange={(e) => setNewPw(e.target.value)} />
+          <input
+            type="password"
+            name="newPassword"
+            value={newPw}
+            onChange={(e) => setNewPw(e.target.value)}
+            onBlur={handleErrorCheck}
+          />
         </div>
 
         <div className={styles.field}>
           <label>새 비밀번호 확인</label>
-          <input type="password" value={newPwCheck} onChange={(e) => setNewPwCheck(e.target.value)} />
+          <input
+            type="password"
+            name="newPasswordCheck"
+            value={newPwCheck}
+            onChange={(e) => setNewPwCheck(e.target.value)}
+            onBlur={handleErrorCheck}
+            className={mismatchError ? styles.error : ''}
+          />
+          {mismatchError && <div className={styles.error}>비밀번호가 일치하지 않습니다.</div>}
         </div>
 
         {/*  모달에서 쓰던 버튼 그대로 재사용 */}
-        <ModalConfirmButton size="large" className={styles.saveButton} onClick={handlePasswordSave}>
+        <ModalConfirmButton
+          size="large"
+          className={styles.saveButton}
+          onClick={handlePasswordSave}
+          disabled={!allTrue}
+          style={{ width: '100%' }}
+        >
           변경
         </ModalConfirmButton>
       </div>
@@ -73,15 +141,6 @@ export default function ChangePasswordCard() {
         primaryBtn="확인"
       >
         {apiError}
-      </Modal>
-      <Modal
-        variant="alert"
-        id="passwordMismatch"
-        isOpen={isOpen('passwordMismatch')}
-        closeModal={closeModal}
-        primaryBtn="확인"
-      >
-        비밀번호가 일치하지 않습니다.
       </Modal>
     </>
   );
