@@ -27,7 +27,7 @@ export default function SignupPage() {
   });
   const [isChecked, setIsChecked] = useState(false);
   const [apiError, setApiError] = useState('');
-  const hasFormError = Object.values(inputError).every((el) => el !== true) && isChecked; // 전체 폼 에러확인
+  const hasFormError = Object.values(inputError).every((el) => el !== true) && isChecked; // 전체 폼 에러확인 테스트
 
   const handleCheckbox = (e) => {
     setIsChecked(e.target.checked);
