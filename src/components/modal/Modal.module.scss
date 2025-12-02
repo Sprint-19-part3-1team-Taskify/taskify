@@ -210,6 +210,11 @@
             background: $gray3;
           }
         }
+        div:not(.todoProgress) {
+          span {
+            margin-bottom: 4px;
+          }
+        }
       }
       .content {
         @include txtStyle('md', R);
@@ -321,13 +326,9 @@
     &.type2 {
       .modalContent {
         overflow-y: auto;
+        max-height: calc(100vh - 250px);
         margin-right: -16px;
         padding-right: 16px;
-      }
-    }
-    &.type1 {
-      .modalContent {
-        max-height: calc(100vh - 250px);
       }
     }
     &.type2 {
