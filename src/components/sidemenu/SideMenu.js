@@ -108,6 +108,7 @@ export default function SideMenu() {
               );
             })}
           </ul>
+          {console.log(pagedDashboards)}
           <PaginationPairButton
             size="large"
             prevState={pageCount === 1 ? 'inactive' : 'active'}

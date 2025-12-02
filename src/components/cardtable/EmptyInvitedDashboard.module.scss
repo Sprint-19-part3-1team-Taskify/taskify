@@ -1,20 +1,19 @@
 .container {
   width: 100%;
   background-color: #fff;
-  border: 1px solid #e5e5e5;
   border-radius: 16px;
-  padding: 48px 56px;
+  padding: 24px 40px;
   box-sizing: border-box;
+  height: 390px;
 
   max-width: 1200px;
-
   overflow-x: hidden;
 }
 
 .title {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 700;
-  margin-bottom: 80px;
+  margin-bottom: 64px;
   color: #000;
 }
 
@@ -32,7 +31,29 @@
 .icon {
   opacity: 0.6;
 }
-
 .description {
   font-size: 20px;
+}
+
+@media (max-width: 1200px) {
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 24px 20px;
+    height: 327px;
+    .title {
+      font-size: 14px;
+    }
+
+    .emptyArea {
+      img {
+        width: 60px;
+        height: 60px;
+      }
+      .description {
+        font-size: 12px;
+      }
+    }
+  }
 }

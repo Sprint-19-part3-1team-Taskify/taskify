@@ -41,7 +41,7 @@
   }
   .navList {
     margin: 20px 0 32px;
-    height: 492px;
+    min-height: 480px;
     li:not(:first-child) {
       margin-top: 8px;
     }
@@ -93,9 +93,6 @@
       .btnCreate {
         position: static;
         margin: 0 auto;
-      }
-      .navList {
-        height: 400px;
       }
       :global(div) {
         // display: block;

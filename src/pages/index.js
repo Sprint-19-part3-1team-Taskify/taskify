@@ -4,16 +4,15 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useHeader } from '@/context/HeaderProvider';
 import { useAuth } from '@/context/authProvider';
-import { getDashboards } from '@/api/dashboards';
 import { LoginButton } from '@/components/button';
-import styles from './index.module.scss';
 import { useDashboard } from '@/context/DashboardProvider';
+import styles from './index.module.scss';
 
 export default function Home() {
+  const router = useRouter();
   const { user } = useAuth();
   const { myDashboards } = useDashboard();
-  const router = useRouter();
-  const [dashboardId, setDashboardId] = useState(null);
+
   const handleClick = () => {
     if (!user) {
       router.push('/login');

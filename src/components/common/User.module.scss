@@ -84,11 +84,20 @@
   }
 }
 
-[class*='userGroup'] {
+:global(.userGroup) {
+  display: flex;
   .user {
     margin-left: -8px;
     &:first-child {
       margin-left: 0;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  [class*='userGroup'] {
+    .user:nth-child(n + 4) {
+      display: none;
     }
   }
 }
