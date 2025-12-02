@@ -328,7 +328,9 @@
 }
 
 @media (max-width: 768px) {
-  .dashboardName {
-    display: none;
+  nav {
+    > .dashboardName {
+      display: none;
+    }
   }
 }
