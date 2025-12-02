@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import Modal from './Modal';
 import Input from '@/components/input/Input';
 import InputTag from '@/components/input/InputTag';
@@ -36,21 +36,30 @@ export default function TodoEditModal({
   const [originalData, setOriginalData] = useState(null);
   const [initializedCardId, setInitializedCardId] = useState(null);
 
-  // 카드 데이터로 초기화 (카드 ID가 변경될 때만)
-  if (cardData && isOpen && cardData.id !== initializedCardId) {
-    const initialData = {
-      title: cardData.title || '',
-      description: cardData.description || '',
-      dueDate: cardData.dueDate ? new Date(cardData.dueDate) : null,
-      assigneeUserId: cardData.assignee?.userId || null,
-      tags: cardData.tags || [],
-      imageUrl: cardData.imageUrl || null,
-      columnId: columnId || null, // 현재 컬럼 ID 저장
-    };
-    setFormData(initialData);
-    setOriginalData(initialData);
-    setInitializedCardId(cardData.id);
-  }
+  // 모달이 닫힐 때 초기화 상태 리셋
+  useEffect(() => {
+    if (!isOpen) {
+      setInitializedCardId(null);
+    }
+  }, [isOpen]);
+
+  // 카드 데이터로 초기화 (카드 ID가 변경되거나 모달이 열릴 때)
+  useEffect(() => {
+    if (cardData && isOpen && cardData.id !== initializedCardId) {
+      const initialData = {
+        title: cardData.title || '',
+        description: cardData.description || '',
+        dueDate: cardData.dueDate ? new Date(cardData.dueDate) : null,
+        assigneeUserId: cardData.assignee?.userId || null,
+        tags: cardData.tags || [],
+        imageUrl: cardData.imageUrl || null,
+        columnId: columnId || null, // 현재 컬럼 ID 저장
+      };
+      setFormData(initialData);
+      setOriginalData(initialData);
+      setInitializedCardId(cardData.id);
+    }
+  }, [cardData, isOpen, initializedCardId, columnId]);
 
   // 변경 감지
   const isChanged = originalData && JSON.stringify(formData) !== JSON.stringify(originalData);
@@ -61,8 +70,12 @@ export default function TodoEditModal({
   };
 
   // 담당자 선택 (이름 -> userId 매핑)
-  const handleAssigneeChange = (selectedName) => {
-    const found = members.find((m) => (m.nickname || m.email) === selectedName);
+  const handleAssigneeChange = (selectedKey) => {
+    if (!selectedKey) {
+      setFormData((prev) => ({ ...prev, assigneeUserId: null }));
+      return;
+    }
+    const found = members.find((m) => (m.nickname || m.email) === selectedKey);
     if (found) setFormData((prev) => ({ ...prev, assigneeUserId: found.userId }));
   };
 
@@ -81,10 +94,7 @@ export default function TodoEditModal({
     }));
   };
 
-  // 이미지 업로드
-  const handleImageUpload = (imageUrl) => {
-    setFormData((prev) => ({ ...prev, imageUrl }));
-  };
+  const imageUploadRef = useRef(null);
 
   // 할 일 수정
   const handleSubmit = async () => {
@@ -100,6 +110,20 @@ export default function TodoEditModal({
       return `${year}-${month}-${day} ${hours}:${minutes}`;
     };
 
+    // 이미지 업로드 처리 (새 파일이 선택된 경우에만)
+    let updatedImageUrl = formData.imageUrl;
+    if (imageUploadRef.current?.uploadImage) {
+      try {
+        const result = await imageUploadRef.current.uploadImage();
+        if (result) {
+          updatedImageUrl = result;
+        }
+      } catch (error) {
+        console.error('이미지 업로드 실패:', error);
+        // 에러가 발생해도 다른 필드는 수정 가능하도록 계속 진행
+      }
+    }
+
     const updatedData = {
       columnId: formData.columnId || columnId, // 변경된 컬럼 ID 사용
       assigneeUserId: formData.assigneeUserId,
@@ -107,21 +131,31 @@ export default function TodoEditModal({
       description: formData.description,
       dueDate: formatDueDate(formData.dueDate),
       tags: formData.tags,
-      imageUrl: formData.imageUrl || undefined,
+      imageUrl: updatedImageUrl || undefined,
     };
 
     await onSuccess(cardData.id, updatedData);
   };
 
-  // 드롭다운용 멤버 이름 배열
-  const memberNames = members.map((m) => m.nickname || m.email);
-
-  // 현재 담당자 이름
-  const currentAssigneeName = (() => {
-    if (!formData.assigneeUserId) return '';
-    const found = members.find((m) => m.userId === formData.assigneeUserId);
-    return found ? found.nickname || found.email : '';
-  })();
+  // 현재 담당자 이름 (모달이 열릴 때 cardData에서 직접 가져오기)
+  const currentAssigneeName = useMemo(() => {
+    // 먼저 cardData에서 직접 확인 (nickname 또는 email이 있으면 바로 사용)
+    if (cardData?.assignee) {
+      if (cardData.assignee.nickname) return cardData.assignee.nickname;
+      if (cardData.assignee.email) return cardData.assignee.email;
+      // userId만 있는 경우 members에서 찾기
+      if (cardData.assignee.userId) {
+        const found = members.find((m) => m.userId === cardData.assignee.userId);
+        if (found) return found.nickname || found.email;
+      }
+    }
+    // 없으면 formData에서 확인
+    if (formData.assigneeUserId) {
+      const found = members.find((m) => m.userId === formData.assigneeUserId);
+      if (found) return found.nickname || found.email;
+    }
+    return '';
+  }, [cardData, formData.assigneeUserId, members]);
 
   // 컬럼 드롭다운용 컬럼 이름 배열
   const columnNames = columns.map((col) => col.title);
@@ -161,9 +195,10 @@ export default function TodoEditModal({
           initValue={currentColumnName}
         />
         <Dropdown
+          key={`assignee-${cardData?.id || 'new'}-${currentAssigneeName}`}
           type="member"
           label="담당자"
-          content={memberNames}
+          content={members}
           onChange={handleAssigneeChange}
           placeholder="담당자를 선택해주세요"
           initValue={currentAssigneeName}
@@ -216,10 +251,11 @@ export default function TodoEditModal({
       {/* 이미지 업로드 */}
       <ImgUpload
         type="card"
-        setImg={handleImageUpload}
-        img={formData.imageUrl}
+        columnId={formData.columnId || columnId}
+        initialImage={formData.imageUrl}
         label="이미지"
         update
+        ref={imageUploadRef}
       />
     </Modal>
   );
