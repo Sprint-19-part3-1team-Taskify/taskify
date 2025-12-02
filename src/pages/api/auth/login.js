@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     const { accessToken } = response.data;
 
     res.setHeader('Set-Cookie', [
-      `accessToken=${accessToken}; Path=/; HttpOnly; SameSite=Lax; Max-Age=360000`,
+      `accessToken=${accessToken}; Path=/; HttpOnly; SameSite=Lax; Secure;Max-Age=360000`,
     ]);
 
     return res.status(200).json(response.data);
