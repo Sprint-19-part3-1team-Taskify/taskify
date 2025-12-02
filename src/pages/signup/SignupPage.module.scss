@@ -95,7 +95,7 @@
 /* mobile (743px 이하) */
 @media (max-width: 743px) {
   .authWrap {
-    width: 100%;
+    width: 300px;
     .logoWrap {
       .massage {
         @include txtStyle('2lg', M);

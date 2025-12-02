@@ -2,7 +2,7 @@
 .layout {
   display: flex;
   width: 100%;
-  min-height: 100vh;
+  min-height: 100%;
   background-color: #fafafa;
 }
 
@@ -93,6 +93,9 @@
 }
 
 @media (max-width: 768px) {
+  .layout {
+    min-height: 100%;
+  }
   .mainContent {
     flex-grow: 1;
     padding: 23px;
