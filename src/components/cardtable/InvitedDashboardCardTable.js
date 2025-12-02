@@ -94,8 +94,14 @@ const InvitedDashboardCardTable = ({
 
               return (
                 <tr key={item.id}>
-                  <td className={styles.nameCell}>{title}</td>
-                  <td className={styles.inviterCell}>{inviter}</td>
+                  <td className={styles.nameCell}>
+                    <span className={styles.tit}>이름</span>
+                    <span className={styles.data}>{title}</span>
+                  </td>
+                  <td className={styles.inviterCell}>
+                    <span className={styles.tit}>초대자</span>
+                    <span className={styles.data}>{inviter}</span>
+                  </td>
                   <td className={styles.actionCell}>
                     <button
                       className={styles.acceptBtn}
