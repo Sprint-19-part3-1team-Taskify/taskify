@@ -11,9 +11,25 @@ export async function postComments(commentData) {
   */
   try {
     const res = await api.post('/comments', commentData);
-    return res.data;
+    const data = res.data;
+
+    // 필요한 필드만 추출
+    return {
+      id: data.id || data.commentId,
+      content: data.content,
+      createdAt: data.createdAt,
+      cardId: data.cardId,
+      author: data.author
+        ? {
+            id: data.author.id || data.author.userId,
+            nickname: data.author.nickname,
+            email: data.author.email,
+            profileImageUrl: data.author.profileImageUrl,
+          }
+        : null,
+    };
   } catch (e) {
-    return e.response.data;
+    return e.response?.data || { error: 'Failed to create comment' };
   }
 }
 
@@ -27,9 +43,34 @@ export async function getComments({ size = 10, cursorId, cardId }) {
 
   try {
     const res = await api.get('/comments', { params: { size, cursorId, cardId } });
-    return res.data;
+    const data = res.data;
+
+    // 필요한 필드만 추출
+    const comments = Array.isArray(data?.comments)
+      ? data.comments
+      : Array.isArray(data)
+        ? data
+        : [];
+    return {
+      comments: comments.map((comment) => ({
+        id: comment.id || comment.commentId,
+        content: comment.content,
+        createdAt: comment.createdAt,
+        updatedAt: comment.updatedAt,
+        cardId: comment.cardId,
+        author: comment.author
+          ? {
+              id: comment.author.id || comment.author.userId,
+              nickname: comment.author.nickname,
+              email: comment.author.email,
+              profileImageUrl: comment.author.profileImageUrl,
+            }
+          : null,
+      })),
+      cursorId: data?.cursorId,
+    };
   } catch (e) {
-    return e.response.data;
+    return e.response?.data || { error: 'Failed to fetch comments' };
   }
 }
 
@@ -40,9 +81,26 @@ export async function putCommentsId(commentId, content) {
   */
   try {
     const res = await api.put(`/comments/${commentId}`, { content });
-    return res.data;
+    const data = res.data;
+
+    // 필요한 필드만 추출
+    return {
+      id: data.id || data.commentId,
+      content: data.content,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
+      cardId: data.cardId,
+      author: data.author
+        ? {
+            id: data.author.id || data.author.userId,
+            nickname: data.author.nickname,
+            email: data.author.email,
+            profileImageUrl: data.author.profileImageUrl,
+          }
+        : null,
+    };
   } catch (e) {
-    return e.response.data;
+    return e.response?.data || { error: 'Failed to update comment' };
   }
 }
 

@@ -16,9 +16,29 @@ export async function postCards(cardData) {
   */
   try {
     const res = await api.post('/cards', cardData);
-    return res.data;
+    const data = res.data;
+
+    // 필요한 필드만 추출
+    return {
+      id: data.id,
+      title: data.title,
+      description: data.description,
+      dueDate: data.dueDate,
+      tags: data.tags || [],
+      imageUrl: data.imageUrl,
+      assignee: data.assignee
+        ? {
+            userId: data.assignee.userId || data.assignee.id,
+            nickname: data.assignee.nickname,
+            email: data.assignee.email,
+            profileImageUrl: data.assignee.profileImageUrl,
+          }
+        : null,
+      columnId: data.columnId,
+      dashboardId: data.dashboardId,
+    };
   } catch (e) {
-    return e.response.data;
+    return e.response?.data || { error: 'Failed to create card' };
   }
 }
 
@@ -32,9 +52,33 @@ export async function getCards({ size = 10, cursorId, columnId }) {
 
   try {
     const res = await api.get('/cards', { params: { size, cursorId, columnId } });
-    return res.data;
+    const data = res.data;
+
+    // 필요한 필드만 추출
+    return {
+      cards: (data?.cards || []).map((card) => ({
+        id: card.id,
+        title: card.title,
+        description: card.description,
+        dueDate: card.dueDate,
+        tags: card.tags || [],
+        imageUrl: card.imageUrl,
+        assignee: card.assignee
+          ? {
+              userId: card.assignee.userId || card.assignee.id,
+              nickname: card.assignee.nickname,
+              email: card.assignee.email,
+              profileImageUrl: card.assignee.profileImageUrl,
+            }
+          : null,
+        columnId: card.columnId,
+        dashboardId: card.dashboardId,
+      })),
+      cursorId: data?.cursorId,
+      totalCount: data?.totalCount,
+    };
   } catch (e) {
-    return e.response.data;
+    return e.response?.data || { error: 'Failed to fetch cards' };
   }
 }
 
@@ -54,9 +98,29 @@ export async function putCardsId(cardId, cardData) {
   */
   try {
     const res = await api.put(`/cards/${cardId}`, cardData);
-    return res.data;
+    const data = res.data;
+
+    // 필요한 필드만 추출
+    return {
+      id: data.id,
+      title: data.title,
+      description: data.description,
+      dueDate: data.dueDate,
+      tags: data.tags || [],
+      imageUrl: data.imageUrl,
+      assignee: data.assignee
+        ? {
+            userId: data.assignee.userId || data.assignee.id,
+            nickname: data.assignee.nickname,
+            email: data.assignee.email,
+            profileImageUrl: data.assignee.profileImageUrl,
+          }
+        : null,
+      columnId: data.columnId,
+      dashboardId: data.dashboardId,
+    };
   } catch (e) {
-    return e.response.data;
+    return e.response?.data || { error: 'Failed to update card' };
   }
 }
 
@@ -65,9 +129,29 @@ export async function getCardsId(cardId) {
   /* cardId: number; */
   try {
     const res = await api.get(`/cards/${cardId}`);
-    return res.data;
+    const data = res.data;
+
+    // 필요한 필드만 추출
+    return {
+      id: data.id,
+      title: data.title,
+      description: data.description,
+      dueDate: data.dueDate,
+      tags: data.tags || [],
+      imageUrl: data.imageUrl,
+      assignee: data.assignee
+        ? {
+            userId: data.assignee.userId || data.assignee.id,
+            nickname: data.assignee.nickname,
+            email: data.assignee.email,
+            profileImageUrl: data.assignee.profileImageUrl,
+          }
+        : null,
+      columnId: data.columnId,
+      dashboardId: data.dashboardId,
+    };
   } catch (e) {
-    return e.response.data;
+    return e.response?.data || { error: 'Failed to fetch card' };
   }
 }
 

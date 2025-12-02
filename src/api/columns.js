@@ -9,9 +9,17 @@ export async function postColumns(columnsData) {
   */
   try {
     const res = await api.post('/columns', columnsData);
-    return res.data;
+    const data = res.data;
+
+    // 필요한 필드만 추출
+    return {
+      id: data.id,
+      title: data.title,
+      dashboardId: data.dashboardId,
+      teamId: data.teamId,
+    };
   } catch (e) {
-    return e.response.data;
+    return e.response?.data || { error: 'Failed to create column' };
   }
 }
 
@@ -22,9 +30,20 @@ export async function getColumns(dashboardId) {
 
   try {
     const res = await api.get('/columns', { params: { dashboardId } });
-    return res.data;
+    const data = res.data;
+
+    // 필요한 필드만 추출
+    const columns = Array.isArray(data?.data) ? data.data : Array.isArray(data) ? data : [];
+    return {
+      data: columns.map((col) => ({
+        id: col.id,
+        title: col.title,
+        dashboardId: col.dashboardId,
+        teamId: col.teamId,
+      })),
+    };
   } catch (e) {
-    return e.response.data;
+    return e.response?.data || { error: 'Failed to fetch columns' };
   }
 }
 
@@ -35,9 +54,17 @@ export async function putColumnsId(columnId, title) {
   */
   try {
     const res = await api.put(`/columns/${columnId}`, { title });
-    return res.data;
+    const data = res.data;
+
+    // 필요한 필드만 추출
+    return {
+      id: data.id,
+      title: data.title,
+      dashboardId: data.dashboardId,
+      teamId: data.teamId,
+    };
   } catch (e) {
-    return e.response.data;
+    return e.response?.data || { error: 'Failed to update column' };
   }
 }
 
@@ -65,7 +92,12 @@ export async function postColumnsIdCardImage(columnId, image) {
         'Content-Type': 'multipart/form-data',
       },
     });
-    return res.data;
+    const data = res.data;
+
+    // 필요한 필드만 추출
+    return {
+      imageUrl: data.imageUrl || data.url,
+    };
   } catch (e) {
     return e.response?.data || { error: 'Image upload failed' };
   }

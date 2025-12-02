@@ -39,24 +39,47 @@ import styles from './InputTag.module.scss';
 
 export default function InputTag({ tags = [], setTags, onAddTag, onRemoveTag, label = '태그' }) {
   const [value, setValue] = useState({ tag: '' });
+  const [isProcessing, setIsProcessing] = useState(false);
+
   const handleChange = (e) => {
     const value = e.target.value;
     setValue({
       tag: value,
     });
   };
+
   const handleCreateTag = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      if (value.tag.trim()) {
-        // onAddTag 우선, 없으면 setTags 사용 (호환)
-        if (onAddTag) {
-          onAddTag(value.tag.trim());
-        } else if (setTags) {
-          setTags((prev) => [...prev, value.tag.trim()]);
-        }
-        setValue({ tag: '' });
+      e.stopPropagation();
+
+      // 중복 실행 방지
+      if (isProcessing) return;
+      if (!value.tag.trim()) return;
+
+      setIsProcessing(true);
+
+      const trimmedTag = value.tag.trim();
+
+      // 중복 태그 체크
+      if (tags.includes(trimmedTag)) {
+        setIsProcessing(false);
+        return;
       }
+
+      // onAddTag 우선, 없으면 setTags 사용 (호환)
+      if (onAddTag) {
+        onAddTag(trimmedTag);
+      } else if (setTags) {
+        setTags((prev) => [...prev, trimmedTag]);
+      }
+
+      setValue({ tag: '' });
+
+      // 다음 이벤트를 위해 약간의 지연 후 플래그 해제
+      setTimeout(() => {
+        setIsProcessing(false);
+      }, 100);
     } else if (e.key === 'Backspace') {
       if (value.tag.trim() === '') {
         if (tags.length > 0) {

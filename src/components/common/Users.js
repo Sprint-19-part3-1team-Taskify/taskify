@@ -24,6 +24,7 @@ export default function Users() {
               <User
                 key={item?.userId ?? `${item?.nickname ?? 'unknown'}-${Math.random()}`}
                 value={item?.nickname ?? ''}
+                profileImageUrl={item?.profileImageUrl}
                 type="large"
                 hiddenName="true"
               />

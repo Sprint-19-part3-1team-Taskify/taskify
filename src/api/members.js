@@ -12,9 +12,21 @@ export async function getMembers({ page = 1, size = 20, dashboardId }) {
     const res = await api.get('/members', {
       params: { page, size, dashboardId },
     });
-    return res.data;
+    const data = res.data;
+
+    // 필요한 필드만 추출
+    const members = Array.isArray(data?.members) ? data.members : Array.isArray(data) ? data : [];
+    return {
+      members: members.map((member) => ({
+        userId: member.userId || member.id,
+        nickname: member.nickname,
+        email: member.email,
+        profileImageUrl: member.profileImageUrl,
+        isOwner: member.isOwner,
+      })),
+    };
   } catch (e) {
-    return e.response.data;
+    return e.response?.data || { error: 'Failed to fetch members' };
   }
 }
 

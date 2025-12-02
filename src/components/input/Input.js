@@ -122,7 +122,7 @@ export default function Input({
           </button>
         )}
       </div>
-      {hasError && <div className="errorMsg">{error}</div>}
+      {(hasError || error) && <div className="errorMsg">{error}</div>}
     </div>
   );
 }

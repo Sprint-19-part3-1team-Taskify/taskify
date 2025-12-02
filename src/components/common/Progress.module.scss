@@ -11,6 +11,8 @@
   background-color: $violet2;
   flex-shrink: 0;
   white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
   &::before {
     content: '';
     position: absolute;
@@ -22,9 +24,14 @@
     margin-top: -3px;
     border-radius: 50%;
     background-color: $violet1;
+    flex-shrink: 0;
   }
   .state {
     @include txtStyle('md', R);
     color: $violet1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
   }
 }

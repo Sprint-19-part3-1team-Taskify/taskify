@@ -9,8 +9,11 @@
   margin: 0 6px 0 0;
   padding: 0 6px;
   min-height: 28px;
+  max-width: 200px;
   border-radius: 4px;
-  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   cursor: default;
   &:hover {
     cursor: pointer;

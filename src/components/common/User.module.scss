@@ -20,15 +20,24 @@
     height: 26px;
     border: 2px solid $white;
     border-radius: 50%;
+    position: relative;
+    overflow: hidden;
     &:only-child {
       width: 24px;
       height: 24px;
       border: none;
     }
+    &.hasImage {
+      border: 2px solid $white;
+    }
   }
   .name {
     @include txtStyle('lg', R);
     margin-left: 6px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 150px;
   }
 
   &.large {
@@ -49,6 +58,10 @@
       margin-left: 12px;
       @include txtStyle('lg', M);
       color: $black3;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 200px;
     }
   }
   &.medium {
@@ -59,6 +72,10 @@
       margin-left: 8px;
       @include txtStyle('md', R);
       color: $black3;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 150px;
     }
   }
   &.comment {
