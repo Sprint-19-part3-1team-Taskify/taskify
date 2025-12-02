@@ -290,7 +290,7 @@
 
   .buttonGroup {
     padding-left: 12px;
-    margin-left: 0; // 모바일에서는 margin-left 제거
+    margin-left: auto; // 모바일에서는 margin-left 제거
   }
 
   .profileSection {
@@ -324,5 +324,11 @@
 
   img {
     display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboardName {
+    display: none;
   }
 }

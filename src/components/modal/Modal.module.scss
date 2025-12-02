@@ -244,6 +244,9 @@
           li {
             position: relative;
             padding-left: 44px;
+            &:not(:first-child) {
+              margin-top: 12px;
+            }
             .info {
               display: flex;
               align-items: center;
@@ -317,14 +320,14 @@
     &.type1,
     &.type2 {
       .modalContent {
-        overflow-y: scroll;
+        overflow-y: auto;
         margin-right: -16px;
         padding-right: 16px;
       }
     }
     &.type1 {
       .modalContent {
-        height: calc(100vh - 250px);
+        max-height: calc(100vh - 250px);
       }
     }
     &.type2 {

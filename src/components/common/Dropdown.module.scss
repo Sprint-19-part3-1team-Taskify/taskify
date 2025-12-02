@@ -64,3 +64,15 @@
   display: flex;
   gap: 32px;
 }
+
+/* mobile (743px 이하) */
+@media (max-width: 743px) {
+  :global(.dropDownWrap) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    .dropDownBox {
+      width: 100%;
+    }
+  }
+}

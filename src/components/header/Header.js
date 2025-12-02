@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useAuth } from '@/context/authProvider';
-import User from '@/components/common/User';
 import styles from './Header.module.scss';
 
 import { useHeader } from '@/context/HeaderProvider';

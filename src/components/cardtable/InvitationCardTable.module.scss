@@ -1,20 +1,12 @@
 .cardTable {
   background: white;
   border-radius: 8px;
-  border: 1px solid #d9d9d9;
   padding: 28px;
   width: 620px;
   height: 404px;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-
-  @media (max-width: 768px) {
-    width: 100%;
-    max-width: 620px;
-    height: auto;
-    min-height: 404px;
-  }
 }
 
 .header {
@@ -26,7 +18,7 @@
 }
 
 .title {
-  font-size: 1.25rem;
+  font-size: 24px;
   font-weight: 700;
   color: #1f2937;
 }
@@ -179,5 +171,27 @@
 
   &:active {
     background: #3a1fa8;
+  }
+}
+
+@media (max-width: 1200px) {
+  .cardTable {
+    width: 100%;
+    height: auto;
+    min-height: 404px;
+  }
+}
+@media (max-width: 768px) {
+  .header {
+    position: relative;
+  }
+  .inviteBtn {
+    position: absolute;
+    top: 56px;
+    right: 0;
+  }
+
+  .title {
+    font-size: 20px;
   }
 }

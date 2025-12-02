@@ -22,6 +22,9 @@ import {
 import { getMembers, deleteMembersId } from '@/api/members';
 import { DashboardDeleteButton } from '@/components/button';
 import Modal from '@/components/modal/Modal';
+import BackPageButton from '@/components/button/BackPageButton/BackPageButton';
+
+import styles from './edit.module.scss';
 
 /* 삭제 확인 모달 */
 function ConfirmDeleteModal({ open, onCancel, onConfirm }) {
@@ -49,79 +52,6 @@ function ConfirmDeleteModal({ open, onCancel, onConfirm }) {
     </div>
   );
 }
-
-/* 스타일 상수*/
-const layout = {
-  padding: '40px 32px',
-  maxWidth: 680,
-  margin: '0',
-  background: '#fff',
-  borderRadius: 16,
-  border: '1px solid #eee',
-};
-const sectionCard = {
-  padding: '28px 32px',
-  background: '#fafafa',
-  borderRadius: 12,
-  border: '1px solid #e5e5e5',
-  marginTop: 48,
-};
-const sectionTitle = {
-  fontSize: 18,
-  fontWeight: 700,
-  marginBottom: 24,
-};
-const backBtn = {
-  display: 'flex',
-  alignItems: 'center',
-  gap: 8,
-  marginBottom: 24,
-  background: 'none',
-  border: 'none',
-  fontWeight: 600,
-  fontSize: 14,
-  cursor: 'pointer',
-};
-const saveBtn = {
-  width: '100%',
-  padding: '12px 16px',
-  borderRadius: 8,
-  border: 'none',
-  background: '#5534DA',
-  color: '#fff',
-  fontSize: 16,
-  fontWeight: 600,
-  marginTop: 24,
-  cursor: 'pointer',
-};
-const overlayStyle = {
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  width: '100vw',
-  height: '100vh',
-  backgroundColor: 'rgba(0,0,0,0.4)',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  zIndex: 9999,
-};
-const modalStyle = {
-  background: '#fff',
-  padding: 24,
-  borderRadius: 8,
-  maxWidth: 400,
-  textAlign: 'center',
-};
-const confirmBtn = {
-  padding: '8px 16px',
-  borderRadius: 6,
-  border: 'none',
-  background: '#5534DA',
-  color: '#fff',
-  fontWeight: 600,
-  cursor: 'pointer',
-};
 
 export default function DashboardEdit() {
   const router = useRouter();
@@ -343,30 +273,23 @@ export default function DashboardEdit() {
   };
 
   return (
-    <div style={layout}>
+    <div className="subPageInner">
       {/* 뒤로가기 */}
-      <button onClick={() => router.push(`/dashboard/${dashboard.id}`)} style={backBtn}>
-        <Image src="/images/common/btn_chevron_left.svg" alt="뒤로가기" width={16} height={16} />
-        대시보드로 돌아가기
-      </button>
-
-      <h1 style={{ fontSize: 26, fontWeight: 700, marginBottom: 20 }}>
-        {dashboard?.title || '대시보드 수정'}
-      </h1>
+      <BackPageButton />
 
       {/* 대시보드 정보 */}
-      <div style={sectionCard}>
-        <h2 style={sectionTitle}>대시보드 정보</h2>
+      <div className={styles.sectionCard}>
+        <h2 className={styles.sectionTitle}>{dashboard?.title || '대시보드 수정'}</h2>
 
         <DashboardForm title={title} setTitle={setTitle} color={color} setColor={setColor} />
 
-        <button style={saveBtn} onClick={handleSave}>
+        <button className={styles.saveBtn} onClick={handleSave}>
           변경
         </button>
       </div>
 
       {/* 구성원 목록 */}
-      <div style={{ marginTop: 48 }}>
+      <div className={styles.section}>
         <MemberCardTable
           members={members}
           itemsPerPage={4}
@@ -376,7 +299,7 @@ export default function DashboardEdit() {
       </div>
 
       {/* 초대 목록 */}
-      <div style={{ marginTop: 48 }}>
+      <div className={styles.section}>
         <InvitationCardTable
           invitations={invitedMembers}
           itemsPerPage={4}
@@ -387,7 +310,7 @@ export default function DashboardEdit() {
       </div>
 
       {/* 대시보드 삭제 */}
-      <div style={{ marginTop: 48 }}>
+      <div className={styles.section}>
         <DashboardDeleteButton type="1" onClick={handleDeleteDashboard}>
           대시보드 삭제하기
         </DashboardDeleteButton>

@@ -1,22 +1,13 @@
 .cardTable {
   background: white;
   border-radius: 8px;
-  border: 1px solid #d9d9d9;
   padding: 28px;
   width: 620px;
   height: 404px;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-
-  @media (max-width: 768px) {
-    width: 100%;
-    max-width: 620px;
-    height: auto;
-    min-height: 477px;
-  }
 }
-
 .header {
   display: flex;
   align-items: center;
@@ -26,7 +17,7 @@
 }
 
 .title {
-  font-size: 1.25rem;
+  font-size: 24px;
   font-weight: 700;
   color: #1f2937;
 }
@@ -155,4 +146,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+@media (max-width: 1200px) {
+  .cardTable {
+    padding: 28px 28px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .cardTable {
+    width: 100%;
+    max-width: 620px;
+    height: auto;
+    min-height: 477px;
+  }
+  .title {
+    font-size: 20px;
+  }
 }

@@ -101,10 +101,21 @@
 
 /* mobile (743px 이하) */
 @media (max-width: 743px) {
-  .profileTop {
-    flex-direction: column;
-    .fields {
-      width: 100%;
+  .profileCard {
+    padding: 16px;
+    .imageUpload {
+      width: 100px;
+      height: 100px;
+      .plus {
+        width: 20px;
+        height: 20px;
+      }
+    }
+    .profileTop {
+      flex-direction: column;
+      .fields {
+        width: 100%;
+      }
     }
   }
 }
