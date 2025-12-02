@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import styles from './ProfileCard.module.scss';
 import { postUsersMeImage } from '@/api/users';
 import { useAuth } from '@/context/authProvider';
@@ -11,35 +11,84 @@ export default function ProfileCard() {
   const [preview, setPreview] = useState('');
   const [nickname, setNickname] = useState('');
   const [apiError, setApiError] = useState('');
+  const selectedFileRef = useRef(null);
 
+  // 사용자 정보 변경 시 상태 초기화
   useEffect(() => {
     if (user) {
       setPreview(user.profileImageUrl);
       setNickname(user.nickname);
+      selectedFileRef.current = null; // 사용자 변경 시 선택된 파일 초기화
     }
   }, [user]);
+
+  // 컴포넌트 언마운트 시 blob URL 정리
+  useEffect(() => {
+    return () => {
+      if (preview && preview.startsWith('blob:')) {
+        URL.revokeObjectURL(preview);
+      }
+    };
+  }, [preview]);
 
   if (isLoading || !user) {
     return null; // 로딩 중이거나 user가 없으면 렌더링 안 함
   }
-  
 
-
-  const handleImageUpload = async (e) => {
+  // 파일 선택 시 미리보기만 표시 (API 호출 안 함)
+  const handleImageSelect = (e) => {
     const file = e.target.files[0];
-    if (!file) return;
-    try {
-      const imageURL = await postUsersMeImage(file);
-      setPreview(imageURL.profileImageUrl);
-    } catch (error) {
-      console.error('이미지 업로드 실패:', error);
+
+    // 이전 blob URL 정리
+    if (preview && preview.startsWith('blob:')) {
+      URL.revokeObjectURL(preview);
     }
+
+    if (!file) {
+      // 파일 선택 취소 시 원래 이미지로 복원
+      setPreview(user?.profileImageUrl || '');
+      selectedFileRef.current = null;
+      return;
+    }
+
+    // 로컬 미리보기 URL 생성
+    const localUrl = URL.createObjectURL(file);
+    setPreview(localUrl);
+
+    // 파일 객체 저장 (나중에 저장 시 업로드용)
+    selectedFileRef.current = file;
   };
+
   const handleProfileSave = async () => {
     try {
+      let profileImageUrl = preview;
+
+      // 새 파일이 선택된 경우에만 이미지 업로드
+      if (selectedFileRef.current) {
+        try {
+          const imageResult = await postUsersMeImage(selectedFileRef.current);
+          profileImageUrl = imageResult.profileImageUrl;
+
+          // 업로드 성공 후 로컬 미리보기 URL 정리
+          if (preview && preview.startsWith('blob:')) {
+            URL.revokeObjectURL(preview);
+          }
+
+          // 업로드된 이미지 URL로 미리보기 업데이트
+          setPreview(profileImageUrl);
+          selectedFileRef.current = null; // 업로드 완료 후 초기화
+        } catch (error) {
+          console.error('이미지 업로드 실패:', error);
+          setApiError('이미지 업로드에 실패했습니다.');
+          openModal('profileErrorModal');
+          return;
+        }
+      }
+
+      // 프로필 업데이트
       const updateData = {
         nickname: nickname.trim(),
-        profileImageUrl: preview,
+        profileImageUrl: profileImageUrl,
       };
       await updateMe(updateData);
       openModal('saveComplete');
@@ -63,7 +112,7 @@ export default function ProfileCard() {
                 <img src="/images/common/btn_img_add.svg" alt="add" />
               </span>
             )}
-            <input type="file" onChange={handleImageUpload} />
+            <input type="file" accept="image/*" onChange={handleImageSelect} />
           </label>
 
           <div className={styles.fields}>

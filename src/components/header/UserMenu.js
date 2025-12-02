@@ -18,7 +18,7 @@ export default function UserMenu() {
   return (
     <div className={styles.userMenu}>
       <button className={styles.userButton} onClick={() => setOpen((prev) => !prev)}>
-        <User value={user?.nickname} type="large" />
+        <User value={user?.nickname} profileImageUrl={user?.profileImageUrl} type="large" />
       </button>
 
       {open && (
