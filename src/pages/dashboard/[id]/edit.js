@@ -30,21 +30,14 @@ import styles from './edit.module.scss';
 function ConfirmDeleteModal({ open, onCancel, onConfirm }) {
   if (!open) return null;
   return (
-    <div style={overlayStyle}>
-      <div style={modalStyle}>
+    <div className={styles.overlayStyle}>
+      <div className={styles.modalStyle}>
         <p style={{ marginBottom: 16 }}>정말로 대시보드를 삭제하시겠습니까?</p>
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
-          <button
-            style={{
-              ...confirmBtn,
-              background: '#e5e7eb',
-              color: '#111',
-            }}
-            onClick={onCancel}
-          >
+          <button className={styles.cancelBtn} onClick={onCancel}>
             취소
           </button>
-          <button style={confirmBtn} onClick={onConfirm}>
+          <button className={styles.confirmBtn} onClick={onConfirm}>
             삭제하기
           </button>
         </div>
