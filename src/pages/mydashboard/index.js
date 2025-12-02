@@ -60,20 +60,33 @@ export default function MyDashboard() {
 
   /* 생성 모달 */
   const [isCreateOpen, setIsCreateOpen] = useState(false);
-  const [value, setValue] = useState({ title: '', color: '' });
+  const [value, setValue] = useState({ title: '', color: colorOptions[0].colorValue });
+  const [titleError, setTitleError] = useState('');
 
   const openCreateModal = () => setIsCreateOpen(true);
 
   const closeCreateModal = () => {
     setIsCreateOpen(false);
-    setValue({ title: '', color: '' });
+    setValue({ title: '', color: colorOptions[0].colorValue });
+    setTitleError('');
   };
 
-  const handleChange = (e) => setValue({ ...value, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    setValue({ ...value, [e.target.name]: e.target.value });
+    // 입력 시 에러 메시지 초기화
+    if (e.target.name === 'title' && titleError) {
+      setTitleError('');
+    }
+  };
 
   const handleColorChange = (color) => setValue((prev) => ({ ...prev, color }));
 
   const handleCreateSubmit = async () => {
+    if (!value.title.trim()) {
+      setTitleError('대시보드 이름을 입력해주세요');
+      return;
+    }
+
     await createDashboard(value);
     closeCreateModal();
   };
@@ -211,6 +224,8 @@ export default function MyDashboard() {
             placeholder="대시보드 이름을 입력해주세요"
             onChange={handleChange}
             value={value.title}
+            error={titleError}
+            required
           />
 
           <div className="ColorWrap">
