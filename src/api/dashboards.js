@@ -9,9 +9,20 @@ export async function postDashboards(dashboardData) {
   */
   try {
     const res = await api.post('/dashboards', dashboardData);
-    return res.data;
+    const data = res.data;
+
+    // 필요한 필드만 추출
+    return {
+      id: data.id || data.dashboardId,
+      title: data.title,
+      color: data.color,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
+      createdByMe: data.createdByMe,
+      userId: data.userId || data.createdBy?.id || data.ownerId || data.createdById,
+    };
   } catch (e) {
-    return e.response?.data;
+    return e.response?.data || { error: 'Failed to create dashboard' };
   }
 }
 
@@ -26,7 +37,29 @@ export async function getDashboards({ navigationMethod, cursorId, page = 1, size
     const res = await api.get('/dashboards', {
       params: { navigationMethod, cursorId, page, size },
     });
-    return res.data;
+    const data = res.data;
+
+    // 필요한 필드만 추출
+    const dashboards = Array.isArray(data?.dashboards)
+      ? data.dashboards
+      : Array.isArray(data?.data)
+        ? data.data
+        : Array.isArray(data)
+          ? data
+          : [];
+
+    return {
+      dashboards: dashboards.map((d) => ({
+        id: d.id || d.dashboardId,
+        title: d.title,
+        color: d.color,
+        createdAt: d.createdAt,
+        updatedAt: d.updatedAt,
+        createdByMe: d.createdByMe,
+        userId: d.userId || d.createdBy?.id || d.ownerId || d.createdById,
+      })),
+      cursorId: data?.cursorId,
+    };
   } catch (e) {
     const errorMessage = e.response?.data?.message || '대시보드를 불러올 수 없습니다.';
     throw new Error(errorMessage);
@@ -38,9 +71,20 @@ export async function getDashboardsId(dashboardId) {
   /* dashboardId: number; */
   try {
     const res = await api.get(`/dashboards/${dashboardId}`);
-    return res.data;
+    const data = res.data;
+
+    // 필요한 필드만 추출
+    return {
+      id: data.id || data.dashboardId,
+      title: data.title,
+      color: data.color,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
+      createdByMe: data.createdByMe,
+      userId: data.userId || data.createdBy?.id || data.ownerId || data.createdById,
+    };
   } catch (e) {
-    return e.response?.data;
+    return e.response?.data || { error: 'Failed to fetch dashboard' };
   }
 }
 
