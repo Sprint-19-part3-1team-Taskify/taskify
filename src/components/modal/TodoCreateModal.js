@@ -47,12 +47,12 @@ export default function TodoCreateModal({
   };
 
   // 담당자 선택 (이름 -> userId 매핑)
-  const handleAssigneeChange = (selectedName) => {
-    if (!selectedName) {
+  const handleAssigneeChange = (selectedKey) => {
+    if (!selectedKey) {
       setFormData((prev) => ({ ...prev, assigneeUserId: null }));
       return;
     }
-    const found = members.find((m) => (m.nickname || m.email) === selectedName);
+    const found = members.find((m) => (m.nickname || m.email) === selectedKey);
     if (found) setFormData((prev) => ({ ...prev, assigneeUserId: found.userId }));
   };
 
@@ -80,10 +80,23 @@ export default function TodoCreateModal({
 
   const imageUploadRef = useRef(null);
 
-  // 이미지 선택 (로컬 미리보기만)
-  const handleImageSelect = () => {
-    // 이미지가 선택되면 ImgUpload 내부에서 미리보기 표시
-  };
+  // 모달이 닫힐 때 폼 초기화
+  useEffect(() => {
+    if (!isOpen) {
+      setFormData({
+        title: '',
+        description: '',
+        dueDate: null,
+        assigneeUserId: null,
+        tags: [],
+        imageUrl: null,
+      });
+      // 이미지 업로드 컴포넌트도 초기화 (ref를 통해)
+      if (imageUploadRef.current) {
+        // ImgUpload 컴포넌트의 내부 상태는 컴포넌트가 언마운트되면 자동으로 초기화됨
+      }
+    }
+  }, [isOpen]);
 
   // 할 일 생성
   const handleSubmit = async () => {
@@ -99,12 +112,19 @@ export default function TodoCreateModal({
       return;
     }
 
-    // 이미지 업로드 처리 (파일이 선택된 경우)
+    // 이미지 업로드 처리 (파일이 선택된 경우에만)
     let uploadedImageUrl = formData.imageUrl;
     if (imageUploadRef.current?.uploadImage) {
-      const result = await imageUploadRef.current.uploadImage();
-      if (result) {
-        uploadedImageUrl = result;
+      try {
+        const result = await imageUploadRef.current.uploadImage();
+        if (result) {
+          uploadedImageUrl = result;
+        }
+      } catch (error) {
+        console.error('이미지 업로드 실패:', error);
+        setAlertMessage('이미지 업로드에 실패했습니다.');
+        setAlertOpen(true);
+        return;
       }
     }
 
@@ -142,9 +162,6 @@ export default function TodoCreateModal({
     });
   };
 
-  // 드롭다운용 멤버 이름 배열
-  const memberNames = members.map((m) => m.nickname || m.email);
-
   return (
     <Modal
       id="todoCreateModal"
@@ -164,7 +181,7 @@ export default function TodoCreateModal({
           <Dropdown
             type="member"
             label=""
-            content={memberNames}
+            content={members}
             onChange={handleAssigneeChange}
             placeholder="담당자를 선택해주세요"
             initValue={null}

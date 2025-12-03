@@ -35,19 +35,27 @@ export default function SideMenu() {
   const { sidemenuShow } = useHeader();
 
   const [pageCount, setPageCount] = useState(1);
-  const [createForm, setCreateForm] = useState({ title: '', color: '' });
+  const [createForm, setCreateForm] = useState({ title: '', color: colorOptions[0].colorValue });
+  const [titleError, setTitleError] = useState('');
 
   const lastPage = Math.ceil((myDashboards?.length || 0) / ITEMS_PER_PAGE);
 
   const changeCreateForm = (field, value) => {
     setCreateForm((prev) => ({ ...prev, [field]: value }));
+    // 입력 시 에러 메시지 초기화
+    if (field === 'title' && titleError) {
+      setTitleError('');
+    }
   };
 
   // ==============================
   // ⭐ 대시보드 생성 + 모달 자동 닫힘
   // ==============================
   const handleCreate = async () => {
-    if (!createForm.title) return alert('대시보드 이름을 입력해주세요');
+    if (!createForm.title.trim()) {
+      setTitleError('대시보드 이름을 입력해주세요');
+      return;
+    }
 
     try {
       await createDashboard({
@@ -55,8 +63,9 @@ export default function SideMenu() {
         color: createForm.color,
       });
 
-      // 입력 초기화
-      setCreateForm({ title: '', color: '' });
+      // 입력 초기화 (색상은 기본값 유지)
+      setCreateForm({ title: '', color: colorOptions[0].colorValue });
+      setTitleError('');
 
       // 생성 직후 모달 닫기
       closeModal('createDashboardModal');
@@ -143,6 +152,8 @@ export default function SideMenu() {
           placeholder="대시보드 이름을 입력해주세요"
           onChange={(e) => changeCreateForm('title', e.target.value)}
           value={createForm.title}
+          error={titleError}
+          required
         />
 
         <div className="ColorWrap">

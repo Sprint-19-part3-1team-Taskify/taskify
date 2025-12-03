@@ -21,7 +21,17 @@ export async function postUsers(userData) {
 export async function getUsersMe() {
   try {
     const res = await api.get('/users/me');
-    return res.data;
+    const data = res.data;
+
+    // 필요한 필드만 추출
+    return {
+      id: data.id || data.userId,
+      email: data.email,
+      nickname: data.nickname,
+      profileImageUrl: data.profileImageUrl,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
+    };
   } catch (e) {
     // ⭐ 401 Unauthorized 에러는 null 반환 (로그인 안 한 상태)
     if (e.response?.status === 401) {
@@ -41,7 +51,17 @@ export async function putUsersMe(userData) {
   */
   try {
     const res = await api.put('/users/me', userData);
-    return res.data;
+    const data = res.data;
+
+    // 필요한 필드만 추출
+    return {
+      id: data.id || data.userId,
+      email: data.email,
+      nickname: data.nickname,
+      profileImageUrl: data.profileImageUrl,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
+    };
   } catch (e) {
     const errorMessage = e.response?.data?.message;
     throw new Error(errorMessage);
@@ -59,7 +79,12 @@ export async function postUsersMeImage(image) {
         'Content-Type': 'multipart/form-data',
       },
     });
-    return res.data;
+    const data = res.data;
+
+    // 필요한 필드만 추출
+    return {
+      profileImageUrl: data.profileImageUrl || data.imageUrl,
+    };
   } catch (e) {
     const errorMessage = e.response?.data?.message;
     throw new Error(errorMessage);

@@ -51,6 +51,11 @@
     font-style: normal;
     font-weight: 700;
     line-height: 22px; /* 157.143% */
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
 
     @media (min-width: 1024px) {
       color: var(--black-black_333236, #333236);

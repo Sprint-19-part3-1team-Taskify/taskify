@@ -64,7 +64,12 @@ const MemberCardTable = ({
           currentMembers.map((member) => (
             <div key={member.id} className={styles.memberItem}>
               <div className={styles.memberInfo}>
-                <User value={safeName(member)} type="medium" hiddenName={true} />
+                <User
+                  value={safeName(member)}
+                  profileImageUrl={member?.profileImageUrl}
+                  type="medium"
+                  hiddenName={true}
+                />
 
                 <div>
                   <div className={styles.memberName}>{safeName(member)}</div>
