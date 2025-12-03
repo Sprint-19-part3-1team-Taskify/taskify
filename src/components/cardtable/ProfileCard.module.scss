@@ -1,0 +1,121 @@
+.profileCard {
+  width: 100%;
+  padding: 24px;
+  margin-bottom: 24px;
+  background: #ffffff;
+  border-radius: 16px;
+}
+
+/* 제목 */
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+/* 이미지 + 입력 필드 가로 배치 */
+.profileTop {
+  display: flex;
+  align-items: flex-start;
+  gap: 42px;
+}
+
+/* 프로필 이미지 박스 */
+.imageUpload {
+  width: 182px;
+  height: 182px;
+  background: #f5f5f5;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+
+  input {
+    display: none;
+  }
+}
+
+/* 플러스 아이콘 */
+.plus img {
+  width: 18px;
+  height: 18px;
+}
+
+/* 업로드된 사진 */
+.preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 우측 입력 필드 전체 */
+.fields {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.saveButton {
+  width: 100%;
+  height: 54px;
+  background: #5c2eff;
+  border-radius: 8px;
+  color: var(--white-white_FFFFFF, #fff);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 26px;
+
+  margin-top: 8px;
+}
+
+/* 각 입력 필드 */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+
+  label {
+    font-size: 16px;
+    font-weight: 500;
+    color: #222;
+  }
+
+  input {
+    height: 52px;
+    padding: 0 16px;
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    font-size: 16px;
+    &:read-only {
+      color: #9fa6b2;
+    }
+  }
+}
+
+/* mobile (743px 이하) */
+@media (max-width: 743px) {
+  .profileCard {
+    padding: 16px;
+    .imageUpload {
+      width: 100px;
+      height: 100px;
+      .plus {
+        width: 20px;
+        height: 20px;
+      }
+    }
+    .profileTop {
+      flex-direction: column;
+      .fields {
+        width: 100%;
+      }
+    }
+  }
+}

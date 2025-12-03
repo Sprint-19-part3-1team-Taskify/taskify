@@ -1,0 +1,105 @@
+@use '@styles/variables' as *;
+@use '@styles/mixins' as *;
+
+:global(.userPage) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.authWrap {
+  width: 520px;
+  .logo {
+    display: inline-block;
+    width: 100%;
+    height: 280px;
+    margin-bottom: 10px;
+    background: url('/images/common/img_logo.svg') no-repeat 0 0;
+    &Wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 200px;
+      margin: 0 auto 30px;
+      text-align: center;
+      .massage {
+        @include txtStyle('xl', M);
+        color: $black3;
+        vertical-align: top;
+      }
+    }
+  }
+  .form {
+    :global(label) {
+      @include txtStyle('lg', R);
+    }
+    .btmBtn {
+      margin-top: 24px;
+      button {
+        width: 100%;
+      }
+    }
+    .checkbox {
+      position: relative;
+      margin-top: 16px;
+      input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+
+        &:checked + label:before {
+          background: url('/images/common/ico_checkbox_on.svg') no-repeat 50% 50%;
+        }
+      }
+      label {
+        @include txtStyle('lg', R);
+        position: relative;
+        padding-left: 28px;
+        color: $black3;
+        cursor: pointer;
+        height: 20px;
+        line-height: 20px;
+        &:before {
+          content: '';
+          display: inline-block;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 20px;
+          height: 20px;
+          border-radius: 4px;
+          border: 1px solid $gray3;
+          background-color: $white;
+          box-sizing: border-box;
+        }
+      }
+    }
+  }
+  .linkArea {
+    margin-top: 24px;
+    text-align: center;
+    a,
+    span {
+      @include txtStyle(16px, R);
+    }
+    a {
+      display: inline-block;
+      margin-left: 6px;
+      color: $violet1;
+      border-bottom: 1px solid $violet1;
+    }
+  }
+}
+
+/* mobile (743px 이하) */
+@media (max-width: 743px) {
+  .authWrap {
+    width: 300px;
+    .logoWrap {
+      .massage {
+        @include txtStyle('2lg', M);
+      }
+    }
+  }
+}

@@ -1,0 +1,376 @@
+@use '@styles/variables' as *;
+@use '@styles/mixins' as *;
+
+.modal {
+  width: 568px;
+  padding: 24px;
+  border-radius: 8px;
+  background-color: #fff;
+
+  // 모달 창 뒤 배경을 위한 오버레이 스타일 (Full Screen Overlay)
+  &Overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+
+  // 제목
+  &Header {
+    margin-bottom: 24px;
+  }
+  &Title {
+    @include txtStyle('2xl', SB);
+  }
+  // 내용
+  &Content {
+    min-height: 0; // empty rule fix
+  }
+  // 하단버튼영역
+  &Footer {
+    display: flex;
+    justify-content: space-around;
+    gap: 8px;
+    margin-top: 24px;
+    button {
+      @include flex-center;
+      height: 55px;
+      width: 100%;
+    }
+  }
+
+  //alert
+  &.alert {
+    @include txtStyle('xl', M);
+    @include flex-center;
+    flex-direction: column;
+    text-align: center;
+    width: 368px;
+    min-height: 192px;
+    .modalFooter {
+      margin-top: 32px;
+      button {
+        width: 240px;
+      }
+    }
+  }
+
+  //confirm
+  &.confirm {
+    @include txtStyle('xl', M);
+    text-align: center;
+    width: 568px;
+    min-height: 174px;
+    .modalFooter {
+      margin-top: 40px;
+    }
+  }
+
+  // type1
+  &.type1 {
+    width: 584px;
+  }
+
+  // type2
+  &.type2 {
+    position: relative;
+    width: 730px;
+    .modalHeader {
+      padding-right: 100px;
+
+      .moreMenu {
+        position: absolute;
+        top: 24px;
+        right: 38px;
+        .btns {
+          display: flex;
+          align-items: center;
+          .btnClose {
+            width: 32px;
+            height: 32px;
+            background: url('/images/common/ico_modal_close.svg') no-repeat 0 0;
+          }
+          .btnMeun {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            margin-right: 24px;
+            background: url('/images/common/ico_modal_more.svg') no-repeat 0 0;
+          }
+        }
+        .menu {
+          position: absolute;
+          top: 32px;
+          right: 56px;
+          width: 93px;
+          padding: 7px 6px;
+          border: 1px solid $gray3;
+          background-color: $white;
+          border-radius: 6px;
+          z-index: 1;
+          button {
+            @include flex-center;
+            @include txtStyle('md', R);
+            width: 100%;
+            height: 32px;
+            color: $black3;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+            // 수정하기 버튼: 기본 투명, hover 시 배경 등장
+            &:first-child {
+              color: $violet1;
+              background: transparent;
+            }
+            &:first-child:hover {
+              background: $violet2;
+            }
+            &:first-child:active {
+              background: darken($violet2, 5%);
+            }
+            // 삭제하기 등 기타 버튼 기본 투명, hover 시 회색
+            &:not(:first-child):hover {
+              background: $gray4;
+            }
+            &:not(:first-child):active {
+              background: $gray3;
+            }
+          }
+        }
+      }
+    }
+    .modalContent {
+      overflow-y: auto;
+      height: 660px;
+      padding-right: 24px;
+      margin-right: -24px;
+    }
+
+    // 할일 상세
+    .todoDetail {
+      position: relative;
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: space-between;
+
+      .infoBox {
+        flex-shrink: 0;
+        // 마감일이 잘리지 않도록 폭을 내용에 맞게 확장
+        width: max-content;
+        min-width: 180px;
+        max-width: 260px;
+        min-height: 155px; // 내용에 따라 확장
+        max-height: 220px; // 세로 전체가 아닌 적당한 높이로 제한
+        padding: 14px 16px;
+        border: 1px solid $gray3;
+        border-radius: 8px;
+        li:first-child {
+          margin-bottom: 16px;
+        }
+        .tit {
+          @include txtStyle('xs', B);
+          display: block;
+          margin-bottom: 6px;
+        }
+        .data {
+          @include txtStyle('md', R);
+          display: block;
+          color: $black3;
+          word-break: break-word;
+          overflow-wrap: anywhere;
+          // 한 줄로 표시하되, 정보가 잘리지 않도록 클리핑/확장
+          white-space: nowrap; // 한 줄 표시
+          overflow: visible;
+          text-overflow: clip;
+        }
+      }
+      .detail {
+        width: 470px;
+      }
+      .state {
+        display: flex;
+        align-items: center;
+        .todoProgress {
+          position: relative;
+          padding-right: 20px;
+          margin-right: 20px;
+          &:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 0;
+            margin-top: -10px;
+            width: 1px;
+            height: 20px;
+            background: $gray3;
+          }
+        }
+        div:not(.todoProgress) {
+          span {
+            margin-bottom: 4px;
+          }
+        }
+      }
+      .content {
+        @include txtStyle('md', R);
+        color: $black1;
+        margin-top: 16px;
+      }
+      .image {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        text-align: left;
+        margin-top: 16px;
+        aspect-ratio: 16/9;
+        img {
+          width: 100%;
+          height: auto;
+          object-fit: contain;
+          object-position: left top;
+        }
+      }
+      // 댓글관련
+      .commnet {
+        font-size: 14px;
+        font-weight: 400;
+        color: $black3;
+        margin-bottom: 6px;
+        &Box {
+          margin-top: 24px;
+        }
+        &List {
+          margin-top: 24px;
+          li {
+            position: relative;
+            padding-left: 44px;
+            &:not(:first-child) {
+              margin-top: 12px;
+            }
+            .info {
+              display: flex;
+              align-items: center;
+              margin-bottom: 6px;
+              gap: 8px;
+              .date {
+                @include txtStyle('xs', R);
+                color: $gray2;
+              }
+            }
+            .btns {
+              button {
+                @include txtStyle('xs', R);
+                color: $gray2;
+                margin-right: 14px;
+                text-decoration: underline; // 액션 밑줄
+              }
+            }
+            .editActions {
+              margin-top: 8px;
+              button {
+                @include txtStyle('xs', R);
+                color: $gray2;
+                margin-right: 14px;
+                text-decoration: underline;
+              }
+            }
+
+            // 수정 인풋 폼 높이 절반 정도로 축소
+            .editWrapper {
+              .textarea {
+                height: 40px;
+                textarea {
+                  min-height: 40px;
+                  height: 40px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.singleButton {
+  width: 100%; // 하나일 때는 꽉 채우기
+  justify-content: center;
+}
+
+/* mobile (743px 이하) */
+@media (max-width: 743px) {
+  .modal {
+    width: 100%;
+    padding: 16px;
+
+    &Overlay {
+      padding: 16px;
+      > section {
+        width: 100%;
+      }
+    }
+    &.alert,
+    &.confirm,
+    &.type1,
+    &.type2 {
+      width: 100%;
+      padding: 16px 16px 16px;
+      max-height: calc(100vh - 32px);
+    }
+
+    &.type1,
+    &.type2 {
+      .modalContent {
+        overflow-y: auto;
+        max-height: calc(100vh - 250px);
+        margin-right: -16px;
+        padding-right: 16px;
+      }
+    }
+    &.type2 {
+      padding-top: 56px;
+      .modalHeader {
+        padding-right: 0;
+        .moreMenu {
+          top: 16px;
+          right: 16px;
+        }
+      }
+
+      // 할일 상세
+      .todoDetail {
+        flex-direction: column;
+        .infoBox {
+          display: flex;
+          width: 100%;
+          max-width: 100%;
+          min-height: auto;
+          max-height: auto;
+          padding: 14px 16px;
+          margin-bottom: 16px;
+          li {
+            width: 100%;
+            &:first-child {
+              margin-bottom: 0;
+            }
+          }
+          .tit {
+            @include txtStyle('xs', B);
+            display: block;
+            margin-bottom: 6px;
+          }
+        }
+        .detail {
+          width: 100%;
+        }
+      }
+    }
+    &.confirm {
+      padding: 24px;
+    }
+  }
+}

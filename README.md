@@ -19,7 +19,7 @@ Taskify는 커뮤니티를 생성하고 멤버를 초대하여 일정과 할 일
 
 ## 🌐 배포 주소
 
-➡️ [Taskify]()
+➡️ [Taskify](https://taskify-ten-pi.vercel.app/)
 
 ## 🛠 기술 스택
 
@@ -30,7 +30,7 @@ Taskify는 커뮤니티를 생성하고 멤버를 초대하여 일정과 할 일
 | **상태 관리**       | ![Context-API](https://img.shields.io/badge/Context--Api-000000?style=for-the-badge&logo=react)                                                                                                                                                                                                                     |
 | **HTTP 클라이언트** | ![axios](https://img.shields.io/badge/axios-API-blue)                                                                                                                                                                                                                                                               |
 | **Routing**         | ![Next.js Pages Router](https://img.shields.io/badge/Next.js_Pages_Router-000000?style=for-the-badge&logo=next.js&logoColor=white)                                                                                                                                                                                  |
-| **배포**            | ![AWS S3](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)                                                                                                                                                                                                       |
+| **배포**            | [![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white)](https://taskify-ten-pi.vercel.app/)                                                                                                                                                                           |
 | **협업**            | ![Discord](https://img.shields.io/badge/Discord-5865F2?style=flat-square&logo=discord&logoColor=white) ![Notion](https://img.shields.io/badge/Notion-000000?style=flat-square&logo=notion)                                                                                                                          |
 
 ## 🚀 시작하기
@@ -42,82 +42,83 @@ Taskify는 커뮤니티를 생성하고 멤버를 초대하여 일정과 할 일
 
 ### 설치 및 실행
 
-```bash
+`````bash
 # 저장소 클론
-git clone https://github.com/Sprint-19-part3-1team-Taksify/frontend.git
+git clone https://github.com/Sprint-19-part3-1team-Taksify/taskify.git
 
 # 프로젝트 디렉토리로 이동
-cd frontend
+cd taskify
 
 # 의존성 설치
 npm install
 
 # 개발 서버 실행
 npm run dev
-```
 
+````markdown
 ## 📁 프로젝트 구조
 
-```
 📦 project
-├── 📂 public               # ⭐ 정적 파일 폴더 (필수)
-│   ├── 🔷 favicon.svg      # Favicon
-│   ├── 📂 images           # UI에서 쓰는 이미지
-│   └── 📂 fonts            # 커스텀 폰트 (Pretendard, NotoSans 등)
+├── 📂 public
+│ ├── 🔷 favicon.svg # 파비콘 파일
+│ ├── 📂 images # UI 이미지 저장
+│ └── 📂 fonts # Pretendard 등 폰트 파일
 │
 ├── 📂 src
-│   ├── 📂 app              # ⭐ Next.js App Router
-│   │   ├── 📄 layout.js    # 전체 레이아웃 (전역 스타일 로드, 공통 UI)
-│   │   ├── 📄 page.js      # 메인 페이지 (/)
-│   │   ├── 📂 list         # /list 페이지
-│   │   ├── 📂 mypage       # /mypage 페이지
-│   │   └── 📂 not-found    # 404 페이지
-│   │
-│   ├── 📂 services         # API 계층 (axios)
-│   │   ├── axiosInstance.js
-│   │   ├── authAPI.js
-│   │   ├── boardAPI.js
-│   │   └── uploadAPI.js
-│   │
-│   ├── 📂 styles           # SCSS 스타일 폴더
-│   │   ├── globals.scss    # 글로벌 스타일
-│   │   ├── variables.scss  # SCSS 변수
-│   │   ├── mixins.scss     # 공통 mixin
-│   │   └── 📂 components   # 컴포넌트 전용 SCSS
-│   │       └── button.scss
-│   │
-│   ├── 📂 components       # 공통 UI 컴포넌트
-│   │   └── 📂 common
-│   │       └── Header.jsx
-│   │
-│   ├── 📂 features         # 기능 단위 Feature Layer
-│   │   ├── 📂 auth
-│   │   │   └── AuthButton.jsx
-│   │   ├── 📂 board
-│   │   │   ├── BoardContainer.jsx
-│   │   │   └── dnd-utils.js
-│   │   └── 📂 upload
-│   │       └── ImageUploader.jsx
-│   │
-│   ├── 📂 constants        # 상수 관리
-│   │   └── endpoints.js
-│   │
-│   ├── 📂 lib              # 유틸 함수 모음
-│   │   └── utils.js
-│   │
-│   └── 📂 hooks            # Custom Hook 디렉토리
-│       └── useAuth.js
+│ ├── 📂 api # API 통신 함수 모음
+│ ├── 📂 components
+│ │ ├── 📂 button # 버튼 UI
+│ │ ├── 📂 card # 카드 UI
+│ │ ├── 📂 cardtable # 카드 + 테이블 UI
+│ │ ├── 📂 column # 테이블 컬럼 UI
+│ │ ├── 📂 common # 공통 UI(아이콘, 컬러 등)
+│ │ ├── 📂 dashboard # 대시보드 전용 UI
+│ │ ├── 📂 header # 상단 헤더
+│ │ ├── 📂 input # 인풋 UI
+│ │ ├── 📂 modal # 모달 UI
+│ │ └── 📂 sidemenu # 사이드 메뉴 UI
+│ │
+│ ├── 📂 context # 전역 상태관리(Context API)
+│ ├── 📂 hook # 커스텀 훅
+│ ├── 📂 lib # 유틸 함수
+│ ├── 📂 pages
+│ │ ├── 📂 api
+│ │ │ ├── 📂 auth # 인증 API
+│ │ │ └── 📂 external # 외부 연동 API
+│ │ ├── 📂 dashboard
+│ │ │ └── 📂 [id] # 동적 라우트
+│ │ ├── 📂 guide # 가이드 페이지
+│ │ ├── 📂 login # 로그인 페이지
+│ │ ├── 📂 mydashboard # 나의 대시보드 관리
+│ │ ├── 📂 mypage # 마이페이지
+│ │ ├── 📂 signup # 회원가입
+│ │ ├── 📄 _app.js # 전역 레이아웃/Provider
+│ │ ├── 📄 _document.js # HTML 문서 커스텀
+│ │ ├── 📄 [...slug].js # 나머지 라우트 처리
+│ │ ├── 📄 index.js # 홈 페이지
+│ │ └── 📄 index.module.scss # 홈 스타일
+│ │
+│ ├── 📂 styles
+│ │ ├── _mixins.scss # SCSS 믹스인
+│ │ ├── _variables.scss # SCSS 변수
+│ │ ├── font.scss # 폰트 스타일
+│ │ ├── globals.scss # 글로벌 스타일
+│ │ ├── input.scss # 인풋 스타일
+│ │ ├── layout.scss # 레이아웃 스타일
+│ │ └── reset.scss # Reset CSS
 │
-├── 📝 .eslintrc.json       # ESLint 규칙 (React Hooks 룰 포함)
-├── 📝 .prettierrc          # Prettier 코드 포맷 규칙
-├── 📝 .gitignore           # Git 제외 파일
-├── 📦 package.json         # 프로젝트 의존성 목록
-├── 📦 package-lock.json    # 의존성 고정 파일
-├──  ▲  next.config.mjs      # Next.js 설정 파일 (이미지 도메인 등)
-├── 📦 jsconfig.json        # 프로젝트 경로 별칭 설정 파일
-├── 📝 README.md            # 프로젝트 설명
-└── ⚙️ .env                 # 환경변수
-```
+├── ⚙️ .env # 환경 변수
+├── 📝 .eslintrc.json # ESLint 설정
+├── 📝 .gitignore # Git 제외 파일
+├── 📝 .prettierrc # Prettier 설정
+├── 📝 .eslint.config.mjs # ESLint 확장 설정
+├── 📦 jsconfig.json # 절대 경로 설정
+├── ▲ next.config.mjs # Next.js 설정
+├── 📦 package-lock.json # 패키지 버전 고정
+├── 📦 package.json # 의존성 목록
+└── 📝 README.md # 프로젝트 설명
+
+`````
 
 ## 🔗 API 문서
 
@@ -138,7 +139,7 @@ npm run dev
 - **Next.js Pages Router**: 파일 기반 라우팅 및 SSR 구현
 - **비동기 통신**: axios를 활용한 서버 데이터 처리
 - **상태 관리**: 전역 상태 관리 및 Context API 활용
-- **AWS 인프라**: S3 이미지 스토리지 및 CloudFront CDN 구축
+- **Vercel**: Next.js 프로젝트 배포, 환경 변수 관리 및 자동 빌드 파이프라인 구성
 - **팀 협업**: Git 브랜치 전략 및 코드 리뷰 프로세스
 
 ## 📜 라이센스
@@ -148,3 +149,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🙏 감사의 글
 
 이 프로젝트는 **코드잇 스프린트 Front-End 19기** 교육 과정의 팀 프로젝트로 제작되었습니다.
+
+```
+
+```

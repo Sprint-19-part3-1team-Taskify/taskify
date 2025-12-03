@@ -1,0 +1,81 @@
+@use '@styles/variables' as *;
+@use '@styles/mixins' as *;
+
+.dashboardLink {
+  @include txtStyle('2lg', M);
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 50px;
+  padding: 12px 12px 12px 36px;
+  color: $gray1;
+  word-break: break-word;
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  &.active {
+    border-radius: 4px;
+    background: rgba($color: $violet2, $alpha: 0.8);
+  }
+  &.owner::after {
+    content: '';
+    display: inline-block;
+    margin-left: 4px;
+    width: 18px;
+    height: 14px;
+    background: url(/images/dashboard/ico_crown.svg) no-repeat 0 0;
+    flex-shrink: 0;
+  }
+
+  &::before {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    margin-top: -4px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  &.color7ac555::before {
+    background: $green;
+  }
+  &.color760dde::before {
+    background: $purple;
+  }
+  &.colorffa500::before {
+    background: $orange;
+  }
+  &.color76a5ea::before {
+    background: $blue;
+  }
+  &.colore876ea::before {
+    background: $pink;
+  }
+  &.colorFF5733::before {
+    background: #ff5733;
+  }
+}
+
+/* Tablet (1280px 이하) */
+@media (max-width: 1280px) {
+}
+/* mobile (743px 이하) */
+@media (max-width: 743px) {
+  .dashboardLink {
+    min-height: 40px;
+    padding: 0;
+    &:before {
+      left: 50%;
+      margin-left: -4px;
+    }
+    span,
+    &.owner::after {
+      display: none;
+    }
+  }
+}

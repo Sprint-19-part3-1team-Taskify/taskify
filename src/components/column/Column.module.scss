@@ -1,0 +1,142 @@
+.column {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  width: 100%;
+  padding: 22px 0 22px 20px;
+  height: 100%;
+  flex-shrink: 0;
+  background: var(--gray-gray_FAFAFA, #fafafa);
+}
+
+.frame2610633 {
+  width: 100%;
+  padding-right: 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  min-width: 0; // flex item이 내용보다 작아질 수 있도록
+}
+
+.frame2610632 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0; // flex item이 내용보다 작아질 수 있도록
+  overflow: hidden;
+}
+
+.frame2013 {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+
+  h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333236;
+    margin: 0;
+    flex: 0 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.chip {
+  display: flex;
+  width: 20px;
+  height: 20px;
+  padding: 3px 6px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0; // 숫자 칩이 축소되지 않도록
+
+  border-radius: 4px;
+  background: var(--gray-gray_EEEEEE, #eee);
+  font-size: 12px;
+  font-weight: 500;
+  color: #787486;
+}
+
+.settingsButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0; // 버튼이 축소되지 않도록
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.frame2000 {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+  overflow-x: visible; // 드래그 시 좌우 잘림 방지
+  padding-right: 20px; // 스크롤바 공간 더 확보하여 카드 잘림 방지
+  scroll-padding-right: 20px; // 스크롤 위치 이동 시도 시 오른쪽 여백 고려
+  scrollbar-gutter: stable; // 지원 브라우저에서 콘텐츠와 스크롤바 간격 유지
+
+  // 상단 AddTodoButton 고정 크기 및 축소 방지
+  > button:first-child {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #d9d9d9;
+    border-radius: 3px;
+
+    &:hover {
+      background: #c0c0c0;
+    }
+  }
+}
+
+// 컬럼 사이 구분선 (부모에서 nth-child로 조정 가능하게 기본 클래스 제공)
+.withDivider {
+  border-left: 1px solid #e0e0e0;
+}
+
+/* Tablet (1280px 이하) */
+@media (max-width: 1280px) {
+  .frame2000 {
+    overflow: visible;
+    max-height: initial;
+  }
+}
+/* mobile (743px 이하) */
+@media (max-width: 743px) {
+  .frame2000 {
+    padding-right: 12px;
+  }
+  .column {
+    padding: 16px 0 16px 12px;
+  }
+}

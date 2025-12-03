@@ -1,0 +1,29 @@
+@use '@styles/variables' as *;
+@use '@styles/mixins' as *;
+
+.backPage {
+  margin-bottom: 34px;
+  .btn {
+    @include txtStyle('lg', M);
+    padding-left: 28px;
+    color: $black3;
+    background: url('/images/common/btn_back_arrow.svg') no-repeat 0 50%;
+  }
+}
+/* Tablet (1280px 이하) */
+@media (max-width: 1280px) {
+  .backPage {
+    margin-bottom: 19px;
+  }
+}
+/* mobile (743px 이하) */
+@media (max-width: 743px) {
+  .backPage {
+    margin-bottom: 10px;
+    .btn {
+      padding-left: 24px;
+      font-size: 14px;
+      background-size: 18px 18px;
+    }
+  }
+}

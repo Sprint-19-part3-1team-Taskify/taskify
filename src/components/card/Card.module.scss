@@ -1,0 +1,89 @@
+.imageCard {
+  width: 100%;
+  min-height: 304px;
+  flex-shrink: 0;
+
+  border-radius: 6px;
+  border: 1px solid var(--gray-gray_D9D9D9, #d9d9d9);
+  background: var(--white-white_FFFFFF, #fff);
+  cursor: pointer;
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.imageWrapper {
+  position: relative;
+  margin: 12px auto;
+  width: 274px;
+  height: 160px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 6px;
+  background-color: #f1f1f5; // 이미지 로딩 실패 시 회색 배경
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Tablet (1280px 이하) */
+@media (max-width: 1280px) {
+  .imageCard {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    min-height: auto;
+    padding: 20px;
+    gap: 20px;
+    .imageWrapper {
+      width: 90px;
+      height: 53px;
+      flex-shrink: 0;
+      margin: 0;
+    }
+    & > div:not(.imageWrapper) {
+      padding: 0;
+      flex-grow: 1;
+    }
+  }
+}
+/* mobile (743px 이하) */
+@media (max-width: 743px) {
+  .imageCard {
+    flex-direction: column;
+    padding: 12px;
+    gap: 4px;
+    .imageWrapper {
+      width: 100%;
+      height: 60%;
+      aspect-ratio: 16 / 9;
+      flex-shrink: 0;
+      margin: 0;
+    }
+  }
+}

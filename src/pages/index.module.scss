@@ -1,0 +1,423 @@
+@use '@styles/variables' as *;
+@use '@styles/mixins' as *;
+
+@mixin box {
+  width: 1200px;
+  height: 600px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: $black2;
+  .con {
+    padding-top: 123px;
+    .subTit {
+      @include txtStyle(22px, M);
+      color: $gray2;
+    }
+    .tit {
+      margin-top: 100px;
+      @include txtStyle(48px, B);
+      color: $white;
+      line-height: 64px;
+    }
+  }
+}
+
+:global(.landingPage) {
+  background: $black1;
+  // hearder
+  header {
+    position: fixed;
+    left: 0;
+    right: 0;
+    background: $black1;
+    border-bottom-color: $black1;
+    img {
+      filter: brightness(0) invert(1);
+    }
+    a {
+      color: #fff;
+      &:hover {
+        color: #a78bfa;
+      }
+    }
+  }
+}
+
+.landing {
+  &Section {
+    scroll-snap-type: y mandatory;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 100vh;
+    background-color: $black1;
+    &::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+      background-color: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+      cursor: pointer;
+      background-color: $black2;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: $black2;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
+    section {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      width: 100%;
+      min-height: 100vh;
+      height: 100vh;
+      padding-top: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .img {
+        position: relative;
+      }
+      &.section01 {
+        text-align: center;
+        .img {
+          width: 722px;
+          height: 422px;
+          margin: auto;
+        }
+        .tit {
+          @include txtStyle(76px, B);
+          color: $white;
+          margin-top: 48px;
+          em {
+            color: $violet1;
+          }
+        }
+      }
+      &.section02 {
+        .box {
+          @include box();
+          .con {
+            padding-left: 60px;
+          }
+          .img {
+            margin-top: 103px;
+            width: 594px;
+            height: 497px;
+          }
+        }
+      }
+      &.section03 {
+        .box {
+          @include box();
+          flex-direction: row-reverse;
+          justify-content: flex-end;
+          .img {
+            margin: 98px 100px 0 108px;
+            width: 436px;
+            height: 502px;
+          }
+        }
+      }
+
+      &.section04 {
+        position: relative;
+        padding-bottom: 100px;
+        .box {
+          width: 1200px;
+        }
+        .tit {
+          @include txtStyle(28px, B);
+          color: $white;
+          margin-bottom: 36px;
+        }
+        ul {
+          display: flex;
+          gap: 33px;
+          li {
+            width: 378px;
+            border-radius: 8px;
+            overflow: hidden;
+            .img {
+              @include flex-center;
+              height: 260px;
+              background-color: $black4;
+              div {
+                position: relative;
+                &.i01 {
+                  width: 300px;
+                  height: 123px;
+                }
+                &.i02 {
+                  width: 300px;
+                  height: 230px;
+                }
+                &.i03 {
+                  width: 300px;
+                  height: 195px;
+                }
+              }
+            }
+            .txt {
+              height: 124px;
+              padding: 33px 32px;
+              background-color: $black2;
+              em {
+                @include txtStyle(18px, B);
+                display: block;
+                color: $white;
+              }
+              span {
+                @include txtStyle(16px, M);
+                display: block;
+                margin-top: 18px;
+                color: $white;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &Footer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100px;
+    padding: 0 140px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .copy {
+      @include txtStyle(16px, R);
+      color: $gray2;
+    }
+    .links {
+      a {
+        @include txtStyle(16px, R);
+        color: $gray2;
+        &:not(:first-child) {
+          margin-left: 32px;
+        }
+      }
+    }
+    .sns {
+      a {
+        display: inline-block;
+        position: relative;
+        width: 20px;
+        height: 20px;
+        &:not(:first-child) {
+          margin-left: 14px;
+        }
+      }
+    }
+  }
+}
+
+/* Tablet (1280px 이하) */
+@media (max-width: 1280px) {
+  .landingSection {
+    section {
+      padding: 115px 40px 45px;
+
+      &.section01 {
+        .img {
+          width: 537px;
+          height: 314px;
+        }
+        .tit {
+          @include txtStyle(56px, B);
+        }
+      }
+
+      &.section02,
+      &.section03 {
+        .box {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          flex-direction: column;
+          justify-content: flex-start;
+          .con {
+            padding-top: 63px;
+            padding-left: 60px;
+          }
+          .img {
+            position: absolute;
+            bottom: 0;
+          }
+        }
+      }
+
+      &.section02 {
+        .box {
+          .img {
+            margin-top: 0;
+            width: 69.892vw;
+            height: 58.467vw;
+            max-width: 520px;
+            max-height: 435px;
+            right: 0;
+          }
+        }
+      }
+      &.section03 {
+        .box {
+          .img {
+            margin: 0;
+            width: 48.387vw;
+            height: 55.779vw;
+            max-width: 360px;
+            max-height: 415px;
+            left: 50%;
+            transform: translateX(-50%);
+          }
+        }
+      }
+
+      &.section04 {
+        height: auto;
+        padding-bottom: 100px;
+        .box {
+          width: 100%;
+          .tit {
+            text-align: center;
+          }
+        }
+        ul {
+          flex-direction: column;
+          align-items: center;
+          gap: 48px;
+        }
+        .landingFooter {
+          padding: 0 40px;
+        }
+      }
+    }
+  }
+}
+/* mobile (743px 이하) */
+@media (max-width: 743px) {
+  .landingSection {
+    section {
+      padding: 90px 16px 30px;
+      &.section01 {
+        .img {
+          width: 287px;
+          height: 168px;
+        }
+        .tit {
+          margin-top: 26px;
+          @include txtStyle(40px, B);
+          line-height: 48px;
+        }
+      }
+
+      &.section02,
+      &.section03 {
+        .box {
+          .con {
+            width: 100%;
+            text-align: center;
+            padding-top: 60px;
+            padding-left: 0;
+            .subTit {
+              @include txtStyle(18px, M);
+            }
+            .tit {
+              margin-top: 60px;
+              @include txtStyle(36px, B);
+              line-height: 50px;
+            }
+          }
+        }
+      }
+
+      &.section02 {
+        .box {
+          .img {
+            width: 78.933vw;
+            height: 66.133vw;
+            max-width: 296px;
+            max-height: 248px;
+          }
+        }
+      }
+      &.section03 {
+        .box {
+          .img {
+            width: 57.866vw;
+            height: 66.666vw;
+            max-width: 217px;
+            max-height: 250px;
+          }
+        }
+      }
+
+      &.section04 {
+        padding-bottom: 320px;
+        flex-direction: column;
+        justify-content: space-between;
+        .tit {
+          @include txtStyle(22px, B);
+          margin-bottom: 42px;
+        }
+        ul {
+          gap: 40px;
+          li {
+            width: 100%;
+            .img {
+              height: 235px;
+              div {
+                &.i01 {
+                  width: 260px;
+                  height: 107px;
+                }
+                &.i02 {
+                  width: 260px;
+                  height: 200px;
+                }
+                &.i03 {
+                  width: 260px;
+                  height: 170px;
+                }
+              }
+            }
+            .txt {
+              height: 112px;
+              padding: 27px 32px;
+            }
+          }
+        }
+        .landingFooter {
+          flex-direction: column;
+          height: auto;
+          bottom: 90px;
+          margin-top: 0;
+          padding: 0;
+          .copy,
+          .links a {
+            @include txtStyle(12px, R);
+          }
+          .links {
+            margin: 12px 0 68px;
+            a:not(:first-child) {
+              margin-left: 20px;
+            }
+          }
+          .sns {
+            a:not(:first-child) {
+              margin-left: 20px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,336 @@
+.header {
+  background: #ffffff;
+  border-bottom: 1px solid #d9d9d9;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  &.dark {
+    background: #1f1f1f;
+    border-bottom-color: #484848;
+  }
+}
+
+.inner {
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 0 40px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// 로고
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+
+  img {
+    display: block;
+  }
+
+  // 다크모드에서 로고를 흰색으로 변경
+  .dark & img {
+    filter: brightness(0) invert(1);
+  }
+}
+
+// 네비게이션
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex: 1;
+  position: relative;
+}
+
+// 로그인/회원가입 그룹 (오른쪽 정렬)
+.authGroup {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-left: auto; // 오른쪽 끝으로 정렬
+}
+
+// 텍스트 버튼 (로그인, 회원가입)
+.textBtn {
+  color: #333236;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 8px 12px;
+  transition: all 0.2s ease;
+  border-radius: 6px;
+
+  &:hover {
+    color: #5534da;
+  }
+
+  .dark & {
+    color: #ffffff;
+
+    &:hover {
+      color: #a78bfa;
+    }
+  }
+}
+
+// 대시보드 이름
+.dashboardName {
+  color: #333236;
+  font-size: 20px;
+  font-weight: 700;
+  text-decoration: none;
+  position: absolute;
+
+  .dark & {
+    color: #ffffff;
+  }
+}
+
+// 대시보드 이름 + 컬러 닷
+.dashboardNameWithDot {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: absolute;
+
+  .dashboardName {
+    position: static; // 부모가 이미 absolute이므로 자식은 static
+  }
+}
+
+.colorDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+// 버튼 그룹
+.buttonGroup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-left: 24px;
+  margin-left: auto; // 오른쪽 정렬을 위해
+
+  .dark & {
+    border-left-color: #484848;
+  }
+}
+
+// 아웃라인 버튼 (관리, 초대하기)
+.outlineBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #787486;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+
+  &:hover {
+    background: #f5f5f5;
+    border-color: #5534da;
+    color: #5534da;
+  }
+
+  .dark & {
+    color: #d9d9d9;
+    border-color: #484848;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: #a78bfa;
+      color: #a78bfa;
+    }
+  }
+}
+
+.moreCount {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #f4d03f;
+  border: 2px solid #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333236;
+  margin-left: -8px;
+
+  .dark & {
+    border-color: #1f1f1f;
+  }
+}
+
+// 프로필 섹션
+.profileSection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-left: 32px;
+  border-left: 1px solid #d9d9d9;
+
+  .dark & {
+    border-left-color: #484848;
+  }
+}
+
+.avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.avatarPlaceholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+  border-radius: 50%;
+}
+
+.profileLink {
+  color: #333236;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+
+  &:hover {
+    color: #5534da;
+  }
+
+  .dark & {
+    color: #ffffff;
+
+    &:hover {
+      color: #a78bfa;
+    }
+  }
+}
+/* ================================ header3Simple 전용 레이아웃 ================================ */
+
+/* header3Simple 전용 */
+.header3Simple {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* 대시보드명 왼쪽 */
+.header3Simple .dashboardName {
+  margin-right: auto !important;
+  position: static !important;
+}
+
+/* 버튼/관리/초대 모두 숨김 */
+.header3Simple .buttonGroup,
+.header3Simple .outlineBtn,
+.header3Simple .dashboardNameWithDot {
+  display: none !important;
+}
+
+// 반응형
+@media (max-width: 1200px) {
+  .inner {
+    padding: 0 24px;
+  }
+
+  .nav {
+    gap: 20px;
+  }
+
+  .buttonGroup {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .inner {
+    padding: 0 16px;
+    height: 60px;
+  }
+
+  .nav {
+    gap: 12px;
+  }
+
+  .dashboardName {
+    font-size: 16px;
+    position: static; // 모바일에서는 일반 플로우로
+  }
+
+  .dashboardNameWithDot {
+    position: static; // 모바일에서는 일반 플로우로
+  }
+
+  .textBtn,
+  .outlineBtn,
+  .profileLink {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+
+  .buttonGroup {
+    padding-left: 0;
+    margin-left: auto; // 모바일에서는 margin-left 제거
+  }
+
+  .profileSection {
+    padding-left: 12px;
+  }
+
+  .avatar,
+  .stackedAvatar,
+  .moreCount {
+    width: 32px;
+    height: 32px;
+  }
+
+  .outlineBtn {
+    img {
+      display: none;
+    }
+  }
+
+  .authGroup {
+    gap: 16px; // 모바일에서는 간격 줄이기
+  }
+}
+/* header에서 dashboardName은 모두 absolute 금지 (header3~5 맞춤 고정) */
+.header .dashboardName {
+  position: static !important;
+}
+.crownIcon {
+  display: inline-flex;
+  margin-left: 6px;
+
+  img {
+    display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  nav {
+    > .dashboardName {
+      display: none;
+    }
+  }
+}

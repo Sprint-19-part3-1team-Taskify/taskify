@@ -1,0 +1,55 @@
+.inviteRejectButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background-color: white;
+  border: 1px solid #d9d9d9;
+  color: var(--black-black_333236, #333236);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #f5f5f5;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+  // 타입별 스타일
+  &.type1 {
+    width: 84px;
+    height: 32px;
+  }
+
+  &.type2 {
+    width: 72px;
+    height: 30px;
+  }
+
+  &.type3 {
+    width: 109px;
+    height: 32px;
+    text-align: center;
+
+    font-family: Pretendard;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 18px;
+  }
+}

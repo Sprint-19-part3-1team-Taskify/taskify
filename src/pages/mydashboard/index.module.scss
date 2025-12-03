@@ -1,0 +1,110 @@
+/* 전체 레이아웃 */
+.layout {
+  display: flex;
+  width: 100%;
+  min-height: 100%;
+  background-color: #fafafa;
+}
+
+.mainContent {
+  flex-grow: 1;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+.contentWrapper {
+  max-width: 1022px;
+  width: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* 🔥 상단 버튼 + 카드 영역 (통합 그리드) */
+.topSection {
+  width: 100%;
+}
+
+.dashboardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3열 고정 */
+  gap: 12px;
+  width: 100%;
+}
+
+/* 하단 흰색 박스 영역 (사진과 동일한 크기 및 스타일) */
+.bottomSection {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 30px;
+  min-height: 400px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+
+  :global(h2),
+  :global(h3),
+  :global(.title) {
+    margin-left: -5px !important;
+  }
+}
+
+/* 내부 컴포넌트가 박스를 가득 채우도록 설정 */
+.fullSizeContainer {
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.loadingText {
+  text-align: center;
+  padding: 40px;
+  color: #999;
+  margin: auto;
+}
+.paginationArea {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.pageInfo {
+  font-size: 14px;
+  color: #555;
+}
+
+@media (max-width: 1200px) {
+  .dashboardGrid {
+    grid-template-columns: repeat(2, 1fr); /* 2열 고정 */
+    gap: 10px;
+    width: 100%;
+    :global(button) {
+      width: 100% !important;
+      margin: 0;
+      transition: none;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .layout {
+    min-height: 100%;
+  }
+  .mainContent {
+    flex-grow: 1;
+    padding: 23px;
+  }
+  .dashboardGrid {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 8px 0;
+    :global(button) {
+      height: 58px !important;
+    }
+  }
+}

@@ -1,0 +1,161 @@
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+// 폰트 스타일을 적용하는 믹스인
+// $size: 가이드라인의 스타일 이름 (예: '3xl', '2xl', 'xl', 26px)
+// $weight: 가이드라인의 폰트 굵기 (예: 'B', 'SB', 'R', 'M')
+@mixin txtStyle($size, $weight) {
+  $font-size: null;
+  $line-height: null;
+  $font-weight: null;
+
+  // --- 크기 (Size) 정의 ---
+  @if $size == '3xl' {
+    $font-size: 32px;
+    $line-height: 42px;
+  } @else if $size == '2xl' {
+    $font-size: 24px;
+    $line-height: 32px;
+  } @else if $size == 'xl' {
+    $font-size: 20px;
+    $line-height: 32px;
+  } @else if $size == '2lg' {
+    $font-size: 18px;
+    $line-height: 26px;
+  } @else if $size == 'lg' {
+    $font-size: 16px;
+    $line-height: 26px;
+  } @else if $size == 'md' {
+    $font-size: 14px;
+    $line-height: 24px;
+  } @else if $size == 'SB' {
+    $font-size: 13px;
+    $line-height: 22px;
+  } @else if $size == 'xs' {
+    $font-size: 12px;
+    $line-height: 20px;
+  } @else {
+    $font-size: $size;
+  }
+
+  // --- 굵기 (Weight) 정의 ---
+  @if $weight == B {
+    $font-weight: 700;
+  } @else if $weight == SB {
+    $font-weight: 600;
+  } @else if $weight == M {
+    $font-weight: 500;
+  } @else if $weight == R {
+    $font-weight: 400;
+  } @else {
+    $font-weight: $weight;
+  }
+  // --- 최종 CSS 속성 할당 ---
+  @if $font-size {
+    font-size: $font-size;
+  }
+  @if $line-height {
+    line-height: $line-height;
+  } @else if $font-size {
+    line-height: $font-size;
+  }
+  @if $font-weight {
+    font-weight: $font-weight;
+  }
+
+  font-family: 'Pretendard', sans-serif;
+}
+
+/* 텍스트 클래스 - size, weight */
+.txt-3xl-1 {
+  @include txtStyle('3xl', B);
+}
+.txt-3xl-2 {
+  @include txtStyle('3xl', SB);
+}
+.txt-2xl-1 {
+  @include txtStyle('2xl', B);
+}
+.txt-2xl-2 {
+  @include txtStyle('2xl', SB);
+}
+.txt-2xl-3 {
+  @include txtStyle('2xl', M);
+}
+.txt-2xl-4 {
+  @include txtStyle('2xl', R);
+}
+.txt-xl-1 {
+  @include txtStyle('xl', B);
+}
+.txt-xl-2 {
+  @include txtStyle('xl', SB);
+}
+.txt-xl-3 {
+  @include txtStyle('xl', M);
+}
+.txt-xl-4 {
+  @include txtStyle('xl', R);
+}
+.txt-2lg-1 {
+  @include txtStyle('2lg', B);
+}
+.txt-2lg-2 {
+  @include txtStyle('2lg', SB);
+}
+.txt-2lg-3 {
+  @include txtStyle('2lg', M);
+}
+.txt-2lg-4 {
+  @include txtStyle('2lg', R);
+}
+.txt-lg-1 {
+  @include txtStyle('lg', B);
+}
+.txt-lg-2 {
+  @include txtStyle('lg', SB);
+}
+.txt-lg-3 {
+  @include txtStyle('lg', M);
+}
+.txt-lg-4 {
+  @include txtStyle('lg', R);
+}
+.txt-md-1 {
+  @include txtStyle('md', B);
+}
+.txt-md-2 {
+  @include txtStyle('md', SB);
+}
+.txt-md-3 {
+  @include txtStyle('md', M);
+}
+.txt-md-4 {
+  @include txtStyle('md', R);
+}
+.txt-sm-1 {
+  @include txtStyle('sm', SB);
+}
+.txt-sm-2 {
+  @include txtStyle('sm', M);
+}
+.txt-xs-1 {
+  @include txtStyle('xs', SB);
+}
+.txt-xs-2 {
+  @include txtStyle('xs', M);
+}
+.txt-xs-3 {
+  @include txtStyle('xs', R);
+}
+.txt-free {
+  @include txtStyle(42px, B);
+}

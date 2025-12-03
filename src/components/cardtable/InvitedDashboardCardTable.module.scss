@@ -1,0 +1,311 @@
+.tableContainer {
+  background: white;
+  border-radius: 8px;
+  padding: 32px 28px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  width: 1022px;
+  min-height: 650px;
+  box-sizing: border-box;
+}
+
+/* ---- 제목 ---- */
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #000;
+  margin: 0 0 20px 0;
+}
+
+/* ---- 검색 인풋창 ---- */
+.searchWrapper {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  margin-bottom: 24px;
+}
+
+.searchWrapper img {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 1;
+  width: 24px;
+  height: 24px;
+}
+
+.searchInput {
+  width: 100%;
+  height: 40px;
+  padding: 6px 16px 6px 48px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.searchInput:focus {
+  border-color: #5534da;
+}
+
+.searchInput::placeholder {
+  color: #9fa6b2;
+}
+
+/* ---- 테이블 ---- */
+.table {
+  width: calc(100% - 48px);
+  margin-left: 48px;
+  border-collapse: collapse;
+  margin-top: 24px;
+  table-layout: fixed;
+  border-spacing: 0;
+}
+
+.table thead {
+  position: relative;
+}
+
+.table thead th {
+  padding: 20px 0;
+  text-align: left;
+  font-weight: 400;
+  color: #9fa6b2;
+  font-size: 16px;
+  background: transparent;
+  word-break: break-word;
+}
+
+.table thead th:nth-child(1) {
+  width: 33%;
+}
+.table thead th:nth-child(2) {
+  width: 33%;
+}
+.table thead th:nth-child(3) {
+  width: 34%;
+  text-align: center;
+}
+
+/* 헤더 쪽 선 제거 (겹침 방지) */
+.table thead::after,
+.table thead tr::after {
+  display: none !important;
+  content: none;
+}
+
+/* tbody 설정 */
+.table tbody tr {
+  border-bottom: none !important;
+  position: relative;
+  transition: background-color 0.2s;
+}
+
+.table tbody tr:hover {
+  background-color: transparent;
+}
+
+/* 🚀 [핵심 변경] 모든 데이터 행(tr)에 구분선 생성 */
+/* nth-child 제한을 없애서 데이터가 생길 때마다 선이 그려집니다. */
+.table tbody tr::after {
+  content: '';
+  display: block; /* 데이터가 있으면 무조건 보임 */
+  position: absolute;
+  bottom: 0;
+
+  /* 양쪽 끝 꽉 차게 유지 */
+  left: -76px;
+  width: 1022px;
+
+  height: 1px;
+  background-color: #eeeeee;
+  box-sizing: border-box;
+}
+
+.table tbody td {
+  padding: 24px 0;
+  color: #333;
+  font-size: 16px;
+  word-break: break-word;
+}
+
+.table thead th:nth-child(2),
+.table tbody td:nth-child(2) {
+  text-align: center;
+}
+.table tbody td:nth-child(1) {
+  font-weight: 500;
+  color: #000;
+}
+.table tbody td:nth-child(2) {
+  color: #333;
+}
+.table tbody td:nth-child(3) {
+  text-align: center;
+}
+.table .tit {
+  display: none;
+}
+
+.actionCell {
+  text-align: center;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 60px 20px !important;
+  color: #9fa6b2;
+  font-size: 14px;
+}
+
+/* 버튼 스타일 */
+.acceptBtn,
+.rejectBtn {
+  padding: 10px 32px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  min-width: 84px;
+  white-space: nowrap;
+}
+.acceptBtn {
+  background-color: #5534da;
+  color: white;
+}
+.acceptBtn:hover {
+  background-color: #4323c7;
+}
+.rejectBtn {
+  background-color: white;
+  color: #787486;
+  border: 1px solid #d9d9d9;
+}
+.rejectBtn:hover {
+  background-color: #fafafa;
+  border-color: #5534da;
+  color: #5534da;
+}
+
+/* 페이지네이션 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+  padding-top: 20px;
+
+  /* [중요 유지] 페이지네이션 윗선 제거 (마지막 데이터 행의 선과 겹침 방지) */
+  border-top: none;
+}
+
+.pagination button {
+  padding: 8px 16px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  background: white;
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.pagination button:hover:not(:disabled) {
+  border-color: #5534da;
+  color: #5534da;
+}
+.pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.pagination span {
+  color: #787486;
+  font-size: 14px;
+  min-width: 60px;
+  text-align: center;
+}
+
+@media (max-width: 1200px) {
+  .tableContainer {
+    padding: 18px 28px;
+    width: 100%;
+    overflow: hidden;
+    .table {
+      width: 100%;
+      margin-left: 0;
+      border-collapse: collapse;
+      margin-top: 24px;
+      table-layout: fixed;
+      border-spacing: 0;
+      thead th:nth-child(2),
+      tbody td:nth-child(2) {
+        width: 50px;
+        text-align: center;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .searchWrapper {
+    margin-bottom: 13px;
+  }
+  .tableContainer {
+    padding: 24px 16px;
+    min-height: auto;
+    /* ---- 제목 ---- */
+    .title {
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+    .table {
+      margin-top: 0;
+      thead {
+        display: none;
+      }
+      tbody tr,
+      tbody td:not(.emptyState) {
+        padding: 0;
+        text-align: left;
+      }
+      tbody td {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        min-height: 24px;
+        .tit {
+          display: block;
+          flex-shrink: 0;
+          width: 62px;
+          font-size: 14px;
+          color: #9fa6b2;
+        }
+        .data {
+          font-size: 14px;
+          color: #333236;
+          font-weight: 400;
+        }
+        button {
+          width: 50%;
+        }
+        &:nth-child(3) {
+          padding-top: 14px;
+          padding-bottom: 14px;
+        }
+        &:nth-child(1) {
+          padding-top: 14px;
+        }
+      }
+    }
+  }
+}
