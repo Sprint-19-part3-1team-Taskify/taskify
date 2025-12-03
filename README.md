@@ -19,7 +19,7 @@ Taskify는 커뮤니티를 생성하고 멤버를 초대하여 일정과 할 일
 
 ## 🌐 배포 주소
 
-➡️ [Taskify]()
+➡️ [[Taskify]()](https://taskify-ten-pi.vercel.app/)
 
 ## 🛠 기술 스택
 
